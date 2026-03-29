@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "Bash(npm create:*)",
+      "Bash(npx create-vite@latest . --template react)",
+      "Bash(npx --yes create-vite@latest temp-cv --template react)",
+      "Bash(cp temp-cv/index.html .)",
+      "Bash(cp temp-cv/vite.config.js .)",
+      "Bash(cp temp-cv/eslint.config.js .)",
+      "Bash(cp temp-cv/package.json .)",
+      "Bash(cp -r temp-cv/public .)",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)"
+    ]
+  }
+}
