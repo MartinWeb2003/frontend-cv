@@ -1,0 +1,37 @@
+.border-glow {
+  position: relative;
+  background: var(--bg-color, #fff);
+  border-radius: var(--radius, 16px);
+  isolation: isolate;
+}
+.border-glow::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: calc(var(--radius, 16px) + 1px);
+  background: conic-gradient(
+    from var(--cursor-angle, 0deg) at 50% 50%,
+    rgba(var(--glow-r, 165), var(--glow-g, 28), var(--glow-b, 48), calc(var(--edge-proximity, 0) * var(--intensity, 0.8))),
+    rgba(var(--glow-r, 165), var(--glow-g, 28), var(--glow-b, 48), 0) 60deg,
+    rgba(var(--glow-r, 165), var(--glow-g, 28), var(--glow-b, 48), 0) 300deg,
+    rgba(var(--glow-r, 165), var(--glow-g, 28), var(--glow-b, 48), calc(var(--edge-proximity, 0) * var(--intensity, 0.8))) 360deg
+  );
+  z-index: -1;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+.border-glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius, 16px);
+  border: 1px solid rgba(var(--glow-r, 165), var(--glow-g, 28), var(--glow-b, 48), 0.15);
+  pointer-events: none;
+}
+.border-glow--animated::before {
+  animation: borderGlowSweep 1s ease-out forwards;
+}
+@keyframes borderGlowSweep {
+  from { opacity: 0; --cursor-angle: 0deg; }
+  to { opacity: 1; --cursor-angle: 360deg; }
+}

@@ -1,0 +1,7 @@
+.glare-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.glare-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(165, 28, 48, 0.12);
+}
