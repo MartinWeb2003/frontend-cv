@@ -46,22 +46,22 @@ export default function About() {
 
         <div className="sticky-panel about__sticky">
           <motion.span className="section-label" custom={0} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
-            Pozadina
+            Usluge
           </motion.span>
           <motion.h2 className="about__heading" custom={1} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
-            Izgradnja na sjecištu inženjeringa i dizajna.
+            Digitalna rješenja na spoju dizajna i vrhunskog inženjeringa
           </motion.h2>
           <motion.p className="about__para" custom={2} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
-            Student sam računarstva na FER-u u Zagrebu, trenutno na magistarskom studiju
-            Softverskog inženjerstva i informacijskih sustava. Radim kao Software Developer
-            u Ericsson Nikola Tesla, gdje sam doprinio enterprise softverskim sustavima u agilnom okruženju.
+            Pomažem tvrtkama transformirati ideje u funkcionalne proizvode.
           </motion.p>
           <motion.p className="about__para" custom={3} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
-            Uz glavni posao, freelancem — izgrađujem full-stack web aplikacije, WordPress rješenja
-            i REST API integracije za klijente iz različitih industrija.
+            Uz iskustvo u vodećoj regionalnoj tech tvrtki, kao freelance developer nudim:
           </motion.p>
-
-          <motion.div className="about__stats" custom={4} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
+          <motion.ul className="about__list" custom={4} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
+            <li><strong>Full-stack razvoj:</strong> Od koncepta do produkcije.</li>
+            <li><strong>API integracije:</strong> Povezivanje vašeg poslovanja s modernim servisima.</li>
+          </motion.ul>
+          <motion.div className="about__stats" custom={5} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
             {STATS.map((s, i) => (
               <div key={s.label} className="about__stat">
                 <span className="about__stat-value">
@@ -89,14 +89,14 @@ export default function About() {
                 <div className="bento-inner">
                   <FiCode size={26} color="#A51C30" />
                   <h3>Čist kod</h3>
-                  <p>Čitljiv, održiv, skalabilan. Buduće ja uvijek zahvaljuje sadašnjem.</p>
+                  <p>Buduće ja uvijek zahvaljuje sadašnjem. Pišem kod koji je lako čitati, a još lakše nadograđivati.</p>
                 </div>
               </MagicBento.Card>
               <MagicBento.Card className="bento-tall">
                 <div className="bento-inner">
                   <FiLayers size={26} color="#A51C30" />
                   <h3>Full-Stack</h3>
-                  <p>Fluent od pixel-perfect sučelja do optimiziranih PostgreSQL upita.</p>
+                  <p>Suveren u svakom sloju aplikacije. Spajam vizualnu perfekciju s moćnim serverskim rješenjima.</p>
                 </div>
               </MagicBento.Card>
               <MagicBento.Card className="bento-wide">
@@ -104,7 +104,7 @@ export default function About() {
                   <FiCpu size={30} color="#A51C30" />
                   <div>
                     <h3>Performans na prvom mjestu</h3>
-                    <p>Svaka milisekunda je važna. Optimiziram bundle, renderiranje i Core Web Vitals.</p>
+                    <p>Svaka milisekunda je važna. Optimiziram bundle, renderiranje i baze podataka za instantno iskustvo.</p>
                   </div>
                 </div>
               </MagicBento.Card>
@@ -112,14 +112,14 @@ export default function About() {
                 <div className="bento-inner">
                   <FiGlobe size={26} color="#A51C30" />
                   <h3>Međunarodni</h3>
-                  <p>Tečan engleski (C1). Iskustvo u multikulturalnim inženjerskim timovima.</p>
+                  <p>Tečan engleski i inženjerska etika usvojena u vodećim svjetskim tehnološkim korporacijama.</p>
                 </div>
               </MagicBento.Card>
               <MagicBento.Card className="bento-tall">
                 <div className="bento-inner">
                   <FiAward size={26} color="#A51C30" />
                   <h3>Akademski</h3>
-                  <p>Magistarski studij na FER-u — jednom od vodećih tehničkih fakulteta u Europi.</p>
+                  <p>FER background kao jamstvo inženjerske discipline i sposobnosti rješavanja najkompleksnijih problema.</p>
                 </div>
               </MagicBento.Card>
             </MagicBento>

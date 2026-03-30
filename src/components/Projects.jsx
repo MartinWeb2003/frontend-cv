@@ -8,7 +8,7 @@ const PROJECTS = [
     id: 1, num: '01', year: '2024',
     title: 'Sottomonte',
     subtitle: 'Web stranica za nekretnine',
-    desc: 'Profesionalna web stranica za agenciju za nekretnine Sottomonte. Moderna prezentacija luksuznih nekretnina s elegantnim dizajnom, optimizacijom za pretraživače i responzivnim layoutom prilagođenim svim uređajima.',
+    desc: 'Custom web rješenje za agenciju Sottomonte: Projektiranje responzivnog sustava visokih performansi. Implementirana napredna SEO optimizacija i custom layout dizajniran za maksimalnu konverziju i brzinu učitavanja.',
     tags: ['WordPress', 'Web dizajn', 'SEO', 'Responzivan dizajn'],
     images: ['/sotto1.png', '/sotto2.png', '/sotto3.png', '/sotto4.png'],
     video: null,
@@ -19,7 +19,7 @@ const PROJECTS = [
     id: 2, num: '02', year: '2024',
     title: 'Visit Eva Orebić',
     subtitle: 'Web stranica za turističku ponudu',
-    desc: 'Web stranica za turističku ponudu smještaja u Orebiću na Pelješcu. Prezentacija apartmana i vila s galerijom, opisima, kontakt formom i optimizacijom za turistička pretraživanja.',
+    desc: 'Custom web rješenje za prezentaciju premium smještaja na Pelješcu. Projektiranje sustava s fokusom na brzinu učitavanja vizualnog sadržaja i responzivni dizajn koji osigurava lakoću rezervacije na svim uređajima.',
     tags: ['WordPress', 'Web dizajn', 'SEO', 'Turizam'],
     images: ['/eva1.png', '/eva2.png', '/eva3.png', '/eva4.png'],
     video: null,
@@ -30,7 +30,7 @@ const PROJECTS = [
     id: 3, num: '03', year: '2024',
     title: 'Sabioncello',
     subtitle: 'Web stranica za turizam na Pelješcu',
-    desc: 'Web stranica za turističku destinaciju Sabioncello na poluotoku Pelješcu. Prezentacija smještaja, aktivnosti i lokalnih atrakcija s modernim dizajnom i SEO optimizacijom za međunarodno tržište.',
+    desc: 'Sabioncello: Od dizajnerskog koncepta do cjelovitog destinacijskog vodiča. Razvoj modernog i skalabilnog web rješenja optimiziranog za međunarodnu publiku, s naglaskom na vizualni storytelling i tehničku SEO izvrsnost.',
     tags: ['WordPress', 'Web dizajn', 'SEO', 'Turizam'],
     images: ['/sabioncello1.png', '/sabioncello2.png', '/sabioncello3.png', '/sabioncello4.png'],
     video: null,
@@ -41,7 +41,7 @@ const PROJECTS = [
     id: 4, num: '04', year: '2025',
     title: 'Sabioncello Grafika',
     subtitle: 'Web aplikacija · U izradi',
-    desc: 'Web aplikacija u razvoju za grafičke usluge destinacije Sabioncello. Projekt je trenutno u fazi aktivnog razvoja — detalji i live verzija dostupni uskoro.',
+    desc: 'Coming Soon: Sabioncello Graphics Web App. Projektiranje skalabilnog ekosustava za grafičke usluge. Od dizajna arhitekture do finalnog poliranja koda — u procesu gradnje nečeg velikog.',
     tags: ['React', 'Web dizajn', 'U izradi'],
     images: ['/grafica1.png', '/grafica2.png', '/grafica3.png', '/grafica4.png'],
     video: null,
@@ -212,7 +212,7 @@ export default function Projects() {
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.7, delay: 0.2 }}
         >
-          Četiri projekta izgrađena od nule — pravi klijenti, pravi problemi, pravi kod.
+          Od inicijalnog koncepta do skalabilne produkcije: Četiri autorska projekta vođena stvarnim zahtjevima tržišta i čistom inženjerskom logikom.
         </motion.p>
       </div>
 

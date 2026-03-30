@@ -1,4 +1,4 @@
-import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
+import { FiGithub, FiMail } from 'react-icons/fi'
 import { Link } from 'react-scroll'
 import './Footer.css'
 
@@ -17,8 +17,7 @@ export default function Footer() {
         <Link to="hero" smooth duration={600} className="footer__wordmark">MARTIN BOGOJE</Link>
         <div className="footer__socials">
           <a href="https://github.com/martinbogoje" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><FiGithub /></a>
-          <a href="https://linkedin.com/in/martinbogoje" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FiLinkedin /></a>
-          <a href="mailto:bogojemartin@gmail.com" aria-label="Email"><FiMail /></a>
+<a href="mailto:bogojemartin@gmail.com" aria-label="Email"><FiMail /></a>
         </div>
       </div>
 

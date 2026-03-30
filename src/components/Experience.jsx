@@ -11,11 +11,10 @@ const EXPERIENCES = [
     company: 'Ericsson Nikola Tesla',
     period: 'Tra 2025 – Stu 2025',
     bullets: [
-      'Razvoj i održavanje softverskih komponenti u suradnji s inženjerskim timovima',
-      'Rad s Git sustavom za kontrolu verzija unutar agilnog razvojnog okruženja',
-      'Sudjelovanje u implementaciji, code reviewu i testiranju novih funkcionalnosti',
-      'Debugiranje i poboljšanje performansi enterprise-grade aplikacija',
-      'Suradnja sa senior inženjerima na dizajnu pouzdanih i skalabilnih softverskih rješenja',
+      'Isporuka robusnih softverskih modula koji zadovoljavaju stroge enterprise standarde kvalitete.',
+      'Primjena Best-Practice Git workflowa i agilnih metodologija za održavanje visoke brzine isporuke (velocity).',
+      'Zastupanje visokih standarda koda sudjelovanjem u recenzijama (code review) i optimizaciji funkcionalnosti.',
+      'Arhitektonski doprinos u suradnji s iskusnim inženjerima na razvoju rješenja za budućnost sustava.',
     ],
     tags: ['Git', 'Agile/Scrum', 'C#', 'Testiranje', 'Enterprise'],
     index: 1,
@@ -26,10 +25,10 @@ const EXPERIENCES = [
     company: 'Neovisni projekti',
     period: '2023 – danas',
     bullets: [
-      'Razvoj full-stack web aplikacija koristeći React, SQL baze podataka i REST API-je',
-      'Izgradnja i prilagodba web stranica i plugina koristeći WordPress',
-      'Upravljanje cijelim životnim ciklusom projekta: od planiranja do deployanja i podrške',
-      'Direktna komunikacija s klijentima radi razumijevanja zahtjeva i isporuke rješenja',
+      'Full-stack Development: Inženjerski pristup izgradnji aplikacija koristeći React i kompleksne SQL/API arhitekture.',
+      'UI/UX Inženjering: Razvoj interaktivnih, "pixel-perfect" sučelja koja osiguravaju besprijekorno korisničko iskustvo.',
+      'Project Leadership: Samostalno vođenje svih faza razvoja, osiguravajući stabilnost sustava i čistu dokumentaciju.',
+      'Client Management: Direktna suradnja i savjetovanje klijenata oko odabira optimalne tehnologije za njihov rast.',
     ],
     tags: ['React', 'WordPress', 'REST API', 'PostgreSQL', 'Node.js'],
     index: 2,
@@ -74,8 +73,8 @@ export default function Experience() {
             Karijera
           </motion.span>
           <motion.p className="experience__left-text" custom={1} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
-            Od enterprise softverskog inženjeringa u Ericssonu do freelance
-            projekata — gradnja stvarnih sustava koji rješavaju stvarne probleme.
+            Software Engineer s iskustvom u Ericssonu i razvoju custom web aplikacija.
+            Spajam inženjersku preciznost s freelance brzinom za isporuku rješenja koja rade.
           </motion.p>
 
           <div className="experience__edu-list">

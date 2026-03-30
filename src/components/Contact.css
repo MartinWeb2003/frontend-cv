@@ -76,6 +76,9 @@
   color: rgba(255,255,255,0.35);
   text-transform: uppercase;
   pointer-events: none;
+  background: rgba(10, 10, 10, 0.55);
+  padding: 10px 22px;
+  border-radius: 999px;
 }
 .contact__avail-dot {
   width: 7px; height: 7px;

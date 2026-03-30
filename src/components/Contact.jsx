@@ -40,8 +40,8 @@ export default function Contact() {
           <div ref={ref} className="container contact__body">
 
             <motion.p className="contact__tagline" custom={0} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
-              Otvoren sam za freelance projekte, puno radno vrijeme i suradnje.<br />
-              Najbrži odgovor dobivate putem emaila.
+              Povežimo se. Dostupan sam za freelance upite i stalne angažmane.<br />
+              Za detalje o suradnji i brzu komunikaciju, pišite mi na email.
             </motion.p>
 
             <motion.div className="contact__location" custom={1} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
@@ -52,7 +52,7 @@ export default function Contact() {
             </motion.div>
 
             <motion.div className="contact__cta" custom={2} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
-              <a href="mailto:bogojemartin@gmail.com" className="contact__btn contact__btn--primary">
+              <a href="https://mail.google.com/mail/?view=cm&to=bogojemartin@gmail.com" target="_blank" rel="noopener noreferrer" className="contact__btn contact__btn--primary">
                 <FiMail size={18} />
                 <span>Pošalji email</span>
                 <FiArrowUpRight size={16} className="contact__btn-arrow" />
