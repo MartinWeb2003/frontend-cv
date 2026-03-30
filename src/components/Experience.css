@@ -1,5 +1,4 @@
 .experience {
-  overflow: hidden;
   border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 .experience__title-row {
@@ -63,7 +62,7 @@
 .exp-list { display: flex; flex-direction: column; gap: 0; }
 
 .exp-item {
-  padding: 48px 0;
+  padding: 80px 0;
   border-bottom: 1px solid rgba(255,255,255,0.07);
 }
 .exp-item:last-child { border-bottom: none; }
@@ -73,27 +72,27 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 36px;
 }
 .exp-item__num {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 1rem;
   color: #A51C30;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   letter-spacing: 0.1em;
 }
 .exp-item__role {
-  font-size: 1.6rem;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
   font-weight: 800;
   color: #fff;
-  line-height: 1.1;
-  margin-bottom: 8px;
+  line-height: 1.05;
+  margin-bottom: 12px;
   text-transform: uppercase;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
-.exp-item__meta { display: flex; align-items: center; gap: 12px; }
+.exp-item__meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .exp-item__company {
-  font-size: 0.85rem;
+  font-size: 1rem;
   color: rgba(255,255,255,0.6);
 }
 .exp-item__type {
@@ -122,16 +121,16 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-bottom: 24px;
+  gap: 16px;
+  margin-bottom: 32px;
 }
 .exp-item__bullets li {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  font-size: 0.875rem;
-  color: rgba(255,255,255,0.5);
-  line-height: 1.65;
+  gap: 12px;
+  font-size: 1rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.7;
 }
 .exp-bullet-dot {
   width: 4px; height: 4px;

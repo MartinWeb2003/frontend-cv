@@ -5,9 +5,8 @@
   overflow: hidden;
 }
 .image-trail__img {
-  width: 200px;
-  aspect-ratio: 4 / 3;
-  border-radius: 12px;
+  width: 140px;
+  height: 140px; /* square */
   position: absolute;
   opacity: 0;
   pointer-events: none;
@@ -15,8 +14,7 @@
   background-position: center;
   will-change: transform, opacity;
   transform-style: preserve-3d;
-  box-shadow: 0 16px 48px rgba(0,0,0,0.2);
-  border: 2px solid rgba(255,255,255,0.8);
+  /* NO border-radius, NO border */
 }
 .image-trail__content {
   position: relative;

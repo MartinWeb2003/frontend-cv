@@ -2,20 +2,9 @@ import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Link } from 'react-scroll'
 import { FiArrowDown, FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
-import TextPressure from '../bits/TextPressure'
 import CircularText from '../bits/CircularText'
-import ImageTrail from '../bits/ImageTrail'
+import FloatingIcons from './FloatingIcons'
 import './Hero.css'
-
-// Abstract colored image placeholders for ImageTrail (replace with real screenshots later)
-const TRAIL_IMAGES = [
-  'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&q=80',
-  'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&q=80',
-  'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80',
-  'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&q=80',
-  'https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=400&q=80',
-  'https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?w=400&q=80',
-]
 
 const SOCIALS = [
   { icon: <FiGithub />, href: 'https://github.com/martinbogoje', label: 'GitHub' },
@@ -26,110 +15,104 @@ const SOCIALS = [
 export default function Hero() {
   const sectionRef = useRef(null)
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] })
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '40%'])
-  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0])
+
+  const yBg    = useTransform(scrollYProgress, [0, 1], ['0%', '14%'])
+  const yIcons = useTransform(scrollYProgress, [0, 1], ['0%', '30%'])
+  const yText  = useTransform(scrollYProgress, [0, 1], ['0%', '60%'])
+  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0])
+  const yLine  = useTransform(scrollYProgress, [0, 1], ['0%', '80%'])
+
+  const fadeIn = (delay = 0) => ({
+    initial: { opacity: 0, y: 24 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.7, delay, ease: [0.4, 0, 0.2, 1] },
+  })
 
   return (
     <section ref={sectionRef} className="hero" id="hero">
-      <ImageTrail items={TRAIL_IMAGES}>
-        <motion.div className="hero__inner" style={{ y, opacity }}>
-          <div className="container">
-            <div className="hero__top">
-              <motion.span
-                className="section-label hero__label"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-              >
-                Software Developer — Zagreb, Croatia
-              </motion.span>
+      {/* Layer 0: background blob */}
+      <motion.div className="hero__bg-shape" style={{ y: yBg }}>
+        <div className="hero__blob" />
+        <div className="hero__blob-grid" />
+      </motion.div>
 
-              <motion.div
-                className="hero__socials"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-              >
-                {SOCIALS.map(s => (
-                  <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="hero__social" aria-label={s.label}>
-                    {s.icon}
-                  </a>
-                ))}
-              </motion.div>
+      {/* Layer 1: floating icons */}
+      <motion.div className="hero__icons-layer" style={{ y: yIcons }}>
+        <FloatingIcons />
+      </motion.div>
+
+      {/* Layer 2: name — fastest parallax, feels closest */}
+      <motion.div className="hero__name" style={{ y: yText }}>
+        <motion.span
+          className="hero__name-first"
+          initial={{ opacity: 0, x: -60 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        >
+          Martin
+        </motion.span>
+        <motion.span
+          className="hero__name-last"
+          initial={{ opacity: 0, x: 60 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        >
+          Bogoje
+        </motion.span>
+      </motion.div>
+
+      {/* Layer 3: UI chrome */}
+      <motion.div className="hero__content" style={{ opacity }}>
+        <div className="container hero__container">
+          <motion.div className="hero__topbar" {...fadeIn(0.1)}>
+            <span className="section-label" style={{ marginBottom: 0, color: 'rgba(255,255,255,0.35)' }}>
+              Softverski developer · Zagreb, Hrvatska
+            </span>
+            <div className="hero__socials">
+              {SOCIALS.map(s => (
+                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
+                   className="hero__social" aria-label={s.label}>{s.icon}</a>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div className="hero__bottom" {...fadeIn(0.9)}>
+            <div className="hero__bio">
+              <p>
+                Student računarstva na FER-u u Zagrebu.<br />
+                Bivši Software Developer u <strong>Ericsson Nikola Tesla</strong>.<br />
+                Gradim iznimna web iskustva.
+              </p>
+              <div className="hero__cta">
+                <Link to="projekti" smooth duration={800} offset={-70}>
+                  <button className="btn btn-primary">
+                    Pogledaj radove <FiArrowDown size={13} />
+                  </button>
+                </Link>
+                <Link to="kontakt" smooth duration={800} offset={-70}>
+                  <button className="btn btn-outline">Kontaktiraj me</button>
+                </Link>
+              </div>
             </div>
 
-            <motion.div
-              className="hero__title-wrap"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4, delay: 0.4 }}
-            >
-              <TextPressure
-                text="MARTIN"
-                flex
-                weight
-                width
-                minFontSize={60}
-                textColor="#0A0A0A"
+            <motion.div className="hero__badge" style={{ y: yIcons }}>
+              <CircularText
+                text="DOSTUPAN ZA POSAO • OPEN TO WORK • "
+                spinDuration={20}
+                onHover="speedUp"
+                radius={76}
+                fontSize={9.5}
+                color="#A51C30"
               />
-              <TextPressure
-                text="BOGOJE"
-                flex
-                weight
-                width
-                stroke
-                minFontSize={60}
-                textColor="transparent"
-                strokeColor="#A51C30"
-              />
+              <div className="hero__badge-center">
+                <FiArrowDown size={18} color="#A51C30" />
+              </div>
             </motion.div>
+          </motion.div>
+        </div>
+      </motion.div>
 
-            <div className="hero__bottom">
-              <motion.div
-                className="hero__bio"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.8 }}
-              >
-                <p>
-                  CS Master's student at FER Zagreb.<br />
-                  Software Developer at <strong>Ericsson Nikola Tesla</strong>.<br />
-                  Building exceptional web experiences.
-                </p>
-                <div className="hero__cta">
-                  <Link to="projects" smooth duration={800} offset={-70}>
-                    <button className="btn btn-primary">View Work <FiArrowDown size={14} /></button>
-                  </Link>
-                  <Link to="contact" smooth duration={800} offset={-70}>
-                    <button className="btn btn-outline">Get In Touch</button>
-                  </Link>
-                </div>
-              </motion.div>
-
-              <motion.div
-                className="hero__circular"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 1.0 }}
-              >
-                <CircularText
-                  text="AVAILABLE FOR HIRE • OPEN TO WORK • "
-                  spinDuration={18}
-                  onHover="speedUp"
-                  radius={72}
-                  fontSize={10}
-                  color="#A51C30"
-                />
-                <div className="hero__circular-center">
-                  <FiArrowDown size={20} color="#A51C30" />
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </motion.div>
-      </ImageTrail>
-
-      <div className="hero__scroll-line" />
+      <motion.div className="hero__scroll-line" style={{ y: yLine }} />
     </section>
   )
 }

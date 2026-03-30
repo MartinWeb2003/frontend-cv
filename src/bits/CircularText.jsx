@@ -43,8 +43,9 @@ export default function CircularText({
       {chars.map((char, i) => {
         const angle = angleStep * i - 90;
         const rad = (angle * Math.PI) / 180;
-        const x = radius + Math.cos(rad) * radius;
-        const y = radius + Math.sin(rad) * radius;
+        const cx = size / 2;
+        const x = cx + Math.cos(rad) * radius;
+        const y = cx + Math.sin(rad) * radius;
         return (
           <span
             key={i}

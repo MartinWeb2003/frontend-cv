@@ -1,103 +1,97 @@
+/* ─── Navbar — always transparent, items in bubbles ─── */
 .navbar {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 1000;
-  padding: 24px 0;
-  transition: all 0.3s ease;
+  padding: 16px 0;
+  background: transparent;
+  border: none;
+  transition: padding 0.3s ease;
 }
 .navbar--scrolled {
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  padding: 16px 0;
+  padding: 12px 0;
 }
+
 .navbar__inner {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 40px;
+  width: 100%;
+  padding: 0 14px 0 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.navbar__logo {
-  font-family: var(--font-mono);
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  color: var(--text);
-  cursor: pointer;
-  text-transform: uppercase;
-}
-.navbar__logo:hover { color: var(--crimson); }
 
-.navbar__links {
+/* ── Logo bubble ── */
+.navbar__logo {
+  cursor: pointer;
+  border: none;
+  padding: 8px 14px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 999px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: background 0.2s, box-shadow 0.2s;
 }
-.nav-link {
-  padding: 7px 14px;
-  font-size: 0.75rem;
+.navbar__logo:hover {
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+.navbar__logo-img {
+  height: 28px;
+  width: auto;
+  display: block;
+}
+
+/* ── Menu trigger bubble ── */
+.navbar__trigger {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  padding: 10px 18px 10px 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.navbar__trigger:hover {
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.navbar__trigger-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--text-secondary);
-  cursor: pointer;
   transition: color 0.2s;
 }
-.nav-link:hover { color: var(--crimson); }
-.navbar__resume {
-  margin-left: 16px;
-  font-size: 0.72rem;
-  padding: 9px 18px;
-}
+.navbar__trigger:hover .navbar__trigger-label { color: var(--crimson); }
 
-.navbar__burger {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-}
-.navbar__burger span {
-  display: block;
-  width: 22px;
-  height: 1.5px;
-  background: var(--text);
-  transition: all 0.3s;
-  transform-origin: center;
-}
-.navbar__burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-.navbar__burger.open span:nth-child(2) { opacity: 0; }
-.navbar__burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-.mobile-menu {
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
-  padding: 20px 40px 32px;
+.navbar__trigger-lines {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  overflow: hidden;
+  gap: 5px;
+  width: 22px;
 }
-.mobile-link {
-  font-size: 1.3rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 12px 0;
-  color: var(--text);
-  cursor: pointer;
-  border-bottom: 1px solid var(--border);
-  transition: color 0.2s;
+.navbar__trigger-lines span {
+  display: block;
+  height: 1.5px;
+  background: var(--text);
+  transition: all 0.25s ease;
+  transform-origin: right center;
 }
-.mobile-link:hover { color: var(--crimson); }
+.navbar__trigger-lines span:nth-child(2) { width: 14px; align-self: flex-end; }
+.navbar__trigger:hover .navbar__trigger-lines span { background: var(--crimson); }
+.navbar__trigger:hover .navbar__trigger-lines span:nth-child(2) { width: 22px; }
 
 @media (max-width: 768px) {
-  .navbar__links { display: none; }
-  .navbar__burger { display: flex; }
-  .navbar__inner { padding: 0 20px; }
+  .navbar__inner { padding: 0 10px 0 12px; }
 }

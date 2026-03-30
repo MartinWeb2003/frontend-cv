@@ -1,0 +1,118 @@
+/* ─── Staggered Menu ─── */
+
+.smenu-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1100;
+}
+
+.smenu-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(480px, 100vw);
+  height: 100dvh;
+  background: #0A0A0A;
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  padding: 48px 52px 48px;
+  border-left: 1px solid rgba(255, 255, 255, 0.07);
+  will-change: transform;
+}
+
+/* Close button — two diagonal spans forming an X */
+.smenu-close {
+  position: absolute;
+  top: 28px;
+  right: 40px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s;
+  flex-shrink: 0;
+}
+.smenu-close:hover { border-color: var(--crimson); }
+.smenu-close span {
+  position: absolute;
+  width: 16px;
+  height: 1.5px;
+  background: #fff;
+  display: block;
+}
+.smenu-close span:nth-child(1) { transform: rotate(45deg); }
+.smenu-close span:nth-child(2) { transform: rotate(-45deg); }
+
+/* Nav list */
+.smenu-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 80px;
+  flex: 1;
+}
+
+.smenu-item-wrap {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.smenu-item-wrap:first-child {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.smenu-link {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  width: 100%;
+  padding: 22px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: gap 0.3s ease;
+}
+.smenu-link:hover { gap: 28px; }
+
+.smenu-link__num {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--crimson);
+  letter-spacing: 0.12em;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
+}
+
+.smenu-link__label {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 800;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  transition: color 0.2s;
+}
+.smenu-link:hover .smenu-link__label { color: var(--crimson); }
+
+/* Footer */
+.smenu-footer {
+  padding-top: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.smenu-resume {
+  font-size: 0.72rem;
+  padding: 12px 24px;
+}
+
+@media (max-width: 480px) {
+  .smenu-panel { padding: 40px 28px 40px; }
+  .smenu-close { right: 24px; }
+}
