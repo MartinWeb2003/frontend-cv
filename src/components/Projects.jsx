@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 import { FiExternalLink, FiGithub, FiArrowUpRight, FiX, FiPlay, FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import './Projects.css'
 
@@ -7,8 +8,8 @@ const PROJECTS = [
   {
     id: 1, num: '01', year: '2024',
     title: 'Sottomonte',
-    subtitle: 'Web stranica za nekretnine',
-    desc: 'Custom web rješenje za agenciju Sottomonte: Projektiranje responzivnog sustava visokih performansi. Implementirana napredna SEO optimizacija i custom layout dizajniran za maksimalnu konverziju i brzinu učitavanja.',
+    subtitleKey: 'projects.p1Subtitle',
+    descKey: 'projects.p1Desc',
     tags: ['WordPress', 'Web dizajn', 'SEO', 'Responzivan dizajn'],
     images: ['/sotto1.png', '/sotto2.png', '/sotto3.png', '/sotto4.png'],
     video: null,
@@ -18,8 +19,8 @@ const PROJECTS = [
   {
     id: 2, num: '02', year: '2024',
     title: 'Visit Eva Orebić',
-    subtitle: 'Web stranica za turističku ponudu',
-    desc: 'Custom web rješenje za prezentaciju premium smještaja na Pelješcu. Projektiranje sustava s fokusom na brzinu učitavanja vizualnog sadržaja i responzivni dizajn koji osigurava lakoću rezervacije na svim uređajima.',
+    subtitleKey: 'projects.p2Subtitle',
+    descKey: 'projects.p2Desc',
     tags: ['WordPress', 'Web dizajn', 'SEO', 'Turizam'],
     images: ['/eva1.png', '/eva2.png', '/eva3.png', '/eva4.png'],
     video: null,
@@ -29,8 +30,8 @@ const PROJECTS = [
   {
     id: 3, num: '03', year: '2024',
     title: 'Sabioncello',
-    subtitle: 'Web stranica za turizam na Pelješcu',
-    desc: 'Sabioncello: Od dizajnerskog koncepta do cjelovitog destinacijskog vodiča. Razvoj modernog i skalabilnog web rješenja optimiziranog za međunarodnu publiku, s naglaskom na vizualni storytelling i tehničku SEO izvrsnost.',
+    subtitleKey: 'projects.p3Subtitle',
+    descKey: 'projects.p3Desc',
     tags: ['WordPress', 'Web dizajn', 'SEO', 'Turizam'],
     images: ['/sabioncello1.png', '/sabioncello2.png', '/sabioncello3.png', '/sabioncello4.png'],
     video: null,
@@ -40,8 +41,8 @@ const PROJECTS = [
   {
     id: 4, num: '04', year: '2025',
     title: 'Sabioncello Grafika',
-    subtitle: 'Web aplikacija · U izradi',
-    desc: 'Coming Soon: Sabioncello Graphics Web App. Projektiranje skalabilnog ekosustava za grafičke usluge. Od dizajna arhitekture do finalnog poliranja koda — u procesu gradnje nečeg velikog.',
+    subtitleKey: 'projects.p4Subtitle',
+    descKey: 'projects.p4Desc',
     tags: ['React', 'Web dizajn', 'U izradi'],
     images: ['/grafica1.png', '/grafica2.png', '/grafica3.png', '/grafica4.png'],
     video: null,
@@ -55,6 +56,7 @@ const PLACEHOLDER_ACCENT = { 1: '#3d0f17', 2: '#0f1a3d', 3: '#0f3d2a', 4: '#1a0f
 
 /* ─── Modal ─── */
 function ProjectModal({ project, onClose }) {
+  const { t } = useTranslation()
   const [imgIndex, setImgIndex] = useState(0)
   const [showVideo, setShowVideo] = useState(false)
   const next = () => setImgIndex(i => (i + 1) % project.images.length)
@@ -104,15 +106,15 @@ function ProjectModal({ project, onClose }) {
             <div>
               <span className="pmodal__num">{project.num}</span>
               <h2 className="pmodal__title">{project.title}</h2>
-              <p className="pmodal__subtitle">{project.subtitle}</p>
+              <p className="pmodal__subtitle">{t(project.subtitleKey)}</p>
             </div>
             <div className="pmodal__links">
               {project.liveUrl && <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary"><FiExternalLink size={13} /> Live</a>}
               {project.githubUrl && <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline"><FiGithub size={13} /> Kod</a>}
             </div>
           </div>
-          <p className="pmodal__desc">{project.desc}</p>
-          <div className="pmodal__tags">{project.tags.map(t => <span key={t} className="tag">{t}</span>)}</div>
+          <p className="pmodal__desc">{t(project.descKey)}</p>
+          <div className="pmodal__tags">{project.tags.map(tag => <span key={tag} className="tag">{tag}</span>)}</div>
         </div>
       </motion.div>
     </motion.div>
@@ -121,6 +123,7 @@ function ProjectModal({ project, onClose }) {
 
 /* ─── Single project row ─── */
 function ProjectRow({ project, i, onClick }) {
+  const { t } = useTranslation()
   const rowRef = useRef(null)
   const { scrollYProgress } = useScroll({ target: rowRef, offset: ['start 0.95', 'start 0.2'] })
   const imgScale = useTransform(scrollYProgress, [0, 1], [1.06, 1])
@@ -154,7 +157,7 @@ function ProjectRow({ project, i, onClick }) {
         </motion.div>
         <div className="proj-row__hover-overlay">
           <FiArrowUpRight size={32} />
-          <span>Klikni za detalje</span>
+          <span>{t('projects.liveBtn')}</span>
         </div>
       </motion.div>
 
@@ -165,10 +168,10 @@ function ProjectRow({ project, i, onClick }) {
           <span className="proj-row__year">{project.year}</span>
         </div>
         <h2 className="proj-row__title">{project.title}</h2>
-        <p className="proj-row__sub">{project.subtitle}</p>
-        <p className="proj-row__desc">{project.desc}</p>
+        <p className="proj-row__sub">{t(project.subtitleKey)}</p>
+        <p className="proj-row__desc">{t(project.descKey)}</p>
         <div className="proj-row__tags">
-          {project.tags.slice(0, 4).map(t => <span key={t} className="tag">{t}</span>)}
+          {project.tags.slice(0, 4).map(tag => <span key={tag} className="tag">{tag}</span>)}
           {project.tags.length > 4 && <span className="tag">+{project.tags.length - 4}</span>}
         </div>
         <div className="proj-row__actions" onClick={e => e.stopPropagation()}>
@@ -179,7 +182,7 @@ function ProjectRow({ project, i, onClick }) {
           )}
           {project.liveUrl && (
             <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary proj-btn">
-              <FiExternalLink size={13} /> Live
+              <FiExternalLink size={13} /> {t('projects.liveBtn')}
             </a>
           )}
         </div>
@@ -190,6 +193,7 @@ function ProjectRow({ project, i, onClick }) {
 
 /* ─── Main component ─── */
 export default function Projects() {
+  const { t } = useTranslation()
   const headerRef = useRef(null)
   const [modal, setModal] = useState(null)
 
@@ -212,7 +216,7 @@ export default function Projects() {
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.7, delay: 0.2 }}
         >
-          Od inicijalnog koncepta do skalabilne produkcije: Četiri autorska projekta vođena stvarnim zahtjevima tržišta i čistom inženjerskom logikom.
+          {t('projects.sectionIntro')}
         </motion.p>
       </div>
 

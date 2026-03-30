@@ -1,43 +1,34 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 import { FiCalendar } from 'react-icons/fi'
 import useInView from '../hooks/useInView'
 import './Experience.css'
 
 const EXPERIENCES = [
   {
-    role: 'Software Developer',
-    type: 'Studentska pozicija',
-    company: 'Ericsson Nikola Tesla',
-    period: 'Tra 2025 – Stu 2025',
-    bullets: [
-      'Isporuka robusnih softverskih modula koji zadovoljavaju stroge enterprise standarde kvalitete.',
-      'Primjena Best-Practice Git workflowa i agilnih metodologija za održavanje visoke brzine isporuke (velocity).',
-      'Zastupanje visokih standarda koda sudjelovanjem u recenzijama (code review) i optimizaciji funkcionalnosti.',
-      'Arhitektonski doprinos u suradnji s iskusnim inženjerima na razvoju rješenja za budućnost sustava.',
-    ],
+    roleKey:    'experience.job1Role',
+    typeKey:    'experience.job1Type',
+    company:    'Ericsson Nikola Tesla',
+    periodKey:  'experience.job1Period',
+    bulletKeys: ['experience.job1B1', 'experience.job1B2', 'experience.job1B3', 'experience.job1B4'],
     tags: ['Git', 'Agile/Scrum', 'C#', 'Testiranje', 'Enterprise'],
     index: 1,
   },
   {
-    role: 'Freelance Web Developer',
-    type: 'Samozaposleni',
-    company: 'Neovisni projekti',
-    period: '2023 – danas',
-    bullets: [
-      'Full-stack Development: Inženjerski pristup izgradnji aplikacija koristeći React i kompleksne SQL/API arhitekture.',
-      'UI/UX Inženjering: Razvoj interaktivnih, "pixel-perfect" sučelja koja osiguravaju besprijekorno korisničko iskustvo.',
-      'Project Leadership: Samostalno vođenje svih faza razvoja, osiguravajući stabilnost sustava i čistu dokumentaciju.',
-      'Client Management: Direktna suradnja i savjetovanje klijenata oko odabira optimalne tehnologije za njihov rast.',
-    ],
+    roleKey:    'experience.job2Role',
+    typeKey:    'experience.job2Type',
+    company:    'Neovisni projekti',
+    periodKey:  'experience.job2Period',
+    bulletKeys: ['experience.job2B1', 'experience.job2B2', 'experience.job2B3', 'experience.job2B4'],
     tags: ['React', 'WordPress', 'REST API', 'PostgreSQL', 'Node.js'],
     index: 2,
   },
 ]
 
 const EDUCATION = [
-  { degree: 'Magistar — Softversko inženjerstvo i informacijski sustavi', school: 'FER, Sveučilište u Zagrebu', period: '2023/24 – aktivan', index: 3 },
-  { degree: 'Prvostupnik — Računarstvo', school: 'FER, Sveučilište u Zagrebu', period: '2021 – 2023', index: 4 },
+  { degreeHR: 'Magistar — Softversko inženjerstvo i informacijski sustavi', school: 'FER, Sveučilište u Zagrebu', period: '2023/24 – aktivan', index: 3 },
+  { degreeHR: 'Prvostupnik — Računarstvo', school: 'FER, Sveučilište u Zagrebu', period: '2021 – 2023', index: 4 },
 ]
 
 const fadeUp = {
@@ -46,17 +37,16 @@ const fadeUp = {
 }
 
 export default function Experience() {
+  const { t } = useTranslation()
   const sectionRef = useRef(null)
   const [ref, inView] = useInView()
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] })
 
   const titleX = useTransform(scrollYProgress, [0, 1], ['-6%', '6%'])
-  // Only the right scroll panel gets parallax — sticky left is left alone
-  const rightY  = useTransform(scrollYProgress, [0, 1], [40, -40])
+  const rightY = useTransform(scrollYProgress, [0, 1], [40, -40])
 
   return (
     <section ref={sectionRef} className="experience section-dark" id="experience">
-      {/* Parallax scrolling title track */}
       <div className="experience__title-row">
         <motion.div className="experience__title-track" style={{ x: titleX }}>
           <span className="mega-title">ISKUSTVO&nbsp;&nbsp;&nbsp;</span>
@@ -65,33 +55,29 @@ export default function Experience() {
         </motion.div>
       </div>
 
-      {/* sticky-layout: left stands still, right scrolls */}
       <div ref={ref} className="sticky-layout">
-        {/* Left sticky panel — plain div, no transform (transform would break sticky) */}
         <div className="sticky-panel experience__left">
           <motion.span className="section-label" custom={0} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
-            Karijera
+            {t('experience.sectionLabel')}
           </motion.span>
           <motion.p className="experience__left-text" custom={1} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
-            Software Engineer s iskustvom u Ericssonu i razvoju custom web aplikacija.
-            Spajam inženjersku preciznost s freelance brzinom za isporuku rješenja koja rade.
+            {t('experience.intro')}
           </motion.p>
 
           <div className="experience__edu-list">
             <motion.h4 className="experience__edu-label" custom={2} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
-              Obrazovanje
+              {t('nav.education')}
             </motion.h4>
             {EDUCATION.map((edu) => (
-              <motion.div key={edu.degree} className="edu-item" custom={edu.index} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
+              <motion.div key={edu.degreeHR} className="edu-item" custom={edu.index} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
                 <div className="edu-item__period"><FiCalendar size={10} />{edu.period}</div>
-                <div className="edu-item__degree">{edu.degree}</div>
+                <div className="edu-item__degree">{edu.degreeHR}</div>
                 <div className="edu-item__school">{edu.school}</div>
               </motion.div>
             ))}
           </div>
         </div>
 
-        {/* Right scroll panel — scrolls past the sticky left */}
         <motion.div className="scroll-panel" style={{ y: rightY }}>
           <div className="exp-list">
             {EXPERIENCES.map((exp) => (
@@ -99,21 +85,21 @@ export default function Experience() {
                 <div className="exp-item__header">
                   <div>
                     <div className="exp-item__num">0{exp.index}</div>
-                    <h3 className="exp-item__role">{exp.role}</h3>
+                    <h3 className="exp-item__role">{t(exp.roleKey)}</h3>
                     <div className="exp-item__meta">
                       <span className="exp-item__company">{exp.company}</span>
-                      <span className="exp-item__type">{exp.type}</span>
+                      <span className="exp-item__type">{t(exp.typeKey)}</span>
                     </div>
                   </div>
-                  <div className="exp-item__period"><FiCalendar size={11} />{exp.period}</div>
+                  <div className="exp-item__period"><FiCalendar size={11} />{t(exp.periodKey)}</div>
                 </div>
                 <ul className="exp-item__bullets">
-                  {exp.bullets.map((b, i) => (
-                    <li key={i}><span className="exp-bullet-dot" />{b}</li>
+                  {exp.bulletKeys.map((key) => (
+                    <li key={key}><span className="exp-bullet-dot" />{t(key)}</li>
                   ))}
                 </ul>
                 <div className="exp-item__tags">
-                  {exp.tags.map(t => <span key={t} className="tag">{t}</span>)}
+                  {exp.tags.map(tag => <span key={tag} className="tag">{tag}</span>)}
                 </div>
               </motion.div>
             ))}

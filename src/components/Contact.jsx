@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { FiMail, FiGithub, FiDownload, FiArrowUpRight, FiMapPin } from 'react-icons/fi'
+import { useTranslation } from 'react-i18next'
+import { FiMail, FiDownload, FiArrowUpRight, FiMapPin } from 'react-icons/fi'
 import ImageTrail from '../bits/ImageTrail'
 import useInView from '../hooks/useInView'
 import './Contact.css'
@@ -18,6 +19,7 @@ const fadeUp = {
 }
 
 export default function Contact() {
+  const { t } = useTranslation()
   const sectionRef = useRef(null)
   const [ref, inView] = useInView()
 
@@ -29,43 +31,37 @@ export default function Contact() {
       <ImageTrail items={TRAIL_IMAGES}>
         <div className="contact__trail-inner">
 
-          {/* Mega title with scroll parallax */}
           <div className="contact__title-row">
             <motion.div style={{ y: titleY }} className="contact__title-mover">
               <div className="mega-title contact__mega">RAZGOVARAJMO</div>
             </motion.div>
           </div>
 
-          {/* CTA body */}
           <div ref={ref} className="container contact__body">
 
             <motion.p className="contact__tagline" custom={0} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
-              Povežimo se. Dostupan sam za freelance upite i stalne angažmane.<br />
-              Za detalje o suradnji i brzu komunikaciju, pišite mi na email.
+              {t('contact.tagline1')}<br />
+              {t('contact.tagline2')}
             </motion.p>
 
             <motion.div className="contact__location" custom={1} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
               <FiMapPin size={13} />
-              Zagreb, Hrvatska · Remote friendly
+              {t('contact.location')}
               <span className="contact__avail-dot" />
-              <span className="contact__avail-text">Dostupan</span>
+              <span className="contact__avail-text">{t('contact.available')}</span>
             </motion.div>
 
             <motion.div className="contact__cta" custom={2} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
               <a href="https://mail.google.com/mail/?view=cm&to=bogojemartin@gmail.com" target="_blank" rel="noopener noreferrer" className="contact__btn contact__btn--primary">
                 <FiMail size={18} />
-                <span>Pošalji email</span>
+                <span>{t('contact.emailBtn')}</span>
                 <FiArrowUpRight size={16} className="contact__btn-arrow" />
               </a>
             </motion.div>
 
             <motion.div className="contact__secondary" custom={3} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
-              <a href="https://github.com/martinbogoje" target="_blank" rel="noopener noreferrer" className="contact__link">
-                <FiGithub size={14} /> GitHub
-              </a>
-              <span className="contact__link-sep">·</span>
-              <a href="/Martin_Bogoje_CV.pdf" download className="contact__link">
-                <FiDownload size={14} /> Preuzmi CV
+              <a href="/Martin_Bogoje-CV.pdf" download="Martin_Bogoje-CV.pdf" className="contact__link">
+                <FiDownload size={14} /> {t('contact.cvBtn')}
               </a>
               <span className="contact__link-sep">·</span>
               <span className="contact__link contact__link--plain">bogojemartin@gmail.com</span>

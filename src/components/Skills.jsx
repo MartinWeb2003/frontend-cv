@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 import {
   SiJavascript, SiTypescript, SiReact, SiCss, SiHtml5,
   SiNodedotjs, SiPython, SiCplusplus, SiDotnet,
@@ -30,27 +31,26 @@ const TECH_ROW = [
   { node: <SiLinux />, label: 'Linux' },
 ]
 
-const SKILL_BANDS = [
-  { label: 'Frontend Development', pct: 93, chips: ['React', 'Next.js', 'Angular', 'TypeScript', 'JavaScript', 'Framer Motion', 'Bootstrap', 'CSS3', 'HTML5', 'Figma'] },
-  { label: 'Backend & Databases',  pct: 82, chips: ['Node.js', 'PostgreSQL', 'MySQL', '.NET Core', 'REST API'] },
-  { label: 'Programski jezici',    pct: 78, chips: ['C# / .NET', 'Java', 'Python', 'C / C++', 'SQL'] },
+const SKILL_BANDS_DEF = [
+  { labelKey: 'skills.band1Label', pct: 93, chips: ['React', 'Next.js', 'Angular', 'TypeScript', 'JavaScript', 'Framer Motion', 'Bootstrap', 'CSS3', 'HTML5', 'Figma'] },
+  { labelKey: 'skills.band2Label', pct: 82, chips: ['Node.js', 'PostgreSQL', 'MySQL', '.NET Core', 'REST API'] },
+  { labelKey: 'skills.band3Label', pct: 78, chips: ['C# / .NET', 'Java', 'Python', 'C / C++', 'SQL'] },
 ]
 
-const LANG_BARS = [
-  { lang: 'Hrvatski', level: 'Materinji',   pct: 100 },
-  { lang: 'Engleski', level: 'Tečan · C1',  pct: 90 },
-  { lang: 'Njemački', level: 'Osnove · A2', pct: 25 },
+const LANG_BARS_DEF = [
+  { nameKey: 'skills.lang1Name', levelKey: 'skills.lang1Level', pct: 100 },
+  { nameKey: 'skills.lang2Name', levelKey: 'skills.lang2Level', pct: 90 },
+  { nameKey: 'skills.lang3Name', levelKey: 'skills.lang3Level', pct: 25 },
 ]
 
-const BENTO_STATS = [
-  { to: 16, suffix: '+', label: 'Tehnologija',    sub: 'React, Node, .NET, Docker...' },
-  { to: 3,  suffix: '+', label: 'God. iskustva',  sub: 'Enterprise & freelance' },
-  { to: 8,  suffix: '+', label: 'Projekata',      sub: 'Full-stack, web, API' },
-  { to: 3,  suffix: '',  label: 'Jezika',         sub: 'HR · EN · DE' },
+const BENTO_STATS_DEF = [
+  { to: 16, suffix: '+', labelKey: 'skills.stat1Label', subKey: 'skills.stat1Sub' },
+  { to: 3,  suffix: '+', labelKey: 'skills.stat2Label', subKey: 'skills.stat2Sub' },
+  { to: 8,  suffix: '+', labelKey: 'skills.stat3Label', subKey: 'skills.stat3Sub' },
+  { to: 3,  suffix: '',  labelKey: 'skills.stat4Label', subKey: 'skills.stat4Sub' },
 ]
 
-/* ─── Individual skill band row ─── */
-function SkillBand({ band, i }) {
+function SkillBand({ band, i, label }) {
   return (
     <motion.div
       className="skill-band"
@@ -62,7 +62,7 @@ function SkillBand({ band, i }) {
       <div className="skill-band__top">
         <div className="skill-band__left">
           <span className="skill-band__idx">0{i + 1}</span>
-          <h3 className="skill-band__label">{band.label}</h3>
+          <h3 className="skill-band__label">{label}</h3>
           <div className="skill-band__chips">
             {band.chips.map(c => <span key={c} className="skill-chip-dark">{c}</span>)}
           </div>
@@ -89,6 +89,7 @@ function SkillBand({ band, i }) {
 }
 
 export default function Skills() {
+  const { t } = useTranslation()
   const sectionRef = useRef(null)
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] })
   const titleX = useTransform(scrollYProgress, [0, 1], ['0%', '-8%'])
@@ -96,7 +97,6 @@ export default function Skills() {
   return (
     <section ref={sectionRef} className="skills section-dark" id="skills">
 
-      {/* ── Parallax mega title ── */}
       <div className="skills__title-row">
         <motion.div className="skills__title-track" style={{ x: titleX }}>
           <span className="mega-title">VJEŠTINE&nbsp;&nbsp;&nbsp;</span>
@@ -105,27 +105,24 @@ export default function Skills() {
         </motion.div>
       </div>
 
-      {/* ── Fast ticker ── */}
       <div className="skills__ticker">
         <LogoLoop items={TECH_ROW} speed={35} logoHeight={18} gap={40} pauseOnHover fadeOut direction="left" />
       </div>
 
-      {/* ── Skill bands ── */}
       <div className="skills__bands">
-        {SKILL_BANDS.map((band, i) => (
-          <SkillBand key={band.label} band={band} i={i} />
+        {SKILL_BANDS_DEF.map((band, i) => (
+          <SkillBand key={band.labelKey} band={band} i={i} label={t(band.labelKey)} />
         ))}
       </div>
 
-      {/* ── Languages ── */}
       <div className="skills__langs-section">
-        <p className="skills__langs-heading">Jezici</p>
+        <p className="skills__langs-heading">{t('skills.langsHeading')}</p>
         <div className="skills__langs-list">
-          {LANG_BARS.map(l => (
-            <div key={l.lang} className="skills__lang-row">
+          {LANG_BARS_DEF.map(l => (
+            <div key={l.nameKey} className="skills__lang-row">
               <div className="skills__lang-header">
-                <span className="skills__lang-name">{l.lang}</span>
-                <span className="skills__lang-level">{l.level}</span>
+                <span className="skills__lang-name">{t(l.nameKey)}</span>
+                <span className="skills__lang-level">{t(l.levelKey)}</span>
               </div>
               <div className="skills__lang-track">
                 <motion.div
@@ -141,14 +138,13 @@ export default function Skills() {
         </div>
       </div>
 
-      {/* ── Magic Bento stats grid ── */}
       <div className="skills__bento-section">
         <MagicBento className="skills__bento-grid">
-          {BENTO_STATS.map((s, i) => (
-            <MagicBento.Card key={s.label} glowColor="165,28,48" className="skills__bento-card">
+          {BENTO_STATS_DEF.map((s) => (
+            <MagicBento.Card key={s.labelKey} glowColor="165,28,48" className="skills__bento-card">
               <CountUp to={s.to} suffix={s.suffix} className="skills__bento-val" />
-              <p className="skills__bento-label">{s.label}</p>
-              <p className="skills__bento-sub">{s.sub}</p>
+              <p className="skills__bento-label">{t(s.labelKey)}</p>
+              <p className="skills__bento-sub">{t(s.subKey)}</p>
             </MagicBento.Card>
           ))}
         </MagicBento>

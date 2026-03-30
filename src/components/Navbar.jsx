@@ -1,19 +1,13 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 import { scroller } from 'react-scroll'
 import StaggeredMenu from '../bits/StaggeredMenu'
+import LanguageSwitcher from './LanguageSwitcher'
 import './Navbar.css'
 
-const NAV_LINKS = [
-  { label: 'O meni',     to: 'about' },
-  { label: 'Iskustvo',   to: 'experience' },
-  { label: 'Obrazovanje', to: 'obrazovanje' },
-  { label: 'Projekti',   to: 'projekti' },
-  { label: 'Vještine',   to: 'skills' },
-  { label: 'Kontakt',    to: 'kontakt' },
-]
-
 export default function Navbar() {
+  const { t } = useTranslation()
   const [scrolled, setScrolled]   = useState(false)
   const [hidden, setHidden]       = useState(false)
   const [menuOpen, setMenuOpen]   = useState(false)
@@ -38,10 +32,14 @@ export default function Navbar() {
   const scrollTo = (to) =>
     scroller.scrollTo(to, { smooth: true, duration: 700, offset: -70 })
 
-  const links = NAV_LINKS.map(l => ({
-    ...l,
-    onClick: () => scrollTo(l.to),
-  }))
+  const links = [
+    { label: t('nav.about'),      to: 'about' },
+    { label: t('nav.experience'), to: 'experience' },
+    { label: t('nav.education'),  to: 'obrazovanje' },
+    { label: t('nav.projects'),   to: 'projekti' },
+    { label: t('nav.skills'),     to: 'skills' },
+    { label: t('nav.contact'),    to: 'kontakt' },
+  ].map(l => ({ ...l, onClick: () => scrollTo(l.to) }))
 
   return (
     <>
@@ -55,21 +53,24 @@ export default function Navbar() {
           <button
             className="navbar__logo"
             onClick={() => scrollTo('hero')}
-            aria-label="Na vrh"
+            aria-label={t('nav.toTop')}
           >
             <img src="/logo.png" alt="Martin Bogoje" className="navbar__logo-img" />
           </button>
 
-          <button
-            className="navbar__trigger"
-            onClick={() => setMenuOpen(true)}
-            aria-label="Otvori izbornik"
-          >
-            <span className="navbar__trigger-label">Menu</span>
-            <div className="navbar__trigger-lines">
-              <span /><span />
-            </div>
-          </button>
+          <div className="navbar__right">
+            <LanguageSwitcher />
+            <button
+              className="navbar__trigger"
+              onClick={() => setMenuOpen(true)}
+              aria-label={t('nav.menu')}
+            >
+              <span className="navbar__trigger-label">{t('nav.menu')}</span>
+              <div className="navbar__trigger-lines">
+                <span /><span />
+              </div>
+            </button>
+          </div>
         </div>
       </motion.header>
 

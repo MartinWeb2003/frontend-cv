@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 import './StaggeredMenu.css'
 
 const itemVariants = {
@@ -39,6 +40,8 @@ const panelVariants = {
 }
 
 export default function StaggeredMenu({ isOpen, onClose, links }) {
+  const { t } = useTranslation()
+
   // Lock body scroll while open
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
@@ -103,8 +106,8 @@ export default function StaggeredMenu({ isOpen, onClose, links }) {
               animate={{ opacity: 1, y: 0, transition: { delay: 0.55, duration: 0.4 } }}
               exit={{ opacity: 0 }}
             >
-              <a href="/CV-MartinB.pdf" download className="btn btn-primary smenu-resume">
-                Preuzmi Résumé
+              <a href="/Martin_Bogoje-CV.pdf" download="Martin_Bogoje-CV.pdf" className="btn btn-primary smenu-resume">
+                {t('menu.cvBtn')}
               </a>
             </motion.div>
           </motion.div>

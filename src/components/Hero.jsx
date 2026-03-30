@@ -1,18 +1,14 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-scroll'
-import { FiArrowDown, FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
+import { FiArrowDown, FiMail } from 'react-icons/fi'
 import CircularText from '../bits/CircularText'
 import FloatingIcons from './FloatingIcons'
 import './Hero.css'
 
-const SOCIALS = [
-  { icon: <FiGithub />, href: 'https://github.com/martinbogoje', label: 'GitHub' },
-  { icon: <FiLinkedin />, href: 'https://linkedin.com/in/martinbogoje', label: 'LinkedIn' },
-  { icon: <FiMail />, href: 'mailto:bogojemartin@gmail.com', label: 'Email' },
-]
-
 export default function Hero() {
+  const { t } = useTranslation()
   const sectionRef = useRef(null)
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] })
 
@@ -30,18 +26,15 @@ export default function Hero() {
 
   return (
     <section ref={sectionRef} className="hero" id="hero">
-      {/* Layer 0: background blob */}
       <motion.div className="hero__bg-shape" style={{ y: yBg }}>
         <div className="hero__blob" />
         <div className="hero__blob-grid" />
       </motion.div>
 
-      {/* Layer 1: floating icons */}
       <motion.div className="hero__icons-layer" style={{ y: yIcons }}>
         <FloatingIcons />
       </motion.div>
 
-      {/* Layer 2: name — fastest parallax, feels closest */}
       <motion.div className="hero__name" style={{ y: yText }}>
         <motion.span
           className="hero__name-first"
@@ -61,36 +54,34 @@ export default function Hero() {
         </motion.span>
       </motion.div>
 
-      {/* Layer 3: UI chrome */}
       <motion.div className="hero__content" style={{ opacity }}>
         <div className="container hero__container">
           <motion.div className="hero__topbar" {...fadeIn(0.1)}>
             <span className="section-label" style={{ marginBottom: 0, color: 'rgba(255,255,255,0.35)' }}>
-              Softverski developer · Zagreb, Hrvatska
+              {t('hero.tagline')}
             </span>
             <div className="hero__socials">
-              {SOCIALS.map(s => (
-                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
-                   className="hero__social" aria-label={s.label}>{s.icon}</a>
-              ))}
+              <a href="mailto:bogojemartin@gmail.com" className="hero__social" aria-label="Email">
+                <FiMail />
+              </a>
             </div>
           </motion.div>
 
           <motion.div className="hero__bottom" {...fadeIn(0.9)}>
             <div className="hero__bio">
               <p>
-                Student računarstva na FER-u u Zagrebu.<br />
-                Bivši Software Developer u <strong>Ericsson Nikola Tesla</strong>.<br />
-                Gradim iznimna web iskustva.
+                {t('hero.bio1')}<br />
+                {t('hero.bio2')}<br />
+                {t('hero.bio3')}
               </p>
               <div className="hero__cta">
                 <Link to="projekti" smooth duration={800} offset={-70}>
                   <button className="btn btn-primary">
-                    Pogledaj radove <FiArrowDown size={13} />
+                    {t('hero.ctaProjects')} <FiArrowDown size={13} />
                   </button>
                 </Link>
                 <Link to="kontakt" smooth duration={800} offset={-70}>
-                  <button className="btn btn-outline">Kontaktiraj me</button>
+                  <button className="btn btn-outline">{t('hero.ctaContact')}</button>
                 </Link>
               </div>
             </div>

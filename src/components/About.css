@@ -7,7 +7,7 @@
   position: relative;
   overflow: hidden;
   clip-path: inset(0 0 0 0);
-  padding: 72px 40px 96px;
+  padding: 80px 40px 60px;
   border-bottom: 1px solid var(--border);
 }
 .about__title-inner {
