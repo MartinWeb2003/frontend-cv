@@ -1,4 +1,13 @@
 {
+  "titles": {
+    "about": "O MENI",
+    "experience": "ISKUSTVO",
+    "education": "OBRAZOVANJE",
+    "projectsLine1": "MOJI",
+    "projectsLine2": "PROJEKTI",
+    "skills": "VJEŠTINE",
+    "contact": "RAZGOVARAJMO"
+  },
   "nav": {
     "about": "O meni",
     "experience": "Iskustvo",

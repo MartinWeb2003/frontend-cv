@@ -42,16 +42,20 @@ export default function Experience() {
   const [ref, inView] = useInView()
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] })
 
-  const titleX = useTransform(scrollYProgress, [0, 1], ['-6%', '6%'])
-  const rightY = useTransform(scrollYProgress, [0, 1], [40, -40])
+  const titleX    = useTransform(scrollYProgress, [0, 1], ['-6%', '6%'])
+  const rightY    = useTransform(scrollYProgress, [0, 1], [40, -40])
+  const progressX = useTransform(scrollYProgress, [0.1, 0.9], ['0%', '100%'])
 
   return (
     <section ref={sectionRef} className="experience section-dark" id="experience">
+      <div className="exp-progress-track">
+        <motion.div className="exp-progress-fill" style={{ width: progressX }} />
+      </div>
       <div className="experience__title-row">
         <motion.div className="experience__title-track" style={{ x: titleX }}>
-          <span className="mega-title">ISKUSTVO&nbsp;&nbsp;&nbsp;</span>
-          <span className="mega-title mega-title--outline">ISKUSTVO&nbsp;&nbsp;&nbsp;</span>
-          <span className="mega-title">ISKUSTVO&nbsp;&nbsp;&nbsp;</span>
+          <span className="mega-title">{t('titles.experience')}&nbsp;&nbsp;&nbsp;</span>
+          <span className="mega-title mega-title--outline">{t('titles.experience')}&nbsp;&nbsp;&nbsp;</span>
+          <span className="mega-title">{t('titles.experience')}&nbsp;&nbsp;&nbsp;</span>
         </motion.div>
       </div>
 
@@ -93,14 +97,39 @@ export default function Experience() {
                   </div>
                   <div className="exp-item__period"><FiCalendar size={11} />{t(exp.periodKey)}</div>
                 </div>
-                <ul className="exp-item__bullets">
+                <motion.ul
+                  className="exp-item__bullets"
+                  variants={{ show: { transition: { staggerChildren: 0.08 } } }}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: false, amount: 0.1 }}
+                >
                   {exp.bulletKeys.map((key) => (
-                    <li key={key}><span className="exp-bullet-dot" />{t(key)}</li>
+                    <motion.li
+                      key={key}
+                      variants={{ hidden: { opacity: 0, x: -20 }, show: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] } } }}
+                    >
+                      <span className="exp-bullet-dot" />{t(key)}
+                    </motion.li>
                   ))}
-                </ul>
-                <div className="exp-item__tags">
-                  {exp.tags.map(tag => <span key={tag} className="tag">{tag}</span>)}
-                </div>
+                </motion.ul>
+                <motion.div
+                  className="exp-item__tags"
+                  variants={{ show: { transition: { staggerChildren: 0.05 } } }}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: false, amount: 0.1 }}
+                >
+                  {exp.tags.map(tag => (
+                    <motion.span
+                      key={tag}
+                      className="tag"
+                      variants={{ hidden: { opacity: 0, scale: 0.85 }, show: { opacity: 1, scale: 1, transition: { duration: 0.3 } } }}
+                    >
+                      {tag}
+                    </motion.span>
+                  ))}
+                </motion.div>
               </motion.div>
             ))}
           </div>

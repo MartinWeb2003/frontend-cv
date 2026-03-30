@@ -33,7 +33,7 @@ export default function Contact() {
 
           <div className="contact__title-row">
             <motion.div style={{ y: titleY }} className="contact__title-mover">
-              <div className="mega-title contact__mega">RAZGOVARAJMO</div>
+              <div className="mega-title contact__mega">{t('titles.contact')}</div>
             </motion.div>
           </div>
 

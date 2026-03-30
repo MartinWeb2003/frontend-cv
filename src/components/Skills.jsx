@@ -63,9 +63,23 @@ function SkillBand({ band, i, label }) {
         <div className="skill-band__left">
           <span className="skill-band__idx">0{i + 1}</span>
           <h3 className="skill-band__label">{label}</h3>
-          <div className="skill-band__chips">
-            {band.chips.map(c => <span key={c} className="skill-chip-dark">{c}</span>)}
-          </div>
+          <motion.div
+            className="skill-band__chips"
+            variants={{ show: { transition: { staggerChildren: 0.055, delayChildren: 0.1 } } }}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: false, amount: 0.3 }}
+          >
+            {band.chips.map(c => (
+              <motion.span
+                key={c}
+                className="skill-chip-dark"
+                variants={{ hidden: { opacity: 0, y: 8, scale: 0.9 }, show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.35, ease: [0.4, 0, 0.2, 1] } } }}
+              >
+                {c}
+              </motion.span>
+            ))}
+          </motion.div>
         </div>
         <div className="skill-band__right">
           <CountUp
@@ -99,9 +113,9 @@ export default function Skills() {
 
       <div className="skills__title-row">
         <motion.div className="skills__title-track" style={{ x: titleX }}>
-          <span className="mega-title">VJEŠTINE&nbsp;&nbsp;&nbsp;</span>
-          <span className="mega-title mega-title--outline">VJEŠTINE&nbsp;&nbsp;&nbsp;</span>
-          <span className="mega-title">VJEŠTINE&nbsp;&nbsp;&nbsp;</span>
+          <span className="mega-title">{t('titles.skills')}&nbsp;&nbsp;&nbsp;</span>
+          <span className="mega-title mega-title--outline">{t('titles.skills')}&nbsp;&nbsp;&nbsp;</span>
+          <span className="mega-title">{t('titles.skills')}&nbsp;&nbsp;&nbsp;</span>
         </motion.div>
       </div>
 
@@ -138,17 +152,28 @@ export default function Skills() {
         </div>
       </div>
 
-      <div className="skills__bento-section">
+      <motion.div
+        className="skills__bento-section"
+        variants={{ show: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } } }}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: false, amount: 0.2 }}
+      >
         <MagicBento className="skills__bento-grid">
           {BENTO_STATS_DEF.map((s) => (
-            <MagicBento.Card key={s.labelKey} glowColor="165,28,48" className="skills__bento-card">
-              <CountUp to={s.to} suffix={s.suffix} className="skills__bento-val" />
-              <p className="skills__bento-label">{t(s.labelKey)}</p>
-              <p className="skills__bento-sub">{t(s.subKey)}</p>
-            </MagicBento.Card>
+            <motion.div
+              key={s.labelKey}
+              variants={{ hidden: { opacity: 0, y: 32, scale: 0.95 }, show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.55, ease: [0.4, 0, 0.2, 1] } } }}
+            >
+              <MagicBento.Card glowColor="165,28,48" className="skills__bento-card">
+                <CountUp to={s.to} suffix={s.suffix} className="skills__bento-val" />
+                <p className="skills__bento-label">{t(s.labelKey)}</p>
+                <p className="skills__bento-sub">{t(s.subKey)}</p>
+              </MagicBento.Card>
+            </motion.div>
           ))}
         </MagicBento>
-      </div>
+      </motion.div>
 
     </section>
   )

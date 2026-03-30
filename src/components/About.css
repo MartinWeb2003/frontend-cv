@@ -48,10 +48,14 @@
   position: relative;
 }
 .about__list li::before {
-  content: '—';
+  content: '';
   position: absolute;
   left: 0;
-  color: var(--crimson);
+  top: 0.6em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--crimson);
 }
 .about__list li strong {
   color: var(--text);
@@ -114,8 +118,10 @@
 .about__bento {
   grid-template-columns: repeat(2, 1fr);
 }
-.bento-tall { grid-column: span 1; }
-.bento-wide { grid-column: span 2; }
+.bento-tall { grid-column: span 1; display: flex; flex-direction: column; }
+.bento-wide { grid-column: span 2; display: flex; flex-direction: column; }
+.bento-tall .bento-card,
+.bento-wide .bento-card { flex: 1; }
 
 .bento-inner {
   padding: 24px;

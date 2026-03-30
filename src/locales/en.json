@@ -1,4 +1,13 @@
 {
+  "titles": {
+    "about": "ABOUT ME",
+    "experience": "EXPERIENCE",
+    "education": "EDUCATION",
+    "projectsLine1": "MY",
+    "projectsLine2": "PROJECTS",
+    "skills": "SKILLS",
+    "contact": "LET'S TALK"
+  },
   "nav": {
     "about": "About",
     "experience": "Experience",

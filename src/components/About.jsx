@@ -37,8 +37,8 @@ export default function About() {
     <section ref={sectionRef} className="about" id="about">
       <div className="about__title-row">
         <motion.div style={{ y: titleY }} className="about__title-inner">
-          <span className="mega-title">O&nbsp;</span>
-          <span className="mega-title mega-title--outline">MENI</span>
+          <span className="mega-title">{t('titles.about').split(' ')[0]}&nbsp;</span>
+          <span className="mega-title mega-title--outline">{t('titles.about').split(' ').slice(1).join(' ') || t('titles.about')}</span>
         </motion.div>
       </div>
 
@@ -81,45 +81,44 @@ export default function About() {
             </div>
           </motion.div>
 
-          <motion.div style={{ y: textY }}>
+          <motion.div
+            style={{ y: textY }}
+            variants={{ show: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } } }}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: false, amount: 0.15 }}
+          >
             <MagicBento className="about__bento">
-              <MagicBento.Card className="bento-tall">
-                <div className="bento-inner">
-                  <FiCode size={26} color="#A51C30" />
-                  <h3>{t('about.bento1Title')}</h3>
-                  <p>{t('about.bento1Desc')}</p>
-                </div>
-              </MagicBento.Card>
-              <MagicBento.Card className="bento-tall">
-                <div className="bento-inner">
-                  <FiLayers size={26} color="#A51C30" />
-                  <h3>{t('about.bento2Title')}</h3>
-                  <p>{t('about.bento2Desc')}</p>
-                </div>
-              </MagicBento.Card>
-              <MagicBento.Card className="bento-wide">
-                <div className="bento-inner bento-inner--row">
-                  <FiCpu size={30} color="#A51C30" />
-                  <div>
-                    <h3>{t('about.bento3Title')}</h3>
-                    <p>{t('about.bento3Desc')}</p>
-                  </div>
-                </div>
-              </MagicBento.Card>
-              <MagicBento.Card className="bento-tall">
-                <div className="bento-inner">
-                  <FiGlobe size={26} color="#A51C30" />
-                  <h3>{t('about.bento4Title')}</h3>
-                  <p>{t('about.bento4Desc')}</p>
-                </div>
-              </MagicBento.Card>
-              <MagicBento.Card className="bento-tall">
-                <div className="bento-inner">
-                  <FiAward size={26} color="#A51C30" />
-                  <h3>{t('about.bento5Title')}</h3>
-                  <p>{t('about.bento5Desc')}</p>
-                </div>
-              </MagicBento.Card>
+              {[
+                { cls: 'bento-tall',  Icon: FiCode,   size: 26, tKey: 'bento1Title', dKey: 'bento1Desc', row: false },
+                { cls: 'bento-tall',  Icon: FiLayers, size: 26, tKey: 'bento2Title', dKey: 'bento2Desc', row: false },
+                { cls: 'bento-wide',  Icon: FiCpu,    size: 30, tKey: 'bento3Title', dKey: 'bento3Desc', row: true  },
+                { cls: 'bento-tall',  Icon: FiGlobe,  size: 26, tKey: 'bento4Title', dKey: 'bento4Desc', row: false },
+                { cls: 'bento-tall',  Icon: FiAward,  size: 26, tKey: 'bento5Title', dKey: 'bento5Desc', row: false },
+              ].map(({ cls, Icon, size, tKey, dKey, row }) => (
+                <motion.div
+                  key={tKey}
+                  className={cls}
+                  variants={{ hidden: { opacity: 0, y: 28, scale: 0.97 }, show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.55, ease: [0.4, 0, 0.2, 1] } } }}
+                >
+                  <MagicBento.Card>
+                    <div className={`bento-inner${row ? ' bento-inner--row' : ''}`}>
+                      <Icon size={size} color="#A51C30" />
+                      {row ? (
+                        <div>
+                          <h3>{t(`about.${tKey}`)}</h3>
+                          <p>{t(`about.${dKey}`)}</p>
+                        </div>
+                      ) : (
+                        <>
+                          <h3>{t(`about.${tKey}`)}</h3>
+                          <p>{t(`about.${dKey}`)}</p>
+                        </>
+                      )}
+                    </div>
+                  </MagicBento.Card>
+                </motion.div>
+              ))}
             </MagicBento>
           </motion.div>
         </div>

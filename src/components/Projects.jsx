@@ -139,7 +139,10 @@ function ProjectRow({ project, i, onClick }) {
       style={{ '--accent': PLACEHOLDER_ACCENT[project.id] }}
     >
       {/* Ghost number */}
-      <span className="proj-row__ghost">{project.num}</span>
+      <motion.span
+        className="proj-row__ghost"
+        style={{ opacity: useTransform(scrollYProgress, [0, 0.5], [0, 1]) }}
+      >{project.num}</motion.span>
 
       {/* Image column */}
       <motion.div
@@ -206,8 +209,8 @@ export default function Projects() {
       {/* ── Header ── */}
       <div ref={headerRef} className="projects-header">
         <motion.div className="projects-header__title" style={{ y: titleY }}>
-          <span className="projects-mega-line projects-mega-line--white">MOJI</span>
-          <span className="projects-mega-line projects-mega-line--stroke">PROJEKTI</span>
+          <span className="projects-mega-line projects-mega-line--white">{t('titles.projectsLine1')}</span>
+          <span className="projects-mega-line projects-mega-line--stroke">{t('titles.projectsLine2')}</span>
         </motion.div>
         <motion.p
           className="projects-header__sub"

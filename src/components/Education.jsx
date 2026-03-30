@@ -10,6 +10,23 @@ const fadeUp = {
   show: (i) => ({ opacity: 1, y: 0, transition: { duration: 0.7, delay: i * 0.12, ease: [0.4, 0, 0.2, 1] } }),
 }
 
+const statStagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09, delayChildren: 0.15 } },
+}
+const statRow = {
+  hidden: { opacity: 0, x: 24 },
+  show:   { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] } },
+}
+const tagStagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.055 } },
+}
+const tagItem = {
+  hidden: { opacity: 0, scale: 0.85 },
+  show:   { opacity: 1, scale: 1, transition: { duration: 0.3 } },
+}
+
 export default function Education() {
   const { t } = useTranslation()
   const sectionRef = useRef(null)
@@ -24,9 +41,9 @@ export default function Education() {
     <section ref={sectionRef} className="education" id="obrazovanje">
       <div className="education__title-row">
         <motion.div className="education__title-track" style={{ x: titleX }}>
-          <span className="mega-title">OBRAZOVANJE&nbsp;&nbsp;&nbsp;</span>
-          <span className="mega-title mega-title--outline">OBRAZOVANJE&nbsp;&nbsp;&nbsp;</span>
-          <span className="mega-title">OBRAZOVANJE&nbsp;&nbsp;&nbsp;</span>
+          <span className="mega-title">{t('titles.education')}&nbsp;&nbsp;&nbsp;</span>
+          <span className="mega-title mega-title--outline">{t('titles.education')}&nbsp;&nbsp;&nbsp;</span>
+          <span className="mega-title">{t('titles.education')}&nbsp;&nbsp;&nbsp;</span>
         </motion.div>
       </div>
 
@@ -46,28 +63,28 @@ export default function Education() {
                   <span className="edu-card__spec">{t('education.deg1Spec')}</span>
                 </div>
               </div>
-              <div className="edu-card__right">
-                <div className="edu-stat">
+              <motion.div className="edu-card__right" variants={statStagger} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.3 }}>
+                <motion.div className="edu-stat" variants={statRow}>
                   <FiCalendar size={14} color="#A51C30" />
                   <span className="edu-stat__label">{t('education.labelDuration')}</span>
                   <span className="edu-stat__val">{t('education.deg1Period')}</span>
-                </div>
-                <div className="edu-stat">
+                </motion.div>
+                <motion.div className="edu-stat" variants={statRow}>
                   <FiClock size={14} color="#A51C30" />
                   <span className="edu-stat__label">{t('education.labelStatus')}</span>
                   <span className="edu-stat__val">{t('education.deg1Status')}</span>
-                </div>
-                <div className="edu-stat">
+                </motion.div>
+                <motion.div className="edu-stat" variants={statRow}>
                   <FiBookOpen size={14} color="#A51C30" />
                   <span className="edu-stat__label">{t('education.labelUniversity')}</span>
                   <span className="edu-stat__val">{t('education.deg1Uni')}</span>
-                </div>
-                <div className="edu-tags">
+                </motion.div>
+                <motion.div className="edu-tags" variants={tagStagger}>
                   {['deg1Tag1', 'deg1Tag2', 'deg1Tag3', 'deg1Tag4'].map(k =>
-                    <span key={k} className="tag">{t(`education.${k}`)}</span>
+                    <motion.span key={k} className="tag" variants={tagItem}>{t(`education.${k}`)}</motion.span>
                   )}
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             </div>
           </motion.div>
         </motion.div>
@@ -86,28 +103,28 @@ export default function Education() {
                   <span className="edu-card__spec">{t('education.deg2Spec')}</span>
                 </div>
               </div>
-              <div className="edu-card__right">
-                <div className="edu-stat">
+              <motion.div className="edu-card__right" variants={statStagger} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.3 }}>
+                <motion.div className="edu-stat" variants={statRow}>
                   <FiCalendar size={14} color="#A51C30" />
                   <span className="edu-stat__label">{t('education.labelAcademicYear')}</span>
                   <span className="edu-stat__val">{t('education.deg2Period')}</span>
-                </div>
-                <div className="edu-stat">
+                </motion.div>
+                <motion.div className="edu-stat" variants={statRow}>
                   <FiAward size={14} color="#A51C30" />
                   <span className="edu-stat__label">{t('education.labelTitleEarned')}</span>
                   <span className="edu-stat__val">{t('education.deg2TitleEarned')}</span>
-                </div>
-                <div className="edu-stat">
+                </motion.div>
+                <motion.div className="edu-stat" variants={statRow}>
                   <FiCheckCircle size={14} color="#22c55e" />
                   <span className="edu-stat__label">{t('education.labelStatus')}</span>
                   <span className="edu-stat__val edu-stat__val--green">{t('education.deg2Status')}</span>
-                </div>
-                <div className="edu-tags">
+                </motion.div>
+                <motion.div className="edu-tags" variants={tagStagger}>
                   {['deg2Tag1', 'deg2Tag2', 'deg2Tag3', 'deg2Tag4'].map(k =>
-                    <span key={k} className="tag">{t(`education.${k}`)}</span>
+                    <motion.span key={k} className="tag" variants={tagItem}>{t(`education.${k}`)}</motion.span>
                   )}
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             </div>
           </motion.div>
         </motion.div>
