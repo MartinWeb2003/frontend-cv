@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-scroll'
@@ -10,6 +10,14 @@ import './Hero.css'
 export default function Hero() {
   const { t } = useTranslation()
   const sectionRef = useRef(null)
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768)
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth <= 768)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] })
 
   const yBg    = useTransform(scrollYProgress, [0, 1], ['0%', '14%'])
@@ -35,7 +43,7 @@ export default function Hero() {
         <FloatingIcons />
       </motion.div>
 
-      <motion.div className="hero__name" style={{ y: yText }}>
+      <motion.div className="hero__name" style={{ y: isMobile ? 0 : yText }}>
         <motion.span
           className="hero__name-first"
           initial={{ opacity: 0, x: -60 }}

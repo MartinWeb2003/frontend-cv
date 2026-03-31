@@ -208,11 +208,43 @@
 }
 
 @media (max-width: 768px) {
-  .hero__container { padding-top: 88px; padding-bottom: 40px; }
-  .hero__bottom { flex-direction: column; align-items: flex-start; gap: 20px; }
-  .hero__badge { align-self: flex-end; }
-  .hero__cta { flex-direction: column; }
-  .hero__cta .btn { width: 100%; justify-content: center; }
+  .hero {
+    height: auto;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Name becomes part of normal flow — no longer a floating layer */
+  .hero__name {
+    position: relative;
+    z-index: 2;
+    inset: auto;
+    padding: 96px clamp(20px, 5vw, 40px) 0;
+    justify-content: flex-start;
+    text-align: center;
+  }
   .hero__name-first,
-  .hero__name-last { font-size: clamp(3.5rem, 12vw, 8rem); }
+  .hero__name-last { font-size: clamp(3.5rem, 14vw, 8rem); }
+
+  /* Content flows below the name */
+  .hero__content {
+    position: relative;
+    z-index: 3;
+    inset: auto;
+    flex: 1;
+  }
+
+  .hero__container {
+    padding-top: 20px;
+    padding-bottom: 40px;
+    height: auto;
+    flex: 1;
+  }
+
+  .hero__topbar { justify-content: center; text-align: center; flex-direction: column; gap: 8px; }
+  .hero__bottom { flex-direction: column; align-items: center; gap: 20px; text-align: center; }
+  .hero__badge { align-self: center; }
+  .hero__cta { flex-direction: column; align-items: center; }
+  .hero__cta .btn { width: 100%; justify-content: center; }
 }

@@ -25,11 +25,7 @@ export default function ThreeScene({ className = '' }) {
 
     // Torus knot — main shape
     const geo = new THREE.TorusKnotGeometry(0.85, 0.28, 180, 24, 2, 3)
-    const mat = new THREE.MeshStandardMaterial({
-      color: 0xa51c30,
-      roughness: 0.3,
-      metalness: 0.7,
-    })
+    const mat = new THREE.MeshStandardMaterial({ color: 0xa51c30, roughness: 0.3, metalness: 0.7 })
     const mesh = new THREE.Mesh(geo, mat)
     scene.add(mesh)
 
@@ -59,15 +55,61 @@ export default function ThreeScene({ className = '' }) {
     pointLight2.position.set(-3, -2, 2)
     scene.add(pointLight2)
 
-    // Mouse parallax
-    const mouse = { x: 0, y: 0 }
-    const target = { x: 0, y: 0 }
-    const onMove = (e) => {
+    // Mouse hover parallax (only when not dragging)
+    const hover = { x: 0, y: 0 }
+    const hoverTarget = { x: 0, y: 0 }
+    const onHoverMove = (e) => {
+      if (drag.active) return
       const rect = el.getBoundingClientRect()
-      mouse.x = ((e.clientX - rect.left) / W - 0.5) * 2
-      mouse.y = -((e.clientY - rect.top) / H - 0.5) * 2
+      hover.x = ((e.clientX - rect.left) / W - 0.5) * 2
+      hover.y = -((e.clientY - rect.top) / H - 0.5) * 2
     }
-    el.addEventListener('mousemove', onMove, { passive: true })
+    el.addEventListener('mousemove', onHoverMove, { passive: true })
+
+    // Drag state
+    const drag = { active: false, lastX: 0, lastY: 0, rotX: 0, rotY: 0, velX: 0, velY: 0 }
+
+    const getCoords = (e) => e.touches
+      ? { x: e.touches[0].clientX, y: e.touches[0].clientY }
+      : { x: e.clientX, y: e.clientY }
+
+    const onDragStart = (e) => {
+      drag.active = true
+      const { x, y } = getCoords(e)
+      drag.lastX = x
+      drag.lastY = y
+      drag.velX = 0
+      drag.velY = 0
+      el.style.cursor = 'grabbing'
+    }
+
+    const onDragMove = (e) => {
+      if (!drag.active) return
+      e.preventDefault()
+      const { x, y } = getCoords(e)
+      const dx = x - drag.lastX
+      const dy = y - drag.lastY
+      drag.rotY += dx * 0.008
+      drag.rotX += dy * 0.008
+      drag.velX = dy * 0.008
+      drag.velY = dx * 0.008
+      drag.lastX = x
+      drag.lastY = y
+    }
+
+    const onDragEnd = () => {
+      drag.active = false
+      el.style.cursor = 'grab'
+    }
+
+    el.addEventListener('mousedown', onDragStart)
+    el.addEventListener('touchstart', onDragStart, { passive: true })
+    window.addEventListener('mousemove', onDragMove)
+    window.addEventListener('touchmove', onDragMove, { passive: false })
+    window.addEventListener('mouseup', onDragEnd)
+    window.addEventListener('touchend', onDragEnd)
+
+    el.style.cursor = 'grab'
 
     // Animation
     let rafId
@@ -76,11 +118,19 @@ export default function ThreeScene({ className = '' }) {
       rafId = requestAnimationFrame(animate)
       const t = clock.getElapsedTime()
 
-      target.x += (mouse.x - target.x) * 0.05
-      target.y += (mouse.y - target.y) * 0.05
+      // Hover parallax (smooth lerp, ignored while dragging)
+      if (!drag.active) {
+        hoverTarget.x += (hover.x - hoverTarget.x) * 0.05
+        hoverTarget.y += (hover.y - hoverTarget.y) * 0.05
+        // Apply inertia after drag release
+        drag.rotX += drag.velX
+        drag.rotY += drag.velY
+        drag.velX *= 0.92
+        drag.velY *= 0.92
+      }
 
-      mesh.rotation.x = t * 0.18 + target.y * 0.4
-      mesh.rotation.y = t * 0.28 + target.x * 0.4
+      mesh.rotation.x = t * 0.18 + drag.rotX + hoverTarget.y * 0.4
+      mesh.rotation.y = t * 0.28 + drag.rotY + hoverTarget.x * 0.4
       wireMesh.rotation.x = mesh.rotation.x
       wireMesh.rotation.y = mesh.rotation.y
       particles.rotation.y = t * 0.04
@@ -106,7 +156,13 @@ export default function ThreeScene({ className = '' }) {
 
     return () => {
       cancelAnimationFrame(rafId)
-      el.removeEventListener('mousemove', onMove)
+      el.removeEventListener('mousemove', onHoverMove)
+      el.removeEventListener('mousedown', onDragStart)
+      el.removeEventListener('touchstart', onDragStart)
+      window.removeEventListener('mousemove', onDragMove)
+      window.removeEventListener('touchmove', onDragMove)
+      window.removeEventListener('mouseup', onDragEnd)
+      window.removeEventListener('touchend', onDragEnd)
       ro.disconnect()
       renderer.dispose()
       geo.dispose()
