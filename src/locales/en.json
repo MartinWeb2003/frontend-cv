@@ -111,8 +111,10 @@
     "p2Desc": "Custom web solution for presenting premium accommodation on the Pelješac peninsula. System designed focusing on visual content loading speed and responsive design ensuring ease of booking on all devices.",
     "p3Subtitle": "Tourism destination website",
     "p3Desc": "Sabioncello: From design concept to a complete destination guide. Development of a modern and scalable web solution optimized for an international audience, with emphasis on visual storytelling and technical SEO excellence.",
-    "p4Subtitle": "Web application · In progress",
-    "p4Desc": "Coming Soon: Sabioncello Graphics Web App. Designing a scalable ecosystem for graphic services. From architecture design to final code polishing — in the process of building something great."
+    "p4Subtitle": "Graphic design services web app",
+    "p4Desc": "Sabioncello Grafika: A modern web application for graphic design services, built in React. A scalable design ecosystem emphasizing visual presentation, contemporary UX, and technical excellence.",
+    "p5Subtitle": "Student event website",
+    "p5Desc": "Dani Cvjetnog: A custom web solution for a student event. Interactive sign-up forms for games and clear event information — designed for easy navigation and a smooth visitor experience."
   },
   "skills": {
     "band1Label": "Frontend Development",

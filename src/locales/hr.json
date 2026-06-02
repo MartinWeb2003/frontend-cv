@@ -111,8 +111,10 @@
     "p2Desc": "Custom web rješenje za prezentaciju premium smještaja na Pelješcu. Projektiranje sustava s fokusom na brzinu učitavanja vizualnog sadržaja i responzivni dizajn koji osigurava lakoću rezervacije na svim uređajima.",
     "p3Subtitle": "Web stranica za turizam na Pelješcu",
     "p3Desc": "Sabioncello: Od dizajnerskog koncepta do cjelovitog destinacijskog vodiča. Razvoj modernog i skalabilnog web rješenja optimiziranog za međunarodnu publiku, s naglaskom na vizualni storytelling i tehničku SEO izvrsnost.",
-    "p4Subtitle": "Web aplikacija · U izradi",
-    "p4Desc": "Coming Soon: Sabioncello Graphics Web App. Projektiranje skalabilnog ekosustava za grafičke usluge. Od dizajna arhitekture do finalnog poliranja koda — u procesu gradnje nečeg velikog."
+    "p4Subtitle": "Web aplikacija za grafičke usluge",
+    "p4Desc": "Sabioncello Grafika: Moderna web aplikacija za grafičke usluge, izgrađena u Reactu. Skalabilni dizajnerski ekosustav s naglaskom na vizualnu prezentaciju, suvremeni UX i tehničku izvrsnost.",
+    "p5Subtitle": "Web stranica za studentski event",
+    "p5Desc": "Dani Cvjetnog: Custom web rješenje za studentski event. Interaktivne forme za prijavu na igre i pregledne informacije o programu — dizajnirano za jednostavno i brzo snalaženje posjetitelja."
   },
   "skills": {
     "band1Label": "Frontend Development",

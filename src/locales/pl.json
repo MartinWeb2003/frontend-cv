@@ -111,8 +111,10 @@
     "p2Desc": "Dedykowane rozwiązanie webowe dla premium zakwaterowania na półwyspie Pelješac. System skupiony na szybkości ładowania treści wizualnych i responsywnym designie zapewniającym łatwość rezerwacji na wszystkich urządzeniach.",
     "p3Subtitle": "Strona turystyczna",
     "p3Desc": "Sabioncello: Od koncepcji designu do kompletnego przewodnika po destynacji. Nowoczesne i skalowalne rozwiązanie webowe zoptymalizowane dla międzynarodowej publiczności z naciskiem na wizualne storytelling i SEO.",
-    "p4Subtitle": "Aplikacja webowa · W trakcie",
-    "p4Desc": "Coming Soon: Sabioncello Graphics Web App. Projektowanie skalowalnego ekosystemu dla usług graficznych. Od projektu architektury do finalnego polerowania kodu — w trakcie budowania czegoś wielkiego."
+    "p4Subtitle": "Aplikacja webowa dla usług graficznych",
+    "p4Desc": "Sabioncello Grafika: Nowoczesna aplikacja webowa do usług graficznych, zbudowana w React. Skalowalny ekosystem projektowy z naciskiem na prezentację wizualną, nowoczesny UX i doskonałość techniczną.",
+    "p5Subtitle": "Strona dla studenckiego eventu",
+    "p5Desc": "Dani Cvjetnog: Dedykowane rozwiązanie webowe dla studenckiego wydarzenia. Interaktywne formularze zgłoszeń do gier i przejrzyste informacje o programie — zaprojektowane dla łatwej nawigacji i płynnego doświadczenia odwiedzających."
   },
   "skills": {
     "band1Label": "Frontend Development",

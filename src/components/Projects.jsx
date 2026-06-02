@@ -6,7 +6,18 @@ import './Projects.css'
 
 const PROJECTS = [
   {
-    id: 1, num: '01', year: '2024',
+    id: 4, num: '01', year: '2026',
+    title: 'Sabioncello Grafika',
+    subtitleKey: 'projects.p4Subtitle',
+    descKey: 'projects.p4Desc',
+    tags: ['React', 'Web dizajn', 'Grafički dizajn'],
+    images: ['/grafica1.png', '/grafica2.png', '/grafica3.png', '/grafica4.png'],
+    video: null,
+    liveUrl: 'https://sabioncello-grafica.hr',
+    githubUrl: null,
+  },
+  {
+    id: 1, num: '02', year: '2026',
     title: 'Sottomonte',
     subtitleKey: 'projects.p1Subtitle',
     descKey: 'projects.p1Desc',
@@ -17,7 +28,7 @@ const PROJECTS = [
     githubUrl: null,
   },
   {
-    id: 2, num: '02', year: '2024',
+    id: 2, num: '03', year: '2026',
     title: 'Visit Eva Orebić',
     subtitleKey: 'projects.p2Subtitle',
     descKey: 'projects.p2Desc',
@@ -28,7 +39,7 @@ const PROJECTS = [
     githubUrl: null,
   },
   {
-    id: 3, num: '03', year: '2024',
+    id: 3, num: '04', year: '2025',
     title: 'Sabioncello',
     subtitleKey: 'projects.p3Subtitle',
     descKey: 'projects.p3Desc',
@@ -39,20 +50,20 @@ const PROJECTS = [
     githubUrl: null,
   },
   {
-    id: 4, num: '04', year: '2025',
-    title: 'Sabioncello Grafika',
-    subtitleKey: 'projects.p4Subtitle',
-    descKey: 'projects.p4Desc',
-    tags: ['React', 'Web dizajn', 'U izradi'],
-    images: ['/grafica1.png', '/grafica2.png', '/grafica3.png', '/grafica4.png'],
+    id: 5, num: '05', year: '2025',
+    title: 'Dani Cvjetnog',
+    subtitleKey: 'projects.p5Subtitle',
+    descKey: 'projects.p5Desc',
+    tags: ['HTML/CSS/JS', 'Web dizajn', 'Forme', 'Event'],
+    images: ['/cvjetnog1.png', '/cvjetnog2.png', '/cvjetnog3.png'],
     video: null,
-    liveUrl: null,
+    liveUrl: 'https://dani-cvjetnog.netlify.app',
     githubUrl: null,
   },
 ]
 
-const PLACEHOLDER_BG = { 1: '#1a0a0c', 2: '#0a0e1a', 3: '#0a1210', 4: '#0e0a1a' }
-const PLACEHOLDER_ACCENT = { 1: '#3d0f17', 2: '#0f1a3d', 3: '#0f3d2a', 4: '#1a0f3d' }
+const PLACEHOLDER_BG = { 1: '#1a0a0c', 2: '#0a0e1a', 3: '#0a1210', 4: '#0e0a1a', 5: '#0f1a0a' }
+const PLACEHOLDER_ACCENT = { 1: '#3d0f17', 2: '#0f1a3d', 3: '#0f3d2a', 4: '#1a0f3d', 5: '#1a3d0f' }
 
 /* ─── Modal ─── */
 function ProjectModal({ project, onClose }) {
