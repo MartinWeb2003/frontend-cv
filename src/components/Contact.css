@@ -138,14 +138,16 @@
   font-size: 0.82rem;
   color: rgba(255,255,255,0.4);
   text-decoration: none;
-  transition: color 0.2s;
+  transition: color 0.2s, background 0.2s, padding 0.2s;
   font-family: var(--font-mono);
   position: relative;
   z-index: 20;
+  padding: 8px 16px;
+  border-radius: 999px;
 }
-.contact__link:hover { color: rgba(255,255,255,0.85); }
+.contact__link:hover { color: #111; background: #fff; }
 .contact__link--plain { cursor: default; }
-.contact__link--plain:hover { color: rgba(255,255,255,0.4); }
+.contact__link--plain:hover { color: #111; background: #fff; }
 .contact__link-sep { color: rgba(255,255,255,0.15); font-size: 1rem; }
 
 @media (max-width: 768px) {
