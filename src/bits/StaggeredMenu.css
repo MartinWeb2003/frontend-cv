@@ -81,15 +81,6 @@
 }
 .smenu-link:hover { gap: 28px; }
 
-.smenu-link__num {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  color: var(--crimson);
-  letter-spacing: 0.12em;
-  flex-shrink: 0;
-  transition: opacity 0.2s;
-}
-
 .smenu-link__label {
   font-size: clamp(1.6rem, 4vw, 2.4rem);
   font-weight: 800;
@@ -116,7 +107,6 @@
   .smenu-panel { padding: 40px 28px 40px; }
   .smenu-close { right: 24px; }
 }
-
 
 /* The menu entries became real <a href> links; keep the button styling. */
 .smenu-link {

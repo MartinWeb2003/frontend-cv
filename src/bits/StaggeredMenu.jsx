@@ -92,7 +92,6 @@ export default function StaggeredMenu({ isOpen, onClose, links }) {
                       href={link.href}
                       onClick={(e) => { link.onClick(e); onClose() }}
                     >
-                      <span className="smenu-link__num">0{i + 1}</span>
                       <span className="smenu-link__label">{link.label}</span>
                     </a>
                   </motion.div>

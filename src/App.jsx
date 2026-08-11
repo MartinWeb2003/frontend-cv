@@ -4,7 +4,6 @@ import { scroller } from 'react-scroll'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import CustomCursor from './components/CustomCursor'
-import ScrollProgress from './components/ScrollProgress'
 import HomePage from './pages/HomePage'
 import ProjectsIndexPage from './pages/ProjectsIndexPage'
 import ProjectPage from './pages/ProjectPage'
@@ -44,7 +43,6 @@ export default function App() {
   return (
     <>
       <CustomCursor />
-      <ScrollProgress />
       <ScrollManager />
       <Navbar />
       <main>

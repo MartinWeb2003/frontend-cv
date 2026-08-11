@@ -51,7 +51,6 @@ function ProjectRow({ project, lng }) {
             decoding="async"
             onError={(e) => (e.target.style.display = 'none')}
           />
-          <div className="proj-row__pattern" style={{ background: PLACEHOLDER_ACCENT[project.id] }} />
         </motion.div>
         <div className="proj-row__hover-overlay">
           <FiArrowUpRight size={32} />

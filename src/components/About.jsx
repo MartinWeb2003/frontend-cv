@@ -3,7 +3,6 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { FiCode, FiLayers, FiCpu, FiGlobe, FiAward } from 'react-icons/fi'
 import MagicBento from '../bits/MagicBento'
-import CurveSplit from '../bits/CurveSplit'
 import useInView from '../hooks/useInView'
 import useIsClient from '../hooks/useIsClient'
 import './About.css'
@@ -71,7 +70,6 @@ export default function About() {
                 <ThreeScene />
               </Suspense>
             )}
-            <CurveSplit id="about-3d-curve" />
             <div className="about__3d-label">
               <span>{t('about.hint3d')}</span>
             </div>

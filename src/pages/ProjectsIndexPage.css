@@ -116,3 +116,7 @@
   --drawtitle-stroke-color: var(--text);
   --drawtitle-stroke-width: 1.5px;
 }
+
+.pindex__title .drawtitle__line {
+  --drawtitle-stroke-draw: 6px;
+}

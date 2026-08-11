@@ -115,19 +115,6 @@
   object-fit: cover;
 }
 
-.proj-row__pattern {
-  position: absolute;
-  inset: 0;
-  opacity: 0.65;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 28px,
-    rgba(255, 255, 255, 0.012) 28px,
-    rgba(255, 255, 255, 0.012) 29px
-  );
-}
-
 .proj-row__hover-overlay {
   position: absolute;
   inset: 0;
@@ -362,7 +349,6 @@
   .pmodal__header { flex-direction: column; }
 }
 
-
 /* ─── Anchor-based card links (added with the project detail pages) ─── */
 .proj-row { position: relative; }
 
@@ -420,4 +406,10 @@
 .projects-header__title .drawtitle__line:not(.drawtitle__line--fill) {
   --drawtitle-stroke-color: var(--crimson);
   --drawtitle-stroke-width: 2px;
+}
+
+/* Heavier stroke while the title draws itself; it settles to the resting
+   width once the outline has travelled. */
+.projects-header__title .drawtitle__line {
+  --drawtitle-stroke-draw: 8px;
 }

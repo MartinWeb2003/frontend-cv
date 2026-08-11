@@ -30,9 +30,16 @@
   fill: transparent;
 }
 
+/*
+ * The travelling stroke is drawn at `--drawtitle-stroke-draw`, which is heavier
+ * than the resting width so the gesture reads clearly while it happens. It only
+ * thins to the resting width near the end of the travel, so the line does not
+ * appear to shrink behind the pen as it draws.
+ */
 .drawtitle.is-armed .drawtitle__line {
   stroke-dasharray: var(--drawtitle-len);
   stroke-dashoffset: var(--drawtitle-len);
+  stroke-width: var(--drawtitle-stroke-draw, 5px);
 }
 .drawtitle.is-armed .drawtitle__line--fill {
   fill-opacity: 0;
@@ -40,8 +47,12 @@
 
 .drawtitle.is-drawing .drawtitle__line {
   stroke-dashoffset: 0;
-  transition: stroke-dashoffset var(--drawtitle-duration, 2200ms)
-    cubic-bezier(0.33, 0, 0.15, 1) var(--drawtitle-delay, 0ms);
+  stroke-width: var(--drawtitle-stroke-width, 1.5px);
+  transition:
+    stroke-dashoffset var(--drawtitle-duration, 2200ms) cubic-bezier(0.33, 0, 0.15, 1)
+      var(--drawtitle-delay, 0ms),
+    stroke-width 620ms ease
+      calc(var(--drawtitle-delay, 0ms) + var(--drawtitle-duration, 2200ms) * 0.78);
 }
 
 /* The fill arrives once the outline has almost finished travelling. */
@@ -50,12 +61,15 @@
   transition:
     stroke-dashoffset var(--drawtitle-duration, 2200ms) cubic-bezier(0.33, 0, 0.15, 1)
       var(--drawtitle-delay, 0ms),
+    stroke-width 620ms ease
+      calc(var(--drawtitle-delay, 0ms) + var(--drawtitle-duration, 2200ms) * 0.78),
     fill-opacity 700ms ease calc(var(--drawtitle-delay, 0ms) + var(--drawtitle-duration, 2200ms) * 0.62);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .drawtitle.is-armed .drawtitle__line {
     stroke-dashoffset: 0;
+    stroke-width: var(--drawtitle-stroke-width, 1.5px);
   }
   .drawtitle.is-armed .drawtitle__line--fill {
     fill-opacity: 1;
