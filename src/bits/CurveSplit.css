@@ -1,0 +1,48 @@
+.curve-split {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.curve-split__defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/*
+ * `difference` against the section's own accent inverts everything beneath the
+ * curve in one pass: the near-black background lifts to crimson, and the
+ * crimson torus drops to black. One layer, both elements, no duplicated scene.
+ */
+.curve-split__tint {
+  position: absolute;
+  inset: 0;
+  background: var(--curve-split-color, #7d1523);
+  mix-blend-mode: var(--curve-split-blend, difference);
+}
+
+.curve-split__line {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.curve-split__line path {
+  fill: none;
+  stroke: var(--curve-split-stroke, rgba(255, 255, 255, 0.55));
+  /* Keeps the hairline at a real pixel width despite the 0..1 viewBox. */
+  vector-effect: non-scaling-stroke;
+  stroke-width: var(--curve-split-stroke-width, 1.25px);
+  stroke-linecap: round;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .curve-split {
+    transition: none;
+  }
+}

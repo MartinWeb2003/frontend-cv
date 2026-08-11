@@ -1,22 +1,24 @@
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useSyncExternalStore } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-scroll'
+import SectionLink from './SectionLink'
 import { FiArrowDown, FiMail } from 'react-icons/fi'
 import CircularText from '../bits/CircularText'
 import FloatingIcons from './FloatingIcons'
 import './Hero.css'
 
+const subscribeToResize = (onChange) => {
+  window.addEventListener('resize', onChange)
+  return () => window.removeEventListener('resize', onChange)
+}
+const isMobileNow = () => window.innerWidth <= 768
+/** No viewport during prerender; false keeps server and hydration markup identical. */
+const isMobileOnServer = () => false
+
 export default function Hero() {
   const { t } = useTranslation()
   const sectionRef = useRef(null)
-  const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768)
-
-  useEffect(() => {
-    const onResize = () => setIsMobile(window.innerWidth <= 768)
-    window.addEventListener('resize', onResize)
-    return () => window.removeEventListener('resize', onResize)
-  }, [])
+  const isMobile = useSyncExternalStore(subscribeToResize, isMobileNow, isMobileOnServer)
 
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] })
 
@@ -43,24 +45,25 @@ export default function Hero() {
         <FloatingIcons />
       </motion.div>
 
-      <motion.div className="hero__name" style={{ y: isMobile ? 0 : yText }}>
+      <motion.h1 className="hero__name" style={{ y: isMobile ? 0 : yText }}>
         <motion.span
           className="hero__name-first"
-          initial={{ opacity: 0, x: -60 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ x: -60 }}
+          animate={{ x: 0 }}
           transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
         >
           Martin
         </motion.span>
         <motion.span
           className="hero__name-last"
-          initial={{ opacity: 0, x: 60 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ x: 60 }}
+          animate={{ x: 0 }}
           transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
           Bogoje
         </motion.span>
-      </motion.div>
+        <span className="sr-only">{t('hero.tagline')}</span>
+      </motion.h1>
 
       <motion.div className="hero__content" style={{ opacity }}>
         <div className="container hero__container">
@@ -83,14 +86,12 @@ export default function Hero() {
                 {t('hero.bio3')}
               </p>
               <div className="hero__cta">
-                <Link to="projekti" smooth duration={800} offset={-70}>
-                  <button className="btn btn-primary">
-                    {t('hero.ctaProjects')} <FiArrowDown size={13} />
-                  </button>
-                </Link>
-                <Link to="kontakt" smooth duration={800} offset={-70}>
-                  <button className="btn btn-outline">{t('hero.ctaContact')}</button>
-                </Link>
+                <SectionLink to="projects" className="btn btn-primary">
+                  {t('hero.ctaProjects')} <FiArrowDown size={13} />
+                </SectionLink>
+                <SectionLink to="contact" className="btn btn-outline">
+                  {t('hero.ctaContact')}
+                </SectionLink>
               </div>
             </div>
 

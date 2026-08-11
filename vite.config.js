@@ -11,6 +11,8 @@ export default defineConfig({
           if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) return 'react-vendor'
           if (id.includes('node_modules/framer-motion')) return 'motion'
           if (id.includes('node_modules/gsap')) return 'gsap'
+          if (id.includes('node_modules/three')) return 'three'
+          if (id.includes('node_modules/react-router')) return 'router'
           if (id.includes('node_modules/react-icons')) return 'icons'
         },
       },

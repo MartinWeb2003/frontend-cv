@@ -7,10 +7,10 @@ import useInView from '../hooks/useInView'
 import './Contact.css'
 
 const TRAIL_IMAGES = [
-  '/sotto1.png', '/sotto2.png', '/sotto3.png', '/sotto4.png',
-  '/eva1.png', '/eva2.png', '/eva3.png', '/eva4.png',
-  '/sabioncello1.png', '/sabioncello2.png',
-  '/grafica1.png', '/grafica2.png',
+  '/sotto1.webp', '/sotto2.webp', '/sotto3.webp', '/sotto4.webp',
+  '/eva1.webp', '/eva2.webp', '/eva3.webp', '/eva4.webp',
+  '/sabioncello1.webp', '/sabioncello2.webp',
+  '/grafica1.webp', '/grafica2.webp',
 ]
 
 const fadeUp = {
@@ -27,13 +27,13 @@ export default function Contact() {
   const titleY = useTransform(scrollYProgress, [0, 1], [80, -80])
 
   return (
-    <section ref={sectionRef} className="contact section-dark" id="kontakt">
+    <section ref={sectionRef} className="contact section-dark" id="contact">
       <ImageTrail items={TRAIL_IMAGES}>
         <div className="contact__trail-inner">
 
           <div className="contact__title-row">
             <motion.div style={{ y: titleY }} className="contact__title-mover">
-              <div className="mega-title contact__mega">{t('titles.contact')}</div>
+              <h2 className="mega-title contact__mega">{t('titles.contact')}</h2>
             </motion.div>
           </div>
 

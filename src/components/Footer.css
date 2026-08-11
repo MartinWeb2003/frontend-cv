@@ -79,3 +79,20 @@
   .footer__bottom { flex-direction: column; align-items: flex-start; }
   .footer__nav { gap: 12px; }
 }
+
+/* ─── Language links (crawlable path to the other locale trees) ─── */
+.footer__langs {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.footer__lang {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  color: rgba(255, 255, 255, 0.4);
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+.footer__lang:hover { color: #fff; }
+.footer__lang.is-active { color: var(--crimson); }

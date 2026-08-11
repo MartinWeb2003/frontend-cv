@@ -361,3 +361,63 @@
   .pmodal__body { padding: 20px; }
   .pmodal__header { flex-direction: column; }
 }
+
+
+/* ─── Anchor-based card links (added with the project detail pages) ─── */
+.proj-row { position: relative; }
+
+/* Stretched link: the title is the real <a>, its ::after covers the row so the
+   whole card is clickable without nesting interactive elements. */
+.proj-row__link {
+  color: inherit;
+  text-decoration: none;
+}
+.proj-row__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.proj-row__link:hover { color: var(--crimson); }
+
+/* Keep the external buttons above the stretched link. */
+.proj-row__actions { position: relative; z-index: 2; }
+
+.projects-all {
+  display: flex;
+  justify-content: center;
+  padding: 48px 24px 8px;
+}
+.projects-all__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: none;
+  padding: 14px 26px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+.projects-all__link:hover { border-color: var(--crimson); color: var(--crimson); }
+
+/* ─── Draw-on-scroll header title ─── */
+.projects-header__title {
+  /* DrawTitle sizes its SVG in em, so font-size drives the rendered scale. */
+  font-size: clamp(5rem, 16vw, 15rem);
+  line-height: 0.88;
+  margin: 0;
+}
+/* Line 1 is solid white, line 2 keeps the crimson outline of the old design. */
+.projects-header__title .drawtitle__line {
+  --drawtitle-fill: #ffffff;
+  --drawtitle-stroke-color: #ffffff;
+  --drawtitle-stroke-width: 1.5px;
+}
+.projects-header__title .drawtitle__line:not(.drawtitle__line--fill) {
+  --drawtitle-stroke-color: var(--crimson);
+  --drawtitle-stroke-width: 2px;
+}

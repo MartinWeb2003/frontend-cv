@@ -1,0 +1,13 @@
+{
+  "name": "Martin Bogoje | Software Developer",
+  "short_name": "M. Bogoje",
+  "description": "Portfolio of Martin Bogoje, software developer based in Zagreb, Croatia.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0A0A",
+  "theme_color": "#0A0A0A",
+  "icons": [
+    { "src": "/logo.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

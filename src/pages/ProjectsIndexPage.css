@@ -1,0 +1,118 @@
+.pindex {
+  padding: 130px 0 100px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.pindex__title {
+  font-size: clamp(2.8rem, 9vw, 6.5rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+  margin-bottom: 24px;
+}
+
+.pindex__intro {
+  max-width: 62ch;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 64px;
+}
+
+.pindex__grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 24px;
+}
+
+.pindex__card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.35s ease;
+}
+.pindex__card:hover {
+  transform: translateY(-4px);
+  border-color: var(--crimson);
+}
+
+.pindex__media {
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+.pindex__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.pindex__card:hover .pindex__img { transform: scale(1.04); }
+
+.pindex__body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px;
+  background: var(--bg);
+  flex: 1;
+}
+
+.pindex__meta {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+}
+.pindex__num { color: var(--crimson); }
+
+.pindex__card-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.pindex__sub {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.pindex__tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+
+.pindex__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--crimson);
+}
+
+@media (max-width: 768px) {
+  .pindex { padding: 100px 0 72px; }
+  .pindex__grid { grid-template-columns: 1fr; }
+  .pindex__intro { margin-bottom: 40px; }
+}
+
+/* ─── Draw-on-scroll page title ─── */
+.pindex__title .drawtitle__line {
+  --drawtitle-fill: var(--text);
+  --drawtitle-stroke-color: var(--text);
+  --drawtitle-stroke-width: 1.5px;
+}

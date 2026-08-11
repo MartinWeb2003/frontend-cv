@@ -27,8 +27,8 @@ const EXPERIENCES = [
 ]
 
 const EDUCATION = [
-  { degreeHR: 'Magistar — Softversko inženjerstvo i informacijski sustavi', school: 'FER, Sveučilište u Zagrebu', period: '2023/24 – aktivan', index: 3 },
-  { degreeHR: 'Prvostupnik — Računarstvo', school: 'FER, Sveučilište u Zagrebu', period: '2021 – 2023', index: 4 },
+  { degreeHR: 'Magistar: softversko inženjerstvo i informacijski sustavi', school: 'FER, Sveučilište u Zagrebu', period: '2023/24 – aktivan', index: 3 },
+  { degreeHR: 'Prvostupnik: računarstvo', school: 'FER, Sveučilište u Zagrebu', period: '2021 – 2023', index: 4 },
 ]
 
 const fadeUp = {
@@ -53,9 +53,9 @@ export default function Experience() {
       </div>
       <div className="experience__title-row">
         <motion.div className="experience__title-track" style={{ x: titleX }}>
-          <span className="mega-title">{t('titles.experience')}&nbsp;&nbsp;&nbsp;</span>
-          <span className="mega-title mega-title--outline">{t('titles.experience')}&nbsp;&nbsp;&nbsp;</span>
-          <span className="mega-title">{t('titles.experience')}&nbsp;&nbsp;&nbsp;</span>
+          <h2 className="mega-title">{t('titles.experience')}&nbsp;&nbsp;&nbsp;</h2>
+          <span className="mega-title mega-title--outline" aria-hidden="true">{t('titles.experience')}&nbsp;&nbsp;&nbsp;</span>
+          <span className="mega-title" aria-hidden="true">{t('titles.experience')}&nbsp;&nbsp;&nbsp;</span>
         </motion.div>
       </div>
 

@@ -38,12 +38,12 @@ export default function Education() {
   const card2Y = useTransform(scrollYProgress, [0, 1], [110, -60])
 
   return (
-    <section ref={sectionRef} className="education" id="obrazovanje">
+    <section ref={sectionRef} className="education" id="education">
       <div className="education__title-row">
         <motion.div className="education__title-track" style={{ x: titleX }}>
-          <span className="mega-title">{t('titles.education')}&nbsp;&nbsp;&nbsp;</span>
-          <span className="mega-title mega-title--outline">{t('titles.education')}&nbsp;&nbsp;&nbsp;</span>
-          <span className="mega-title">{t('titles.education')}&nbsp;&nbsp;&nbsp;</span>
+          <h2 className="mega-title">{t('titles.education')}&nbsp;&nbsp;&nbsp;</h2>
+          <span className="mega-title mega-title--outline" aria-hidden="true">{t('titles.education')}&nbsp;&nbsp;&nbsp;</span>
+          <span className="mega-title" aria-hidden="true">{t('titles.education')}&nbsp;&nbsp;&nbsp;</span>
         </motion.div>
       </div>
 
@@ -57,7 +57,7 @@ export default function Education() {
                   <span className="edu-active-dot" />
                   {t('education.activeBadge')}
                 </div>
-                <h2 className="edu-card__title">{t('education.deg1Title')}</h2>
+                <h3 className="edu-card__title">{t('education.deg1Title')}</h3>
                 <div className="edu-card__meta">
                   <span className="edu-card__school">{t('education.deg1School')}</span>
                   <span className="edu-card__spec">{t('education.deg1Spec')}</span>
@@ -97,7 +97,7 @@ export default function Education() {
                   <FiCheckCircle size={11} />
                   {t('education.doneBadge')}
                 </div>
-                <h2 className="edu-card__title">{t('education.deg2Title')}</h2>
+                <h3 className="edu-card__title">{t('education.deg2Title')}</h3>
                 <div className="edu-card__meta">
                   <span className="edu-card__school">{t('education.deg2School')}</span>
                   <span className="edu-card__spec">{t('education.deg2Spec')}</span>

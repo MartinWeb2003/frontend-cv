@@ -116,3 +116,12 @@
   .smenu-panel { padding: 40px 28px 40px; }
   .smenu-close { right: 24px; }
 }
+
+
+/* The menu entries became real <a href> links; keep the button styling. */
+.smenu-link {
+  display: flex;
+  width: 100%;
+  text-decoration: none;
+  color: inherit;
+}

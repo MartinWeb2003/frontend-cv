@@ -94,6 +94,8 @@
 
 /* 3D scene */
 .about__3d {
+  /* Contains the CurveSplit blend so it cannot reach the rest of the page. */
+  isolation: isolate;
   border: 1px solid var(--border);
   background: var(--bg-dark);
   height: 520px;

@@ -102,3 +102,7 @@
 @media (max-width: 768px) {
   .navbar__inner { padding: 0 10px 0 12px; }
 }
+
+
+/* The logo is a router <Link> now. */
+.navbar__logo { text-decoration: none; }

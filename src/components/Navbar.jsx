@@ -1,13 +1,18 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { scroller } from 'react-scroll'
 import StaggeredMenu from '../bits/StaggeredMenu'
 import LanguageSwitcher from './LanguageSwitcher'
+import IMAGE_META from '../data/imageMeta.json'
+import { DEFAULT_LOCALE, LOCALES, pathForLocale } from '../seo/siteConfig'
 import './Navbar.css'
 
 export default function Navbar() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
   const [scrolled, setScrolled]   = useState(false)
   const [hidden, setHidden]       = useState(false)
   const [menuOpen, setMenuOpen]   = useState(false)
@@ -29,17 +34,34 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const scrollTo = (to) =>
-    scroller.scrollTo(to, { smooth: true, duration: 700, offset: -70 })
+  const lng = LOCALES.includes(i18n.language) ? i18n.language : DEFAULT_LOCALE
+  const home = pathForLocale(lng)
+  const onHome = pathname === home || pathname === home.replace(/\/$/, '')
 
+  /**
+   * Menu entries are real `<a href="/#section">` links so crawlers can follow
+   * them; the handler keeps smooth scrolling when already on the home page.
+   */
   const links = [
     { label: t('nav.about'),      to: 'about' },
     { label: t('nav.experience'), to: 'experience' },
-    { label: t('nav.education'),  to: 'obrazovanje' },
-    { label: t('nav.projects'),   to: 'projekti' },
+    { label: t('nav.education'),  to: 'education' },
+    { label: t('nav.projects'),   to: 'projects' },
     { label: t('nav.skills'),     to: 'skills' },
-    { label: t('nav.contact'),    to: 'kontakt' },
-  ].map(l => ({ ...l, onClick: () => scrollTo(l.to) }))
+    { label: t('nav.contact'),    to: 'contact' },
+  ].map((l) => ({
+    ...l,
+    href: `${home}#${l.to}`,
+    onClick: (e) => {
+      if (e && (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)) return
+      e?.preventDefault()
+      if (onHome) {
+        scroller.scrollTo(l.to, { smooth: true, duration: 700, offset: -70 })
+      } else {
+        navigate(`${home}#${l.to}`)
+      }
+    },
+  }))
 
   return (
     <>
@@ -50,13 +72,21 @@ export default function Navbar() {
         transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
       >
         <div className="navbar__inner">
-          <button
+          <Link
+            to={home}
             className="navbar__logo"
-            onClick={() => scrollTo('hero')}
             aria-label={t('nav.toTop')}
           >
-            <img src="/logo.png" alt="Martin Bogoje" className="navbar__logo-img" />
-          </button>
+            <img
+              src="/logo.webp"
+              alt="Martin Bogoje"
+              className="navbar__logo-img"
+              {...IMAGE_META['/logo.webp']}
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+            />
+          </Link>
 
           <div className="navbar__right">
             <LanguageSwitcher />

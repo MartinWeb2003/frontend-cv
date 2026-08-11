@@ -1,24 +1,37 @@
 .logo-loop {
+  /* How far the fade reaches in from each edge. */
+  --logo-loop-fade: clamp(90px, 20%, 360px);
+
   width: 100%;
   overflow: hidden;
   position: relative;
 }
-.logo-loop--fade::before,
-.logo-loop--fade::after {
-  content: '';
-  position: absolute;
-  top: 0; bottom: 0;
-  width: 120px;
-  z-index: 2;
-  pointer-events: none;
-}
-.logo-loop--fade::before {
-  left: 0;
-  background: linear-gradient(to right, var(--bg), transparent);
-}
-.logo-loop--fade::after {
-  right: 0;
-  background: linear-gradient(to left, var(--bg), transparent);
+
+/*
+ * The strip is faded with a mask rather than by painting two gradient overlays
+ * on top of it.
+ *
+ * The overlays used to be `linear-gradient(to right, var(--bg), transparent)`,
+ * and --bg is #FFFFFF, so on the dark skills section they rendered as a pale
+ * smear instead of a fade. Masking removes the problem at the root: there is no
+ * fade colour to keep in sync, because the logos dissolve into whatever is
+ * actually behind them.
+ */
+.logo-loop--fade {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--logo-loop-fade),
+    #000 calc(100% - var(--logo-loop-fade)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--logo-loop-fade),
+    #000 calc(100% - var(--logo-loop-fade)),
+    transparent 100%
+  );
 }
 .logo-loop__track {
   display: flex;

@@ -82,3 +82,12 @@
     font-size: 0.62rem;
   }
 }
+
+
+/* Locale options are anchors to the prerendered locale URLs. */
+.lang-switcher__option {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}

@@ -1,7 +1,10 @@
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { FiMail } from 'react-icons/fi'
-import { Link } from 'react-scroll'
+import { Link, useLocation } from 'react-router-dom'
+import SectionLink from './SectionLink'
+import { equivalentPath } from '../routes'
+import { DEFAULT_LOCALE, LOCALES, LOCALE_TAGS, projectsIndexPath } from '../seo/siteConfig'
 import './Footer.css'
 
 const stagger = {
@@ -14,14 +17,16 @@ const fadeUp = {
 }
 
 export default function Footer() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const { pathname } = useLocation()
+  const lng = LOCALES.includes(i18n.language) ? i18n.language : DEFAULT_LOCALE
 
   const LINKS = [
     { labelKey: 'nav.about',      to: 'about' },
     { labelKey: 'nav.experience', to: 'experience' },
-    { labelKey: 'nav.projects',   to: 'projekti' },
+    { labelKey: 'nav.projects',   to: 'projects' },
     { labelKey: 'nav.skills',     to: 'skills' },
-    { labelKey: 'nav.contact',    to: 'kontakt' },
+    { labelKey: 'nav.contact',    to: 'contact' },
   ]
 
   return (
@@ -34,7 +39,7 @@ export default function Footer() {
     >
       <div className="footer__top">
         <motion.div variants={fadeUp}>
-          <Link to="hero" smooth duration={600} className="footer__wordmark">MARTIN BOGOJE</Link>
+          <SectionLink to="hero" className="footer__wordmark">MARTIN BOGOJE</SectionLink>
         </motion.div>
         <motion.div className="footer__socials" variants={fadeUp}>
           <a href="mailto:bogojemartin@gmail.com" aria-label="Email"><FiMail /></a>
@@ -47,12 +52,38 @@ export default function Footer() {
         <motion.nav className="footer__nav" variants={stagger}>
           {LINKS.map(l => (
             <motion.span key={l.to} variants={fadeUp}>
-              <Link to={l.to} smooth duration={700} offset={-70} className="footer__nav-link">{t(l.labelKey)}</Link>
+              <SectionLink to={l.to} className="footer__nav-link">{t(l.labelKey)}</SectionLink>
             </motion.span>
           ))}
+          <motion.span variants={fadeUp}>
+            <Link to={projectsIndexPath(lng)} className="footer__nav-link">
+              {t('projectPage.crumbProjects')}
+            </Link>
+          </motion.span>
         </motion.nav>
+
+        {/*
+          Always-rendered locale links. The navbar switcher is a dropdown that
+          only exists once opened, so without these the other three language
+          trees would have no crawlable inbound link at all.
+        */}
+        <motion.nav className="footer__langs" variants={fadeUp} aria-label="Language">
+          {LOCALES.map((code) => (
+            <a
+              key={code}
+              href={equivalentPath(pathname, code)}
+              hrefLang={LOCALE_TAGS[code]}
+              lang={code}
+              className={`footer__lang${code === lng ? ' is-active' : ''}`}
+              aria-current={code === lng ? 'true' : undefined}
+            >
+              {code.toUpperCase()}
+            </a>
+          ))}
+        </motion.nav>
+
         <motion.p className="footer__copy" variants={fadeUp}>
-          © {new Date().getFullYear()} Martin Bogoje — {t('footer.built')}
+          © {new Date().getFullYear()} Martin Bogoje · {t('footer.built')}
         </motion.p>
       </div>
     </motion.footer>

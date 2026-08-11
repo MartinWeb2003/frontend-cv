@@ -113,9 +113,9 @@ export default function Skills() {
 
       <div className="skills__title-row">
         <motion.div className="skills__title-track" style={{ x: titleX }}>
-          <span className="mega-title">{t('titles.skills')}&nbsp;&nbsp;&nbsp;</span>
-          <span className="mega-title mega-title--outline">{t('titles.skills')}&nbsp;&nbsp;&nbsp;</span>
-          <span className="mega-title">{t('titles.skills')}&nbsp;&nbsp;&nbsp;</span>
+          <h2 className="mega-title">{t('titles.skills')}&nbsp;&nbsp;&nbsp;</h2>
+          <span className="mega-title mega-title--outline" aria-hidden="true">{t('titles.skills')}&nbsp;&nbsp;&nbsp;</span>
+          <span className="mega-title" aria-hidden="true">{t('titles.skills')}&nbsp;&nbsp;&nbsp;</span>
         </motion.div>
       </div>
 

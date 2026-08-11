@@ -1,34 +1,62 @@
+import { useEffect } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
+import { scroller } from 'react-scroll'
 import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import About from './components/About'
-import Experience from './components/Experience'
-import Education from './components/Education'
-import Projects from './components/Projects'
-import Skills from './components/Skills'
-import Contact from './components/Contact'
 import Footer from './components/Footer'
 import CustomCursor from './components/CustomCursor'
 import ScrollProgress from './components/ScrollProgress'
+import HomePage from './pages/HomePage'
+import ProjectsIndexPage from './pages/ProjectsIndexPage'
+import ProjectPage from './pages/ProjectPage'
+import NotFoundPage from './pages/NotFoundPage'
+import { routePatterns } from './routes'
 import './App.css'
 
-function App() {
+const PAGES = {
+  home: HomePage,
+  projects: ProjectsIndexPage,
+  project: ProjectPage,
+}
+
+/**
+ * Honours `/#about` style links after a route change, and otherwise returns to
+ * the top so navigating to a project does not land mid-page.
+ */
+function ScrollManager() {
+  const { pathname, hash } = useLocation()
+
+  useEffect(() => {
+    if (hash) {
+      const id = hash.slice(1)
+      // The target section only exists once the home route has rendered.
+      const raf = requestAnimationFrame(() =>
+        scroller.scrollTo(id, { smooth: true, duration: 600, offset: -70 }),
+      )
+      return () => cancelAnimationFrame(raf)
+    }
+    window.scrollTo(0, 0)
+  }, [pathname, hash])
+
+  return null
+}
+
+export default function App() {
   return (
     <>
       <CustomCursor />
       <ScrollProgress />
+      <ScrollManager />
       <Navbar />
       <main>
-        <Hero />
-        <About />
-        <Experience />
-        <Education />
-        <Projects />
-        <Skills />
-        <Contact />
+        <Routes>
+          {routePatterns.map(({ lng, type, pattern }) => {
+            const Page = PAGES[type]
+            return <Route key={`${lng}:${type}`} path={pattern} element={<Page />} />
+          })}
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
       </main>
       <Footer />
     </>
   )
 }
-
-export default App
