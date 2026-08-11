@@ -13,17 +13,20 @@
   overflow: visible;
 
   /*
-   * `difference` against the section accent inverts only what the band covers:
-   * the near-black background lifts to crimson, and the crimson torus drops to
-   * near-black where the two overlap. Everything outside the stroke is
-   * untouched, so the band reads as a lens passing over the scene.
+   * `screen` with a dark crimson, not `difference`.
+   *
+   * difference maps the section's near-black background to a bright solid, so
+   * the band reads as paint and nothing shows through it. screen only lifts:
+   * the background rises from #0A0A0A to a dark crimson while the torus lifts
+   * to a brighter crimson, so both change colour *and* stay distinguishable.
+   * The band behaves like tinted glass rather than a filled shape.
    */
-  mix-blend-mode: var(--curve-split-blend, difference);
+  mix-blend-mode: var(--curve-split-blend, screen);
 }
 
 .curve-split__band path {
   fill: none;
-  stroke: var(--curve-split-color, #a51c30);
+  stroke: var(--curve-split-color, #5a1020);
   stroke-width: var(--curve-split-thickness, clamp(40px, 9vw, 96px));
   /*
    * The viewBox is 0..1 with preserveAspectRatio="none", so without this the

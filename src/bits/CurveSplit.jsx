@@ -19,7 +19,7 @@ import './CurveSplit.css'
  * @param {string} d curve in a 0..1 viewBox, spanning the full width
  */
 export default function CurveSplit({
-  d = 'M-0.02,0.62 C0.28,0.5 0.66,0.76 1.02,0.6',
+  d = 'M-0.02,0.46 C0.28,0.34 0.66,0.58 1.02,0.44',
   className = '',
 }) {
   return (
