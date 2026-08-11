@@ -203,15 +203,7 @@
     "lang2Name": "Angielski",
     "lang2Level": "Biegły · C1",
     "lang3Name": "Niemiecki",
-    "lang3Level": "Podstawy · A2",
-    "stat1Label": "Technologii",
-    "stat1Sub": "React, Node, .NET, Docker...",
-    "stat2Label": "Lata doświadczenia",
-    "stat2Sub": "Enterprise & freelance",
-    "stat3Label": "Projektów",
-    "stat3Sub": "Full-stack, web, API",
-    "stat4Label": "Języków",
-    "stat4Sub": "HR · EN · DE"
+    "lang3Level": "Podstawy · A2"
   },
   "contact": {
     "tagline1": "Otwarty na projekty freelance i stałe zatrudnienie.",

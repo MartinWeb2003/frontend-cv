@@ -203,15 +203,7 @@
     "lang2Name": "Engleski",
     "lang2Level": "Tečan · C1",
     "lang3Name": "Njemački",
-    "lang3Level": "Osnove · A2",
-    "stat1Label": "Tehnologija",
-    "stat1Sub": "React, Node, .NET, Docker...",
-    "stat2Label": "God. iskustva",
-    "stat2Sub": "Enterprise & freelance",
-    "stat3Label": "Projekata",
-    "stat3Sub": "Full-stack, web, API",
-    "stat4Label": "Jezika",
-    "stat4Sub": "HR · EN · DE"
+    "lang3Level": "Osnove · A2"
   },
   "contact": {
     "tagline1": "Otvoren sam za freelance projekte i stalne angažmane.",

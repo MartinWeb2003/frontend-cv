@@ -5,44 +5,31 @@
   z-index: 2;
 }
 
-.curve-split__defs {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-}
-
-/*
- * `difference` against the section's own accent inverts everything beneath the
- * curve in one pass: the near-black background lifts to crimson, and the
- * crimson torus drops to black. One layer, both elements, no duplicated scene.
- */
-.curve-split__tint {
-  position: absolute;
-  inset: 0;
-  background: var(--curve-split-color, #7d1523);
-  mix-blend-mode: var(--curve-split-blend, difference);
-}
-
-.curve-split__line {
+.curve-split__band {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   overflow: visible;
+
+  /*
+   * `difference` against the section accent inverts only what the band covers:
+   * the near-black background lifts to crimson, and the crimson torus drops to
+   * near-black where the two overlap. Everything outside the stroke is
+   * untouched, so the band reads as a lens passing over the scene.
+   */
+  mix-blend-mode: var(--curve-split-blend, difference);
 }
 
-.curve-split__line path {
+.curve-split__band path {
   fill: none;
-  stroke: var(--curve-split-stroke, rgba(255, 255, 255, 0.55));
-  /* Keeps the hairline at a real pixel width despite the 0..1 viewBox. */
+  stroke: var(--curve-split-color, #a51c30);
+  stroke-width: var(--curve-split-thickness, clamp(40px, 9vw, 96px));
+  /*
+   * The viewBox is 0..1 with preserveAspectRatio="none", so without this the
+   * stroke would be squashed by the non-uniform scale and the width would not
+   * be a real pixel value.
+   */
   vector-effect: non-scaling-stroke;
-  stroke-width: var(--curve-split-stroke-width, 1.25px);
-  stroke-linecap: round;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .curve-split {
-    transition: none;
-  }
+  stroke-linecap: butt;
 }

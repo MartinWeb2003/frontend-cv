@@ -9,7 +9,6 @@ import {
 } from 'react-icons/si'
 import LogoLoop from '../bits/LogoLoop'
 import CountUp from '../bits/CountUp'
-import MagicBento from '../bits/MagicBento'
 import './Skills.css'
 
 const TECH_ROW = [
@@ -41,13 +40,6 @@ const LANG_BARS_DEF = [
   { nameKey: 'skills.lang1Name', levelKey: 'skills.lang1Level', pct: 100 },
   { nameKey: 'skills.lang2Name', levelKey: 'skills.lang2Level', pct: 90 },
   { nameKey: 'skills.lang3Name', levelKey: 'skills.lang3Level', pct: 25 },
-]
-
-const BENTO_STATS_DEF = [
-  { to: 16, suffix: '+', labelKey: 'skills.stat1Label', subKey: 'skills.stat1Sub' },
-  { to: 3,  suffix: '+', labelKey: 'skills.stat2Label', subKey: 'skills.stat2Sub' },
-  { to: 8,  suffix: '+', labelKey: 'skills.stat3Label', subKey: 'skills.stat3Sub' },
-  { to: 3,  suffix: '',  labelKey: 'skills.stat4Label', subKey: 'skills.stat4Sub' },
 ]
 
 function SkillBand({ band, i, label }) {
@@ -151,29 +143,6 @@ export default function Skills() {
           ))}
         </div>
       </div>
-
-      <motion.div
-        className="skills__bento-section"
-        variants={{ show: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } } }}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: false, amount: 0.2 }}
-      >
-        <MagicBento className="skills__bento-grid">
-          {BENTO_STATS_DEF.map((s) => (
-            <motion.div
-              key={s.labelKey}
-              variants={{ hidden: { opacity: 0, y: 32, scale: 0.95 }, show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.55, ease: [0.4, 0, 0.2, 1] } } }}
-            >
-              <MagicBento.Card glowColor="165,28,48" className="skills__bento-card">
-                <CountUp to={s.to} suffix={s.suffix} className="skills__bento-val" />
-                <p className="skills__bento-label">{t(s.labelKey)}</p>
-                <p className="skills__bento-sub">{t(s.subKey)}</p>
-              </MagicBento.Card>
-            </motion.div>
-          ))}
-        </MagicBento>
-      </motion.div>
 
     </section>
   )

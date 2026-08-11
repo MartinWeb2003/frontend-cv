@@ -203,15 +203,7 @@
     "lang2Name": "Englisch",
     "lang2Level": "Fließend · C1",
     "lang3Name": "Deutsch",
-    "lang3Level": "Grundkenntnisse · A2",
-    "stat1Label": "Technologien",
-    "stat1Sub": "React, Node, .NET, Docker...",
-    "stat2Label": "J. Erfahrung",
-    "stat2Sub": "Enterprise & Freelance",
-    "stat3Label": "Projekte",
-    "stat3Sub": "Full-stack, Web, API",
-    "stat4Label": "Sprachen",
-    "stat4Sub": "HR · EN · DE"
+    "lang3Level": "Grundkenntnisse · A2"
   },
   "contact": {
     "tagline1": "Offen für freiberufliche Projekte und feste Anstellungen.",

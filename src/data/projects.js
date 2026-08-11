@@ -11,13 +11,11 @@
  * `featured` selects which projects appear as full-width rows on the home page;
  * the rest are reachable from the projects index. See FEATURED_PROJECTS below.
  */
-export const PROJECTS = [
+const CATALOGUE = [
   {
     id: 4,
     key: 'p4',
-    num: '01',
     year: '2026',
-    featured: true,
     slug: 'sabioncello-grafika',
     title: 'Sabioncello Grafika',
     tags: ['React', 'Web dizajn', 'Grafički dizajn'],
@@ -29,9 +27,7 @@ export const PROJECTS = [
   {
     id: 6,
     key: 'p6',
-    num: '02',
     year: '2026',
-    featured: true,
     slug: 'camping-loviste-paradise',
     title: 'Camping Lovište Paradise',
     tags: ['React', 'Vite', 'Web dizajn', 'Turizam'],
@@ -51,9 +47,7 @@ export const PROJECTS = [
   {
     id: 7,
     key: 'p7',
-    num: '03',
     year: '2026',
-    featured: true,
     slug: 'bmfit',
     title: 'BMFit',
     tags: ['HTML/CSS/JS', 'Landing page', 'Web dizajn', 'Konverzije'],
@@ -73,7 +67,6 @@ export const PROJECTS = [
   {
     id: 1,
     key: 'p1',
-    num: '04',
     year: '2026',
     slug: 'sottomonte',
     title: 'Sottomonte',
@@ -94,7 +87,6 @@ export const PROJECTS = [
   {
     id: 2,
     key: 'p2',
-    num: '05',
     year: '2026',
     slug: 'visit-eva-orebic',
     title: 'Visit Eva Orebić',
@@ -107,7 +99,6 @@ export const PROJECTS = [
   {
     id: 3,
     key: 'p3',
-    num: '06',
     year: '2025',
     slug: 'sabioncello',
     title: 'Sabioncello',
@@ -120,7 +111,6 @@ export const PROJECTS = [
   {
     id: 5,
     key: 'p5',
-    num: '07',
     year: '2025',
     slug: 'dani-cvjetnog',
     title: 'Dani Cvjetnog',
@@ -131,6 +121,46 @@ export const PROJECTS = [
     githubUrl: null,
   },
 ]
+
+/**
+ * Display order, featured first. This is the single place to change which
+ * projects lead the home page or in what order the index lists them.
+ */
+const ORDER = [
+  'sottomonte',
+  'sabioncello-grafika',
+  'bmfit',
+  'sabioncello',
+  'camping-loviste-paradise',
+  'visit-eva-orebic',
+  'dani-cvjetnog',
+]
+
+/** The three that get full-width rows on the home page. */
+const FEATURED = new Set(['sottomonte', 'sabioncello-grafika', 'bmfit'])
+
+const missing = ORDER.filter((slug) => !CATALOGUE.some((p) => p.slug === slug))
+if (missing.length) {
+  throw new Error(`ORDER references unknown project slug(s): ${missing.join(', ')}`)
+}
+if (ORDER.length !== CATALOGUE.length) {
+  throw new Error(
+    `ORDER lists ${ORDER.length} projects but the catalogue has ${CATALOGUE.length}`,
+  )
+}
+
+/**
+ * `num` is derived from position, so it can never disagree with the order the
+ * visitor actually sees.
+ */
+export const PROJECTS = ORDER.map((slug, i) => {
+  const project = CATALOGUE.find((p) => p.slug === slug)
+  return {
+    ...project,
+    num: String(i + 1).padStart(2, '0'),
+    featured: FEATURED.has(slug),
+  }
+})
 
 export const FEATURED_PROJECTS = PROJECTS.filter((p) => p.featured)
 
