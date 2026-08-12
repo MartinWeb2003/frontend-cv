@@ -1,0 +1,237 @@
+.service {
+  padding: 130px 0 100px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ─── Breadcrumbs ─── */
+.service__crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+.service__crumbs li + li::before {
+  content: '/';
+  margin-right: 8px;
+  color: var(--border-strong);
+}
+.service__crumbs a { color: var(--text-secondary); text-decoration: none; }
+.service__crumbs a:hover { color: var(--crimson); }
+
+/* ─── Header ─── */
+.service__header { padding: 36px 0 12px; }
+.service__num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  color: var(--crimson);
+}
+.service__title {
+  font-size: clamp(2.4rem, 6.5vw, 4.6rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  margin: 10px 0 16px;
+  max-width: 20ch;
+}
+.service__lead {
+  font-size: clamp(1.05rem, 2.1vw, 1.35rem);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 60ch;
+}
+
+/* ─── Body ─── */
+.service__body { max-width: 68ch; padding-top: 40px; }
+.service__body > p {
+  font-size: 1.02rem;
+  line-height: 1.78;
+  color: var(--text-secondary);
+  margin-bottom: 18px;
+}
+.service__section { margin-top: 48px; }
+.service__section h2 {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--crimson);
+  margin-bottom: 18px;
+}
+
+.service__checks { list-style: none; display: grid; gap: 12px; }
+.service__checks li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+.service__checks svg { color: var(--crimson); flex-shrink: 0; margin-top: 4px; }
+
+.service__steps { list-style: none; display: grid; gap: 16px; }
+.service__steps li {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+.service__step-num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--crimson);
+  padding-top: 4px;
+  flex-shrink: 0;
+}
+
+.service__tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ─── Proof ─── */
+.service__proof { margin-top: 72px; }
+.service__proof h2 {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--crimson);
+  margin-bottom: 20px;
+}
+.service__proof-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+.service__proof-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid var(--border);
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.service__proof-card:hover { transform: translateY(-3px); border-color: var(--crimson); }
+/*
+ * The source screenshots have differing intrinsic ratios (889x770 through
+ * 1600x1000) and carry width/height attributes for CLS. `height: auto` is what
+ * lets the CSS aspect-ratio win over those attributes, so every card in the row
+ * crops to the same shape.
+ */
+.service__proof-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+.service__proof-body {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 16px 18px;
+  background: var(--bg);
+  flex: 1;
+}
+.service__proof-title { font-weight: 800; font-size: 1.05rem; }
+.service__proof-sub { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; }
+
+/* ─── FAQ ─── */
+.service__faq { max-width: 68ch; }
+.service__faq-item { margin-bottom: 26px; }
+.service__faq-item h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.service__faq-item p {
+  font-size: 0.98rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+}
+
+/* ─── CTA ─── */
+.service__cta {
+  margin-top: 72px;
+  padding: 40px;
+  border: 1px solid var(--border);
+  background: var(--bg-off);
+  max-width: 68ch;
+}
+.service__cta h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+}
+.service__cta p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 22px; }
+.service__cta-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.service__pager {
+  margin-top: 56px;
+  padding-top: 26px;
+  border-top: 1px solid var(--border);
+}
+.service__pager-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+.service__pager-link:hover { color: var(--crimson); }
+
+/* ─── Hub ─── */
+.service--hub .service__title { margin-top: 8px; }
+.service__hub-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 22px;
+  margin-top: 56px;
+}
+.service__hub-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+  padding: 30px 26px;
+  border: 1px solid var(--border);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.service__hub-card:hover { transform: translateY(-4px); border-color: var(--crimson); }
+.service__hub-title { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; }
+.service__hub-sub { font-size: 0.94rem; line-height: 1.6; color: var(--text-secondary); }
+.service__hub-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.service__hub-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--crimson);
+}
+
+@media (max-width: 768px) {
+  .service { padding: 100px 0 72px; }
+  .service__cta { padding: 28px 22px; }
+  .service__hub-grid { grid-template-columns: 1fr; }
+}

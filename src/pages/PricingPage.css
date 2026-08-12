@@ -1,0 +1,174 @@
+.pricing {
+  padding: 130px 0 100px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.pricing__crumbs ol {
+  display: flex;
+  gap: 8px;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+.pricing__crumbs li + li::before { content: '/'; margin-right: 8px; color: var(--border-strong); }
+.pricing__crumbs a { color: var(--text-secondary); text-decoration: none; }
+.pricing__crumbs a:hover { color: var(--crimson); }
+
+.pricing__header { padding: 36px 0 8px; }
+.pricing__title {
+  font-size: clamp(2.4rem, 7vw, 5rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  margin: 8px 0 16px;
+}
+.pricing__lead {
+  font-size: clamp(1.05rem, 2.1vw, 1.3rem);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 60ch;
+}
+
+.pricing__body { max-width: 68ch; padding-top: 32px; }
+.pricing__body p {
+  font-size: 1.02rem;
+  line-height: 1.78;
+  color: var(--text-secondary);
+  margin-bottom: 18px;
+}
+
+.pricing__section { margin-top: 56px; }
+.pricing__narrow { max-width: 68ch; }
+.pricing__section h2 {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--crimson);
+  margin-bottom: 16px;
+}
+/* A section can hold more than one heading (included / charged separately). */
+.pricing__section > * + h2 {
+  margin-top: 44px;
+}
+.pricing__section > p {
+  font-size: 1rem;
+  line-height: 1.78;
+  color: var(--text-secondary);
+  margin-bottom: 18px;
+}
+.pricing__note {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+/* ─── Table ─── */
+.pricing__table-wrap { overflow-x: auto; }
+.pricing__table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+.pricing__table thead th {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 500;
+  padding: 0 0 12px;
+  border-bottom: 1px solid var(--border);
+}
+.pricing__table tbody th {
+  font-weight: 400;
+  padding: 20px 24px 20px 0;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.pricing__table tbody td {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  white-space: nowrap;
+}
+.pricing__item-name {
+  display: block;
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+}
+.pricing__item-desc {
+  display: block;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  max-width: 46ch;
+}
+.pricing__amount {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--crimson);
+  text-align: right;
+}
+.pricing__from {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+.pricing__unit {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+/* ─── Lists ─── */
+.pricing__factors { list-style: none; display: grid; gap: 14px; }
+.pricing__factors li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 1rem;
+  line-height: 1.68;
+  color: var(--text-secondary);
+}
+.pricing__factors svg { color: var(--crimson); flex-shrink: 0; margin-top: 5px; }
+.pricing__factors strong { color: var(--text); }
+
+.pricing__faq-item { margin-bottom: 26px; }
+.pricing__faq-item h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+.pricing__faq-item p { font-size: 0.98rem; line-height: 1.75; color: var(--text-secondary); }
+
+/* ─── CTA ─── */
+.pricing__cta {
+  margin-top: 68px;
+  padding: 40px;
+  border: 1px solid var(--border);
+  background: var(--bg-off);
+  max-width: 68ch;
+}
+.pricing__cta h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+}
+.pricing__cta p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 22px; }
+.pricing__cta-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+@media (max-width: 768px) {
+  .pricing { padding: 100px 0 72px; }
+  .pricing__cta { padding: 28px 22px; }
+  .pricing__table tbody th { padding-right: 14px; }
+  .pricing__amount { font-size: 1.15rem; }
+}

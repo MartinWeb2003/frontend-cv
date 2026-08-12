@@ -5,3 +5,6 @@ dist/
 .env
 .env.local
 dist-ssr/
+
+# Local agent instructions, not part of the project
+CLAUDE.md

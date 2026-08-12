@@ -96,3 +96,7 @@
 }
 .footer__lang:hover { color: #fff; }
 .footer__lang.is-active { color: var(--crimson); }
+
+/* Legal link sits below the primary nav in emphasis. */
+.footer__nav-link--muted { opacity: 0.55; }
+.footer__nav-link--muted:hover { opacity: 1; }

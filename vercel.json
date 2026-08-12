@@ -26,8 +26,8 @@
   "redirects": [
     {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.martinbogoje.com" }],
-      "destination": "https://martinbogoje.com/:path*",
+      "has": [{ "type": "host", "value": "www.bogojemartin.com" }],
+      "destination": "https://bogojemartin.com/:path*",
       "permanent": true
     }
   ]

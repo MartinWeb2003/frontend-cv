@@ -1,91 +1,178 @@
 {
   "/bmfit1.webp": {
     "width": 1600,
-    "height": 1000
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
   },
   "/bmfit2.webp": {
     "width": 1600,
-    "height": 1000
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
   },
   "/bmfit3.webp": {
     "width": 1600,
-    "height": 1000
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
   },
   "/bmfit4.webp": {
     "width": 1600,
-    "height": 1000
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
   },
   "/bmfit5.webp": {
     "width": 1600,
-    "height": 1000
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
   },
   "/camping1.webp": {
     "width": 1600,
-    "height": 1000
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
   },
   "/camping2.webp": {
     "width": 1600,
-    "height": 1000
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
   },
   "/camping3.webp": {
     "width": 1600,
-    "height": 1000
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
   },
   "/camping4.webp": {
     "width": 1600,
-    "height": 1000
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
   },
   "/camping5.webp": {
     "width": 1600,
-    "height": 1000
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
   },
   "/cvjetnog1.webp": {
     "width": 1600,
-    "height": 754
+    "height": 754,
+    "widths": [
+      800,
+      1600
+    ]
   },
   "/cvjetnog2.webp": {
     "width": 1600,
-    "height": 753
+    "height": 753,
+    "widths": [
+      800,
+      1600
+    ]
   },
   "/cvjetnog3.webp": {
     "width": 1600,
-    "height": 780
+    "height": 780,
+    "widths": [
+      800,
+      1600
+    ]
   },
   "/eva1.webp": {
     "width": 1522,
-    "height": 858
+    "height": 858,
+    "widths": [
+      800,
+      1522
+    ]
   },
   "/eva2.webp": {
     "width": 1467,
-    "height": 865
+    "height": 865,
+    "widths": [
+      800,
+      1467
+    ]
   },
   "/eva3.webp": {
     "width": 1530,
-    "height": 756
+    "height": 756,
+    "widths": [
+      800,
+      1530
+    ]
   },
   "/eva4.webp": {
     "width": 1600,
-    "height": 754
+    "height": 754,
+    "widths": [
+      800,
+      1600
+    ]
   },
   "/grafica1.webp": {
     "width": 889,
-    "height": 770
+    "height": 770,
+    "widths": [
+      800,
+      889
+    ]
   },
   "/grafica2.webp": {
     "width": 1600,
-    "height": 682
+    "height": 682,
+    "widths": [
+      800,
+      1600
+    ]
   },
   "/grafica3.webp": {
     "width": 1254,
-    "height": 578
+    "height": 578,
+    "widths": [
+      800,
+      1254
+    ]
   },
   "/grafica4.webp": {
     "width": 1600,
-    "height": 731
+    "height": 731,
+    "widths": [
+      800,
+      1600
+    ]
   },
   "/logo.webp": {
     "width": 512,
-    "height": 512
+    "height": 512,
+    "widths": [
+      512
+    ]
   },
   "/og-image.jpg": {
     "width": 1200,
@@ -93,38 +180,74 @@
   },
   "/sabioncello1.webp": {
     "width": 1600,
-    "height": 758
+    "height": 758,
+    "widths": [
+      800,
+      1600
+    ]
   },
   "/sabioncello2.webp": {
     "width": 1600,
-    "height": 707
+    "height": 707,
+    "widths": [
+      800,
+      1600
+    ]
   },
   "/sabioncello3.webp": {
     "width": 1480,
-    "height": 784
+    "height": 784,
+    "widths": [
+      800,
+      1480
+    ]
   },
   "/sabioncello4.webp": {
     "width": 1401,
-    "height": 773
+    "height": 773,
+    "widths": [
+      800,
+      1401
+    ]
   },
   "/sotto1.webp": {
     "width": 1600,
-    "height": 1000
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
   },
   "/sotto2.webp": {
     "width": 1600,
-    "height": 1000
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
   },
   "/sotto3.webp": {
     "width": 1600,
-    "height": 928
+    "height": 928,
+    "widths": [
+      800,
+      1600
+    ]
   },
   "/sotto4.webp": {
     "width": 1600,
-    "height": 1000
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
   },
   "/sotto5.webp": {
     "width": 1600,
-    "height": 1000
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
   }
 }

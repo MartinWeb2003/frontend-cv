@@ -35,7 +35,24 @@
 
 # Canonical host: force the apex domain so www does not split ranking signals.
 [[redirects]]
-  from = "https://www.martinbogoje.com/*"
-  to = "https://martinbogoje.com/:splat"
+  from = "https://www.bogojemartin.com/*"
+  to = "https://bogojemartin.com/:splat"
   status = 301
   force = true
+
+# Locale-specific 404s. Without these, Netlify serves the Croatian dist/404.html
+# for every unknown path, including ones under /en/, /de/ and /pl/.
+[[redirects]]
+  from = "/en/*"
+  to = "/en/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/de/*"
+  to = "/de/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/pl/*"
+  to = "/pl/404.html"
+  status = 404

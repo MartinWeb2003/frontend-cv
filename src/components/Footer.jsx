@@ -1,10 +1,20 @@
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { FiMail } from 'react-icons/fi'
+import { FiMail, FiGithub, FiLinkedin, FiPhone } from 'react-icons/fi'
 import { Link, useLocation } from 'react-router-dom'
 import SectionLink from './SectionLink'
-import { equivalentPath } from '../routes'
-import { DEFAULT_LOCALE, LOCALES, LOCALE_TAGS, projectsIndexPath } from '../seo/siteConfig'
+import { equivalentPath, hasServices } from '../routes'
+import {
+  DEFAULT_LOCALE,
+  LOCALES,
+  LOCALE_TAGS,
+  PERSON,
+  pagePath,
+  phoneHref,
+  projectsIndexPath,
+  servicesIndexPath,
+  blogIndexPath,
+} from '../seo/siteConfig'
 import './Footer.css'
 
 const stagger = {
@@ -41,8 +51,26 @@ export default function Footer() {
         <motion.div variants={fadeUp}>
           <SectionLink to="hero" className="footer__wordmark">MARTIN BOGOJE</SectionLink>
         </motion.div>
+        {/*
+          Sitewide profile links. `rel="me"` plus the matching schema.org
+          sameAs is what ties this site to those accounts as one identity.
+          Each entry disappears if its config value is empty.
+        */}
         <motion.div className="footer__socials" variants={fadeUp}>
-          <a href="mailto:bogojemartin@gmail.com" aria-label="Email"><FiMail /></a>
+          <a href={`mailto:${PERSON.email}`} aria-label="Email"><FiMail /></a>
+          {PERSON.github && (
+            <a href={PERSON.github} target="_blank" rel="noopener noreferrer me" aria-label="GitHub">
+              <FiGithub />
+            </a>
+          )}
+          {PERSON.linkedin && (
+            <a href={PERSON.linkedin} target="_blank" rel="noopener noreferrer me" aria-label="LinkedIn">
+              <FiLinkedin />
+            </a>
+          )}
+          {PERSON.phone && (
+            <a href={phoneHref()} aria-label={PERSON.phone}><FiPhone /></a>
+          )}
         </motion.div>
       </div>
 
@@ -55,9 +83,46 @@ export default function Footer() {
               <SectionLink to={l.to} className="footer__nav-link">{t(l.labelKey)}</SectionLink>
             </motion.span>
           ))}
+          {/* Standalone pages, so they get crawlable links from every page. */}
+          {hasServices(lng) && (
+            <motion.span variants={fadeUp}>
+              <Link to={servicesIndexPath(lng)} className="footer__nav-link">
+                {t('services.crumbServices')}
+              </Link>
+            </motion.span>
+          )}
+          {hasServices(lng) && (
+            <motion.span variants={fadeUp}>
+              <Link to={pagePath('pricing', lng)} className="footer__nav-link">
+                {t('pricingPage.label')}
+              </Link>
+            </motion.span>
+          )}
+          {hasServices(lng) && (
+            <motion.span variants={fadeUp}>
+              <Link to={blogIndexPath(lng)} className="footer__nav-link">
+                {t('blog.crumb')}
+              </Link>
+            </motion.span>
+          )}
           <motion.span variants={fadeUp}>
             <Link to={projectsIndexPath(lng)} className="footer__nav-link">
               {t('projectPage.crumbProjects')}
+            </Link>
+          </motion.span>
+          <motion.span variants={fadeUp}>
+            <Link to={pagePath('about', lng)} className="footer__nav-link">
+              {t('aboutPage.label')}
+            </Link>
+          </motion.span>
+          <motion.span variants={fadeUp}>
+            <Link to={pagePath('contact', lng)} className="footer__nav-link">
+              {t('contactPage.label')}
+            </Link>
+          </motion.span>
+          <motion.span variants={fadeUp}>
+            <Link to={pagePath('privacy', lng)} className="footer__nav-link footer__nav-link--muted">
+              {t('privacyPage.title')}
             </Link>
           </motion.span>
         </motion.nav>

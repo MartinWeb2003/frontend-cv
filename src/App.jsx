@@ -7,6 +7,14 @@ import CustomCursor from './components/CustomCursor'
 import HomePage from './pages/HomePage'
 import ProjectsIndexPage from './pages/ProjectsIndexPage'
 import ProjectPage from './pages/ProjectPage'
+import AboutPage from './pages/AboutPage'
+import ContactPage from './pages/ContactPage'
+import PrivacyPage from './pages/PrivacyPage'
+import ServicesIndexPage from './pages/ServicesIndexPage'
+import ServicePage from './pages/ServicePage'
+import PricingPage from './pages/PricingPage'
+import BlogIndexPage from './pages/BlogIndexPage'
+import BlogPostPage from './pages/BlogPostPage'
 import NotFoundPage from './pages/NotFoundPage'
 import { routePatterns } from './routes'
 import './App.css'
@@ -15,6 +23,14 @@ const PAGES = {
   home: HomePage,
   projects: ProjectsIndexPage,
   project: ProjectPage,
+  about: AboutPage,
+  contact: ContactPage,
+  privacy: PrivacyPage,
+  services: ServicesIndexPage,
+  service: ServicePage,
+  pricing: PricingPage,
+  blog: BlogIndexPage,
+  post: BlogPostPage,
 }
 
 /**

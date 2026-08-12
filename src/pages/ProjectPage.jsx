@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router-dom'
 import { FiExternalLink, FiGithub, FiArrowLeft, FiArrowRight, FiCheck } from 'react-icons/fi'
 import { PROJECTS, projectBySlug, PLACEHOLDER_BG } from '../data/projects'
-import IMAGE_META from '../data/imageMeta.json'
+import { imgAttrs, SIZES } from '../data/imageAttrs'
 import usePageMeta from '../seo/usePageMeta'
 import NotFoundPage from './NotFoundPage'
 import {
@@ -15,8 +15,6 @@ import {
   pathForLocale,
 } from '../seo/siteConfig'
 import './ProjectPage.css'
-
-const imgDim = (src) => IMAGE_META[src] ?? {}
 
 export default function ProjectPage() {
   const { slug } = useParams()
@@ -103,7 +101,7 @@ export default function ProjectPage() {
             <img
               src={project.images[0]}
               alt={`${project.title}, ${tp('Subtitle')}`}
-              {...imgDim(project.images[0])}
+              {...imgAttrs(project.images[0], SIZES.hero)}
               loading="eager"
               fetchPriority="high"
               decoding="async"
@@ -159,7 +157,7 @@ export default function ProjectPage() {
                     key={src}
                     src={src}
                     alt={`${project.title}, ${t('projects.screenshotAlt', { n: i + 2 })}`}
-                    {...imgDim(src)}
+                    {...imgAttrs(src, SIZES.card)}
                     loading="lazy"
                     decoding="async"
                   />

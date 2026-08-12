@@ -6,7 +6,7 @@
  */
 
 /** Production origin. No trailing slash. Change here and everything follows. */
-export const SITE_ORIGIN = 'https://martinbogoje.com'
+export const SITE_ORIGIN = 'https://bogojemartin.com'
 
 export const DEFAULT_LOCALE = 'hr'
 export const LOCALES = ['hr', 'en', 'de', 'pl']
@@ -35,6 +35,50 @@ export const PROJECT_SEGMENT = {
   pl: 'projekty',
 }
 
+/**
+ * Localised URL segments for the standalone pages. Changing any of these
+ * breaks already-indexed URLs — add a redirect if you do.
+ */
+export const PAGE_SEGMENT = {
+  about: { hr: 'o-meni', en: 'about', de: 'ueber-mich', pl: 'o-mnie' },
+  contact: { hr: 'kontakt', en: 'contact', de: 'kontakt', pl: 'kontakt' },
+  privacy: {
+    hr: 'politika-privatnosti',
+    en: 'privacy-policy',
+    de: 'datenschutz',
+    pl: 'polityka-prywatnosci',
+  },
+  // hr/en only, like services; see SERVICE_LOCALES.
+  pricing: { hr: 'cjenik', en: 'pricing' },
+}
+
+/** @param {'about'|'contact'|'privacy'} key */
+export const pagePath = (key, lng) => `${pathForLocale(lng)}${PAGE_SEGMENT[key][lng]}/`
+export const pageUrl = (key, lng) => `${SITE_ORIGIN}${pagePath(key, lng)}`
+
+/**
+ * Services hub segment. Only the locales listed in SERVICE_LOCALES have these
+ * pages, so this map intentionally has no de/pl entries.
+ */
+export const SERVICES_SEGMENT = {
+  hr: 'usluge',
+  en: 'services',
+}
+
+export const servicesIndexPath = (lng) => `${pathForLocale(lng)}${SERVICES_SEGMENT[lng]}/`
+export const servicePath = (lng, slug) => `${servicesIndexPath(lng)}${slug}/`
+export const serviceUrl = (lng, slug) => `${SITE_ORIGIN}${servicePath(lng, slug)}`
+
+/** Blog segment. hr/en only, like services; see POST_LOCALES. */
+export const BLOG_SEGMENT = {
+  hr: 'blog',
+  en: 'blog',
+}
+
+export const blogIndexPath = (lng) => `${pathForLocale(lng)}${BLOG_SEGMENT[lng]}/`
+export const postPath = (lng, slug) => `${blogIndexPath(lng)}${slug}/`
+export const postUrl = (lng, slug) => `${SITE_ORIGIN}${postPath(lng, slug)}`
+
 export const projectsIndexPath = (lng) => `${pathForLocale(lng)}${PROJECT_SEGMENT[lng]}/`
 export const projectPath = (lng, slug) => `${projectsIndexPath(lng)}${slug}/`
 export const projectUrl = (lng, slug) => `${SITE_ORIGIN}${projectPath(lng, slug)}`
@@ -56,15 +100,60 @@ export const PERSON = {
   email: 'bogojemartin@gmail.com',
   locality: 'Zagreb',
   country: 'HR',
+
   /**
-   * Profiles that prove identity to search engines. GitHub comes from the repo
-   * remote. Add your LinkedIn URL here — it is the single highest-value entry
-   * for a Knowledge Panel and is currently missing.
+   * Optional details. Each is fully wired: set a value and it appears in the
+   * about page, contact page, footer and JSON-LD automatically; leave it empty
+   * and it is omitted everywhere rather than rendering blank. Nothing here is
+   * required for the site to build or look right.
+   *
+   * Currently unset by choice. If any of them is ever added, the only cost is
+   * a rebuild.
    */
-  sameAs: [
-    'https://github.com/MartinWeb2003',
-    // 'https://www.linkedin.com/in/<your-handle>/',
-  ].filter(Boolean),
+  phone: '', // e.g. '+385 91 234 5678'
+  photo: '', // e.g. '/martin.webp' (put the file in public/)
+  linkedin: '', // e.g. 'https://www.linkedin.com/in/martin-bogoje/'
+  github: 'https://github.com/MartinWeb2003',
+
+  /** Croatian business registration number, shown in the footer when set. */
+  oib: '',
+}
+
+/** Identity profiles for schema.org `sameAs`; empty entries drop out. */
+export const PERSON_PROFILES = [PERSON.github, PERSON.linkedin].filter(Boolean)
+
+/** Digits-only form for `tel:` links. */
+export const phoneHref = () => (PERSON.phone ? `tel:${PERSON.phone.replace(/[^\d+]/g, '')}` : '')
+
+/**
+ * Bing Webmaster Tools verification token. Same deal as the Google one:
+ * paste it in, rebuild, and the meta tag appears on every page.
+ */
+export const BING_SITE_VERIFICATION = ''
+
+/**
+ * Cookieless analytics. Set `plausibleDomain` (or `umamiSrc` + `umamiId`) and
+ * the script is injected into every prerendered page.
+ *
+ * Deliberately cookieless: no cookie banner is legally required, and no
+ * consent script sits on the critical path hurting INP.
+ */
+export const ANALYTICS = {
+  plausibleDomain: '', // e.g. 'bogojemartin.com'
+  umamiSrc: '',
+  umamiId: '',
+}
+
+/**
+ * Emit LocalBusiness schema. Only switch this on if you will stand behind a
+ * real address or service area — it is required for local pack eligibility but
+ * a fabricated one is worse than none.
+ */
+export const LOCAL_BUSINESS = {
+  enabled: false,
+  areaServed: ['Zagreb', 'Hrvatska'],
+  streetAddress: '',
+  postalCode: '',
 }
 
 /** Job title per locale, mirroring hero.tagline. */
@@ -102,14 +191,17 @@ export function personSchema(lng, seo) {
     givenName: 'Martin',
     familyName: 'Bogoje',
     url: urlForLocale(lng),
-    image: OG_IMAGE,
+    image: PERSON.photo ? `${SITE_ORIGIN}${PERSON.photo}` : OG_IMAGE,
     email: `mailto:${PERSON.email}`,
+    ...(PERSON.phone ? { telephone: PERSON.phone } : {}),
     jobTitle: JOB_TITLE[lng] ?? JOB_TITLE.en,
     description: seo.description,
     address: {
       '@type': 'PostalAddress',
       addressLocality: PERSON.locality,
       addressCountry: PERSON.country,
+      ...(LOCAL_BUSINESS.streetAddress ? { streetAddress: LOCAL_BUSINESS.streetAddress } : {}),
+      ...(LOCAL_BUSINESS.postalCode ? { postalCode: LOCAL_BUSINESS.postalCode } : {}),
     },
     alumniOf: {
       '@type': 'CollegeOrUniversity',
@@ -128,7 +220,7 @@ export function personSchema(lng, seo) {
       name: LOCALE_TAGS[code],
       alternateName: code,
     })),
-    sameAs: PERSON.sameAs,
+    sameAs: PERSON_PROFILES,
   }
 }
 
@@ -211,5 +303,177 @@ export function collectionSchema(lng, seo, items) {
         url: projectUrl(lng, p.slug),
       })),
     },
+  }
+}
+
+/**
+ * ProfilePage wrapping the Person entity. Added by Google in 2025 specifically
+ * as an E-E-A-T signal, and the about page is where it belongs.
+ */
+export function profilePageSchema(lng, copy) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    url: pageUrl('about', lng),
+    name: copy.title,
+    description: copy.description,
+    inLanguage: LOCALE_TAGS[lng],
+    isPartOf: { '@id': `${SITE_ORIGIN}/#website` },
+    mainEntity: { '@id': `${SITE_ORIGIN}/#person` },
+  }
+}
+
+export function contactPageSchema(lng, copy) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    url: pageUrl('contact', lng),
+    name: copy.title,
+    description: copy.description,
+    inLanguage: LOCALE_TAGS[lng],
+    isPartOf: { '@id': `${SITE_ORIGIN}/#website` },
+    mainEntity: { '@id': `${SITE_ORIGIN}/#person` },
+  }
+}
+
+/** Generic page graph for anything without a more specific type (privacy). */
+export function webPageSchema(lng, copy, url) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    url,
+    name: copy.title,
+    description: copy.description,
+    inLanguage: LOCALE_TAGS[lng],
+    isPartOf: { '@id': `${SITE_ORIGIN}/#website` },
+  }
+}
+
+/**
+ * LocalBusiness, emitted only when LOCAL_BUSINESS.enabled is true. Required for
+ * local pack eligibility, but it must describe a real service area.
+ */
+export function localBusinessSchema(lng, seo) {
+  if (!LOCAL_BUSINESS.enabled) return null
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    '@id': `${SITE_ORIGIN}/#localbusiness`,
+    name: PERSON.name,
+    description: seo.description,
+    url: urlForLocale(lng),
+    image: PERSON.photo ? `${SITE_ORIGIN}${PERSON.photo}` : OG_IMAGE,
+    email: `mailto:${PERSON.email}`,
+    ...(PERSON.phone ? { telephone: PERSON.phone } : {}),
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: PERSON.locality,
+      addressCountry: PERSON.country,
+      ...(LOCAL_BUSINESS.streetAddress ? { streetAddress: LOCAL_BUSINESS.streetAddress } : {}),
+      ...(LOCAL_BUSINESS.postalCode ? { postalCode: LOCAL_BUSINESS.postalCode } : {}),
+    },
+    areaServed: LOCAL_BUSINESS.areaServed.map((name) => ({ '@type': 'Place', name })),
+    founder: { '@id': `${SITE_ORIGIN}/#person` },
+    sameAs: PERSON_PROFILES,
+  }
+}
+
+/**
+ * schema.org Service for a single offering, tied back to the Person as
+ * provider. `areaServed` is what makes it useful for local intent.
+ *
+ * @param {object} service entry from src/data/services.js
+ * @param {string} lng
+ * @param {{title: string, description: string, name: string}} copy
+ */
+export function serviceSchema(service, lng, copy) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    '@id': `${serviceUrl(lng, service.slug[lng])}#service`,
+    name: copy.name,
+    description: copy.description,
+    url: serviceUrl(lng, service.slug[lng]),
+    serviceType: copy.name,
+    inLanguage: LOCALE_TAGS[lng],
+    provider: { '@id': `${SITE_ORIGIN}/#person` },
+    areaServed: LOCAL_BUSINESS.areaServed.map((name) => ({ '@type': 'Place', name })),
+    /**
+     * No `offers.price`: publishing a price that is not real is worse than
+     * publishing none. Add it here once there is a rate card to stand behind.
+     */
+  }
+}
+
+/** ItemList of every service, for the services hub page. */
+export function serviceListSchema(lng, services, copy) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    url: `${SITE_ORIGIN}${servicesIndexPath(lng)}`,
+    name: copy.title,
+    description: copy.description,
+    inLanguage: LOCALE_TAGS[lng],
+    isPartOf: { '@id': `${SITE_ORIGIN}/#website` },
+    about: { '@id': `${SITE_ORIGIN}/#person` },
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: services.map((s, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: s.name,
+        url: s.url,
+      })),
+    },
+  }
+}
+
+/**
+ * schema.org BlogPosting. `author` and `publisher` both point at the Person
+ * entity rather than repeating the details, which is what ties an article to a
+ * known author, the signal Google's 2025 guidance leans on hardest.
+ *
+ * @param {object} post entry from src/data/posts.js
+ * @param {string} lng
+ * @param {{title: string, description: string}} copy
+ */
+export function blogPostingSchema(post, lng, copy) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    '@id': `${postUrl(lng, post.slug[lng])}#post`,
+    headline: copy.title,
+    description: copy.description,
+    url: postUrl(lng, post.slug[lng]),
+    mainEntityOfPage: postUrl(lng, post.slug[lng]),
+    datePublished: post.date,
+    dateModified: post.updated ?? post.date,
+    inLanguage: LOCALE_TAGS[lng],
+    image: `${SITE_ORIGIN}${post.image}`,
+    keywords: post.tags.join(', '),
+    author: { '@id': `${SITE_ORIGIN}/#person` },
+    publisher: { '@id': `${SITE_ORIGIN}/#person` },
+    isPartOf: { '@id': `${SITE_ORIGIN}${blogIndexPath(lng)}#blog` },
+  }
+}
+
+/** The blog itself, listing its posts. */
+export function blogSchema(lng, copy, posts) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    '@id': `${SITE_ORIGIN}${blogIndexPath(lng)}#blog`,
+    url: `${SITE_ORIGIN}${blogIndexPath(lng)}`,
+    name: copy.title,
+    description: copy.description,
+    inLanguage: LOCALE_TAGS[lng],
+    author: { '@id': `${SITE_ORIGIN}/#person` },
+    publisher: { '@id': `${SITE_ORIGIN}/#person` },
+    blogPost: posts.map((p) => ({
+      '@type': 'BlogPosting',
+      headline: p.title,
+      url: p.url,
+      datePublished: p.date,
+    })),
   }
 }

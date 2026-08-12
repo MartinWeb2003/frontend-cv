@@ -14,14 +14,37 @@ import {
   pathForLocale,
   projectsIndexPath,
   projectPath,
+  pagePath,
+  servicesIndexPath,
+  servicePath,
+  blogIndexPath,
+  postPath,
 } from './seo/siteConfig.js'
 import { PROJECTS } from './data/projects.js'
+import { SERVICES, SERVICE_LOCALES } from './data/services.js'
+import { POSTS } from './data/posts.js'
+
+/** Standalone pages that exist once per locale. */
+const STATIC_PAGES = ['about', 'contact', 'privacy']
+
+/** Services are Croatian and English only; see SERVICE_LOCALES for why. */
+export const hasServices = (lng) => SERVICE_LOCALES.includes(lng)
 
 /** Route patterns for react-router, per locale. */
 export const routePatterns = LOCALES.flatMap((lng) => [
   { lng, type: 'home', pattern: pathForLocale(lng) },
   { lng, type: 'projects', pattern: projectsIndexPath(lng) },
   { lng, type: 'project', pattern: `${projectsIndexPath(lng)}:slug` },
+  ...STATIC_PAGES.map((type) => ({ lng, type, pattern: pagePath(type, lng) })),
+  ...(hasServices(lng)
+    ? [
+        { lng, type: 'services', pattern: servicesIndexPath(lng) },
+        { lng, type: 'service', pattern: `${servicesIndexPath(lng)}:slug` },
+        { lng, type: 'pricing', pattern: pagePath('pricing', lng) },
+        { lng, type: 'blog', pattern: blogIndexPath(lng) },
+        { lng, type: 'post', pattern: `${blogIndexPath(lng)}:slug` },
+      ]
+    : []),
 ])
 
 /** Concrete URLs, one per page that gets prerendered and listed in the sitemap. */
@@ -35,6 +58,34 @@ export const allPages = LOCALES.flatMap((lng) => [
     path: projectPath(lng, p.slug),
     priority: '0.7',
   })),
+  { lng, type: 'about', path: pagePath('about', lng), priority: '0.8' },
+  { lng, type: 'contact', path: pagePath('contact', lng), priority: '0.7' },
+  // Legally required, but not something to spend crawl budget or rank on.
+  { lng, type: 'privacy', path: pagePath('privacy', lng), priority: '0.2' },
+  // Highest priority after the homepage: these carry the commercial queries.
+  ...(hasServices(lng)
+    ? [
+        { lng, type: 'services', path: servicesIndexPath(lng), priority: '0.9' },
+        { lng, type: 'pricing', path: pagePath('pricing', lng), priority: '0.9' },
+        { lng, type: 'blog', path: blogIndexPath(lng), priority: '0.7' },
+        ...POSTS.map((b) => ({
+          lng,
+          type: 'post',
+          slug: b.slug[lng],
+          postId: b.id,
+          path: postPath(lng, b.slug[lng]),
+          priority: '0.7',
+        })),
+        ...SERVICES.map((s) => ({
+          lng,
+          type: 'service',
+          slug: s.slug[lng],
+          serviceId: s.id,
+          path: servicePath(lng, s.slug[lng]),
+          priority: '0.9',
+        })),
+      ]
+    : []),
 ])
 
 /**
@@ -51,5 +102,29 @@ export function equivalentPath(pathname, targetLng) {
   if (!current) return pathForLocale(targetLng)
   if (current.type === 'projects') return projectsIndexPath(targetLng)
   if (current.type === 'project') return projectPath(targetLng, current.slug)
+  if (STATIC_PAGES.includes(current.type)) return pagePath(current.type, targetLng)
+  if (current.type === 'blog') {
+    return hasServices(targetLng) ? blogIndexPath(targetLng) : pathForLocale(targetLng)
+  }
+  if (current.type === 'post') {
+    if (!hasServices(targetLng)) return pathForLocale(targetLng)
+    const post = POSTS.find((b) => b.id === current.postId)
+    return post ? postPath(targetLng, post.slug[targetLng]) : pathForLocale(targetLng)
+  }
+  if (current.type === 'pricing') {
+    return hasServices(targetLng) ? pagePath('pricing', targetLng) : pathForLocale(targetLng)
+  }
+
+  // Services only exist in some locales; fall back to that locale's home
+  // rather than linking to a URL that was never built.
+  if (current.type === 'services') {
+    return hasServices(targetLng) ? servicesIndexPath(targetLng) : pathForLocale(targetLng)
+  }
+  if (current.type === 'service') {
+    if (!hasServices(targetLng)) return pathForLocale(targetLng)
+    const service = SERVICES.find((s) => s.id === current.serviceId)
+    return service ? servicePath(targetLng, service.slug[targetLng]) : pathForLocale(targetLng)
+  }
+
   return pathForLocale(targetLng)
 }

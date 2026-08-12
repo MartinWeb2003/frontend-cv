@@ -29,17 +29,37 @@ import {
   OG_IMAGE_WIDTH,
   OG_IMAGE_HEIGHT,
   GOOGLE_SITE_VERIFICATION,
+  BING_SITE_VERIFICATION,
+  ANALYTICS,
+  PERSON,
   urlForLocale,
   projectUrl,
   projectsIndexPath,
+  pagePath,
+  pageUrl,
+  pathForLocale,
   personSchema,
   websiteSchema,
   breadcrumbSchema,
   creativeWorkSchema,
   collectionSchema,
+  profilePageSchema,
+  contactPageSchema,
+  webPageSchema,
+  localBusinessSchema,
+  serviceSchema,
+  serviceListSchema,
+  servicePath,
+  servicesIndexPath,
+  blogIndexPath,
+  postPath,
+  blogPostingSchema,
+  blogSchema,
 } from '../src/seo/siteConfig.js'
 import { allPages } from '../src/routes.js'
 import { PROJECTS, projectBySlug } from '../src/data/projects.js'
+import { SERVICES, SERVICE_LOCALES, serviceById } from '../src/data/services.js'
+import { POSTS, POST_LOCALES, postById } from '../src/data/posts.js'
 
 const DIST = 'dist'
 const SSR_ENTRY = path.resolve('dist-ssr/entry-server.js')
@@ -78,7 +98,47 @@ async function describe(page) {
       imageAlt: L.seo.ogImageAlt,
       image: OG_IMAGE,
       alternates: Object.fromEntries(LOCALES.map((l) => [l, urlForLocale(l)])),
-      schemas: [personSchema(lng, L.seo), websiteSchema(lng, L.seo)],
+      schemas: [
+        personSchema(lng, L.seo),
+        websiteSchema(lng, L.seo),
+        localBusinessSchema(lng, L.seo),
+      ].filter(Boolean),
+    }
+  }
+
+  /* Standalone pages: about, contact, privacy. */
+  if (type === 'about' || type === 'contact' || type === 'privacy') {
+    const block = { about: 'aboutPage', contact: 'contactPage', privacy: 'privacyPage' }[type]
+    const copy = { title: L[block].metaTitle, description: L[block].metaDesc }
+
+    const schemaFor = {
+      about: () => [
+        profilePageSchema(lng, copy),
+        breadcrumbSchema([
+          { name: L.projectPage.crumbHome, url: urlForLocale(lng) },
+          { name: L.aboutPage.title, url },
+        ]),
+      ],
+      contact: () => [
+        contactPageSchema(lng, copy),
+        breadcrumbSchema([
+          { name: L.projectPage.crumbHome, url: urlForLocale(lng) },
+          { name: L.contactPage.title, url },
+        ]),
+      ],
+      privacy: () => [webPageSchema(lng, copy, url)],
+    }
+
+    return {
+      title: copy.title,
+      description: copy.description,
+      url,
+      image: type === 'about' && PERSON.photo ? `${SITE_ORIGIN}${PERSON.photo}` : OG_IMAGE,
+      imageAlt: L.seo.ogImageAlt,
+      alternates: Object.fromEntries(
+        LOCALES.map((l) => [l, `${SITE_ORIGIN}${pagePath(type, l)}`]),
+      ),
+      schemas: schemaFor[type](),
     }
   }
 
@@ -97,6 +157,140 @@ async function describe(page) {
         breadcrumbSchema([
           { name: L.projectPage.crumbHome, url: urlForLocale(lng) },
           { name: L.projectPage.crumbProjects, url },
+        ]),
+      ],
+    }
+  }
+
+  /* Blog index. hr/en only. */
+  if (type === 'blog') {
+    const copy = { title: L.blog.indexMetaTitle, description: L.blog.indexMetaDesc }
+    return {
+      title: copy.title,
+      description: copy.description,
+      url,
+      image: OG_IMAGE,
+      imageAlt: L.seo.ogImageAlt,
+      alternates: Object.fromEntries(
+        POST_LOCALES.map((l) => [l, `${SITE_ORIGIN}${blogIndexPath(l)}`]),
+      ),
+      schemas: [
+        blogSchema(
+          lng,
+          copy,
+          POSTS.map((b) => ({
+            title: L.blog[`${b.key}Title`],
+            url: `${SITE_ORIGIN}${postPath(lng, b.slug[lng])}`,
+            date: b.date,
+          })),
+        ),
+        breadcrumbSchema([
+          { name: L.projectPage.crumbHome, url: urlForLocale(lng) },
+          { name: L.blog.crumb, url },
+        ]),
+      ],
+    }
+  }
+
+  if (type === 'post') {
+    const post = postById(page.postId)
+    const copy = {
+      title: L.blog[`${post.key}MetaTitle`],
+      description: L.blog[`${post.key}MetaDesc`],
+    }
+    return {
+      title: copy.title,
+      description: copy.description,
+      url,
+      image: `${SITE_ORIGIN}${post.image}`,
+      imageAlt: L.blog[`${post.key}Title`],
+      alternates: Object.fromEntries(
+        POST_LOCALES.map((l) => [l, `${SITE_ORIGIN}${postPath(l, post.slug[l])}`]),
+      ),
+      schemas: [
+        blogPostingSchema(post, lng, { title: L.blog[`${post.key}Title`], description: copy.description }),
+        breadcrumbSchema([
+          { name: L.projectPage.crumbHome, url: urlForLocale(lng) },
+          { name: L.blog.crumb, url: `${SITE_ORIGIN}${blogIndexPath(lng)}` },
+          { name: L.blog[`${post.key}Title`], url },
+        ]),
+      ],
+    }
+  }
+
+  /* Cost guide. hr/en only, like services. */
+  if (type === 'pricing') {
+    const copy = { title: L.pricingPage.metaTitle, description: L.pricingPage.metaDesc }
+    return {
+      title: copy.title,
+      description: copy.description,
+      url,
+      image: OG_IMAGE,
+      imageAlt: L.seo.ogImageAlt,
+      alternates: Object.fromEntries(
+        SERVICE_LOCALES.map((l) => [l, `${SITE_ORIGIN}${pagePath('pricing', l)}`]),
+      ),
+      schemas: [
+        webPageSchema(lng, copy, url),
+        breadcrumbSchema([
+          { name: L.projectPage.crumbHome, url: urlForLocale(lng) },
+          { name: L.pricingPage.label, url },
+        ]),
+      ],
+    }
+  }
+
+  /* Services hub. Alternates only cover SERVICE_LOCALES, never de/pl. */
+  if (type === 'services') {
+    const copy = { title: L.services.indexMetaTitle, description: L.services.indexMetaDesc }
+    return {
+      title: copy.title,
+      description: copy.description,
+      url,
+      image: OG_IMAGE,
+      imageAlt: L.seo.ogImageAlt,
+      alternates: Object.fromEntries(
+        SERVICE_LOCALES.map((l) => [l, `${SITE_ORIGIN}${servicesIndexPath(l)}`]),
+      ),
+      schemas: [
+        serviceListSchema(
+          lng,
+          SERVICES.map((s) => ({
+            name: L.services[`${s.key}Name`],
+            url: `${SITE_ORIGIN}${servicePath(lng, s.slug[lng])}`,
+          })),
+          copy,
+        ),
+        breadcrumbSchema([
+          { name: L.projectPage.crumbHome, url: urlForLocale(lng) },
+          { name: L.services.crumbServices, url },
+        ]),
+      ],
+    }
+  }
+
+  if (type === 'service') {
+    const service = serviceById(page.serviceId)
+    const copy = {
+      title: L.services[`${service.key}MetaTitle`],
+      description: L.services[`${service.key}MetaDesc`],
+      name: L.services[`${service.key}Name`],
+    }
+    return {
+      title: copy.title,
+      description: copy.description,
+      url,
+      image: OG_IMAGE,
+      imageAlt: L.seo.ogImageAlt,
+      alternates: Object.fromEntries(
+        SERVICE_LOCALES.map((l) => [l, `${SITE_ORIGIN}${servicePath(l, service.slug[l])}`]),
+      ),
+      schemas: [
+        serviceSchema(service, lng, copy),
+        breadcrumbSchema([
+          { name: L.projectPage.crumbHome, url: urlForLocale(lng) },
+          { name: L.services.crumbServices, url: `${SITE_ORIGIN}${servicesIndexPath(lng)}` },
+          { name: copy.name, url },
         ]),
       ],
     }
@@ -166,10 +360,62 @@ ${ogAlts}
 ${meta.schemas.map((s) => `    <script type="application/ld+json">${jsonLd(s)}</script>`).join('\n')}`
 }
 
-function buildHtml(template, lng, meta, appHtml, opts) {
-  const verification = GOOGLE_SITE_VERIFICATION
-    ? `<meta name="google-site-verification" content="${attr(GOOGLE_SITE_VERIFICATION)}" />`
-    : '<!-- Set GOOGLE_SITE_VERIFICATION in src/seo/siteConfig.js to emit the Search Console tag. -->'
+/**
+ * Preload the two font faces used above the fold.
+ *
+ * fontsource is imported from CSS, so the browser only discovers the woff2
+ * after the stylesheet parses, which delays the first text paint and therefore
+ * LCP. Preloading the exact hashed files pulls that discovery forward.
+ *
+ * Only latin 400 (body) and latin 900 (the hero h1, which is the LCP element)
+ * are preloaded; preloading more would compete for bandwidth.
+ */
+async function fontPreloads() {
+  let assets
+  try {
+    assets = await fs.readdir(path.join(DIST, 'assets'))
+  } catch {
+    return ''
+  }
+
+  const wanted = [/^inter-latin-400-normal-.*\.woff2$/, /^inter-latin-900-normal-.*\.woff2$/]
+  return wanted
+    .map((re) => assets.find((f) => re.test(f)))
+    .filter(Boolean)
+    .map(
+      (file) =>
+        `    <link rel="preload" as="font" type="font/woff2" href="/assets/${file}" crossorigin />`,
+    )
+    .join('\n')
+}
+
+/**
+ * Cookieless analytics, deferred so it never sits on the critical path.
+ * Returns an empty string when nothing is configured.
+ */
+function analyticsTag() {
+  if (ANALYTICS.plausibleDomain) {
+    return `    <script defer data-domain="${attr(ANALYTICS.plausibleDomain)}" src="https://plausible.io/js/script.js"></script>`
+  }
+  if (ANALYTICS.umamiSrc && ANALYTICS.umamiId) {
+    return `    <script defer src="${attr(ANALYTICS.umamiSrc)}" data-website-id="${attr(ANALYTICS.umamiId)}"></script>`
+  }
+  return ''
+}
+
+function buildHtml(template, lng, meta, appHtml, opts = {}) {
+  const verification = [
+    GOOGLE_SITE_VERIFICATION
+      ? `<meta name="google-site-verification" content="${attr(GOOGLE_SITE_VERIFICATION)}" />`
+      : '<!-- Set GOOGLE_SITE_VERIFICATION in src/seo/siteConfig.js to emit the Search Console tag. -->',
+    BING_SITE_VERIFICATION
+      ? `    <meta name="msvalidate.01" content="${attr(BING_SITE_VERIFICATION)}" />`
+      : '    <!-- Set BING_SITE_VERIFICATION in src/seo/siteConfig.js for Bing Webmaster Tools. -->',
+    analyticsTag(),
+    opts.fontPreloads,
+  ]
+    .filter(Boolean)
+    .join('\n')
 
   return template
     .replace(/<html lang="[^"]*">/, `<html lang="${lng}">`)
@@ -190,12 +436,13 @@ async function main() {
   }
 
   const { render } = await import(pathToFileURL(SSR_ENTRY).href)
+  const preloads = await fontPreloads()
 
   let count = 0
   for (const page of allPages) {
     const meta = await describe(page)
     const appHtml = await render(page.lng, page.path)
-    const html = buildHtml(template, page.lng, meta, appHtml)
+    const html = buildHtml(template, page.lng, meta, appHtml, { fontPreloads: preloads })
 
     const outDir = path.join(DIST, page.path)
     await fs.mkdir(outDir, { recursive: true })
@@ -204,28 +451,42 @@ async function main() {
     console.log(`  ${page.path.padEnd(34)} ${String((Buffer.byteLength(html) / 1024).toFixed(0)).padStart(4)} KB`)
   }
 
-  await write404(template, render)
+  await write404(template, render, preloads)
   await writeRobots()
   await writeSitemap()
   console.log(`\n${count} pages prerendered.`)
 }
 
-/** Static-host fallback. noindex so it never competes in search. */
-async function write404(template, render) {
-  const L = await locale(DEFAULT_LOCALE)
-  const appHtml = await render(DEFAULT_LOCALE, '/__not-found__')
-  const meta = {
-    title: `${L.notFound.title} | Martin Bogoje`,
-    description: L.notFound.text,
-    url: `${SITE_ORIGIN}/404.html`,
-    image: OG_IMAGE,
-    imageAlt: L.seo.ogImageAlt,
-    alternates: Object.fromEntries(LOCALES.map((l) => [l, urlForLocale(l)])),
-    schemas: [],
+/**
+ * Static-host fallbacks, one per locale. noindex so they never compete in
+ * search. The host maps /de/* to dist/de/404.html (see netlify.toml), so a
+ * German visitor hitting a bad URL gets a German error page rather than a
+ * Croatian one.
+ */
+async function write404(template, render, preloads) {
+  for (const lng of LOCALES) {
+    const L = await locale(lng)
+    const appHtml = await render(lng, `${pathForLocale(lng)}__not-found__`)
+    const meta = {
+      title: `${L.notFound.title} | Martin Bogoje`,
+      description: L.notFound.text,
+      url: `${SITE_ORIGIN}${pathForLocale(lng)}404.html`,
+      image: OG_IMAGE,
+      imageAlt: L.seo.ogImageAlt,
+      alternates: Object.fromEntries(LOCALES.map((l) => [l, urlForLocale(l)])),
+      schemas: [],
+    }
+    const html = buildHtml(template, lng, meta, appHtml, {
+      noindex: true,
+      fontPreloads: preloads,
+    })
+
+    const out =
+      lng === DEFAULT_LOCALE ? path.join(DIST, '404.html') : path.join(DIST, lng, '404.html')
+    await fs.mkdir(path.dirname(out), { recursive: true })
+    await fs.writeFile(out, html, 'utf8')
+    console.log(`  ${out} (noindex)`)
   }
-  const html = buildHtml(template, DEFAULT_LOCALE, meta, appHtml, { noindex: true })
-  await fs.writeFile(path.join(DIST, '404.html'), html, 'utf8')
-  console.log('  dist/404.html (noindex)')
 }
 
 async function writeRobots() {

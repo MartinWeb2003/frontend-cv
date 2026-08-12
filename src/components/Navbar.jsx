@@ -4,9 +4,10 @@ import { useTranslation } from 'react-i18next'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { scroller } from 'react-scroll'
 import StaggeredMenu from '../bits/StaggeredMenu'
+import { hasServices } from '../routes'
 import LanguageSwitcher from './LanguageSwitcher'
 import IMAGE_META from '../data/imageMeta.json'
-import { DEFAULT_LOCALE, LOCALES, pathForLocale } from '../seo/siteConfig'
+import { DEFAULT_LOCALE, LOCALES, blogIndexPath, pathForLocale, servicesIndexPath } from '../seo/siteConfig'
 import './Navbar.css'
 
 export default function Navbar() {
@@ -63,6 +64,36 @@ export default function Navbar() {
     },
   }))
 
+  /*
+   * Services is a real route rather than a section anchor, and the highest
+   * commercial-intent page on the site, so it leads the menu where it exists.
+   */
+  const menuLinks = hasServices(lng)
+    ? [
+        {
+          label: t('services.crumbServices'),
+          to: 'services-page',
+          href: servicesIndexPath(lng),
+          onClick: (e) => {
+            if (e && (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)) return
+            e?.preventDefault()
+            navigate(servicesIndexPath(lng))
+          },
+        },
+        ...links,
+        {
+          label: t('blog.crumb'),
+          to: 'blog-page',
+          href: blogIndexPath(lng),
+          onClick: (e) => {
+            if (e && (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)) return
+            e?.preventDefault()
+            navigate(blogIndexPath(lng))
+          },
+        },
+      ]
+    : links
+
   return (
     <>
       <motion.header
@@ -107,7 +138,7 @@ export default function Navbar() {
       <StaggeredMenu
         isOpen={menuOpen}
         onClose={() => setMenuOpen(false)}
-        links={links}
+        links={menuLinks}
       />
     </>
   )

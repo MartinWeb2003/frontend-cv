@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { FiArrowUpRight } from 'react-icons/fi'
 import { PROJECTS, PLACEHOLDER_BG } from '../data/projects'
-import IMAGE_META from '../data/imageMeta.json'
+import { imgAttrs, SIZES } from '../data/imageAttrs'
 import DrawTitle from '../bits/DrawTitle'
 import usePageMeta from '../seo/usePageMeta'
 import {
@@ -13,8 +13,6 @@ import {
   projectsIndexPath,
 } from '../seo/siteConfig'
 import './ProjectsIndexPage.css'
-
-const imgDim = (src) => IMAGE_META[src] ?? {}
 
 export default function ProjectsIndexPage() {
   const { t, i18n } = useTranslation()
@@ -52,7 +50,7 @@ export default function ProjectsIndexPage() {
                   <img
                     src={project.images[0]}
                     alt={`${project.title}, ${t(`projects.${project.key}Subtitle`)}`}
-                    {...imgDim(project.images[0])}
+                    {...imgAttrs(project.images[0], SIZES.card)}
                     loading="lazy"
                     decoding="async"
                     className="pindex__img"

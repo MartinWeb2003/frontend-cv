@@ -4,13 +4,10 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { FiExternalLink, FiGithub, FiArrowUpRight, FiArrowRight } from 'react-icons/fi'
 import { PROJECTS, FEATURED_PROJECTS, PLACEHOLDER_BG, PLACEHOLDER_ACCENT } from '../data/projects'
-import IMAGE_META from '../data/imageMeta.json'
+import { imgAttrs, SIZES } from '../data/imageAttrs'
 import DrawTitle from '../bits/DrawTitle'
 import { DEFAULT_LOCALE, LOCALES, projectPath, projectsIndexPath } from '../seo/siteConfig'
 import './Projects.css'
-
-/** Intrinsic size for an optimized asset, so <img> can reserve space (no CLS). */
-const imgDim = (src) => IMAGE_META[src] ?? {}
 
 /* ─── Single project row ─── */
 function ProjectRow({ project, lng }) {
@@ -46,7 +43,7 @@ function ProjectRow({ project, lng }) {
             src={project.images[0]}
             alt={`${project.title}, ${t(`projects.${project.key}Subtitle`)}`}
             className="proj-row__img"
-            {...imgDim(project.images[0])}
+            {...imgAttrs(project.images[0], SIZES.projectRow)}
             loading="lazy"
             decoding="async"
             onError={(e) => (e.target.style.display = 'none')}
