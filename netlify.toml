@@ -33,10 +33,12 @@
   [headers.values]
     Cache-Control = "public, max-age=2592000"
 
-# Canonical host: force the apex domain so www does not split ranking signals.
+# Canonical host: www, matching the primary domain configured in Vercel.
+# Keeping these in agreement matters: a canonical tag pointing at a host that
+# redirects elsewhere is the bug that broke the first deploy.
 [[redirects]]
-  from = "https://www.bogojemartin.com/*"
-  to = "https://bogojemartin.com/:splat"
+  from = "https://bogojemartin.com/*"
+  to = "https://www.bogojemartin.com/:splat"
   status = 301
   force = true
 

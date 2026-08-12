@@ -6,7 +6,7 @@
  */
 
 /** Production origin. No trailing slash. Change here and everything follows. */
-export const SITE_ORIGIN = 'https://bogojemartin.com'
+export const SITE_ORIGIN = 'https://www.bogojemartin.com'
 
 export const DEFAULT_LOCALE = 'hr'
 export const LOCALES = ['hr', 'en', 'de', 'pl']
