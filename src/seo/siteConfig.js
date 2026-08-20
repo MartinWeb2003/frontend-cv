@@ -122,6 +122,18 @@ export const PERSON = {
 /** Identity profiles for schema.org `sameAs`; empty entries drop out. */
 export const PERSON_PROFILES = [PERSON.github, PERSON.linkedin].filter(Boolean)
 
+/**
+ * The CV exists in Croatian and English only. Croatian visitors get the
+ * Croatian edition, every other locale gets the English one: a German or
+ * Polish reader is served better by English than by Croatian. Both PDFs are
+ * generated from cv/*.html by `npm run cv`.
+ */
+export const cvPath = (lng) =>
+  lng === DEFAULT_LOCALE ? '/Martin_Bogoje-CV.pdf' : '/Martin_Bogoje-CV-EN.pdf'
+
+/** Filename for the `download` attribute, so the saved file is not "download". */
+export const cvFilename = (lng) => cvPath(lng).slice(1)
+
 /** Digits-only form for `tel:` links. */
 export const phoneHref = () => (PERSON.phone ? `tel:${PERSON.phone.replace(/[^\d+]/g, '')}` : '')
 

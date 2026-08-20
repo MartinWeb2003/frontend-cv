@@ -182,30 +182,45 @@
 /* ─── Scene colour presets ─── */
 .about__presets {
   position: absolute;
-  top: 14px;
-  right: 14px;
+  top: 4px;
+  right: 4px;
   z-index: 3;
   display: flex;
-  gap: 9px;
+  gap: 0;
 }
+/*
+ * The button is a 44px touch target; the visible swatch is the ::before dot.
+ * Sizing the button itself down to the dot made these hard to hit on a phone.
+ */
 .about__preset {
-  width: 20px;
-  height: 20px;
+  width: 44px;
+  height: 44px;
   padding: 0;
+  border: 0;
+  background: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.about__preset::before {
+  content: "";
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.22);
   background: var(--preset);
-  cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
-.about__preset:hover { transform: scale(1.18); }
-.about__preset.is-active {
+.about__preset:hover::before { transform: scale(1.18); }
+.about__preset:active::before { transform: scale(1.04); }
+.about__preset.is-active::before {
   border-color: rgba(255, 255, 255, 0.9);
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.14);
 }
 .about__preset:focus-visible {
   outline: 2px solid #fff;
-  outline-offset: 3px;
+  outline-offset: -5px;
 }
 
 /* Services in the intro list link to their own pages where those exist. */

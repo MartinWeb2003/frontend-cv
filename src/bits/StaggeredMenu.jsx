@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { useTranslation } from 'react-i18next'
+import { cvFilename, cvPath, DEFAULT_LOCALE, LOCALES } from '../seo/siteConfig'
 import './StaggeredMenu.css'
 
 const itemVariants = {
@@ -40,7 +41,8 @@ const panelVariants = {
 }
 
 export default function StaggeredMenu({ isOpen, onClose, links }) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const lng = LOCALES.includes(i18n.language) ? i18n.language : DEFAULT_LOCALE
 
   // Lock body scroll while open
   useEffect(() => {
@@ -106,7 +108,7 @@ export default function StaggeredMenu({ isOpen, onClose, links }) {
               animate={{ opacity: 1, y: 0, transition: { delay: 0.55, duration: 0.4 } }}
               exit={{ opacity: 0 }}
             >
-              <a href="/Martin_Bogoje-CV.pdf" download="Martin_Bogoje-CV.pdf" className="btn btn-primary smenu-resume">
+              <a href={cvPath(lng)} download={cvFilename(lng)} className="btn btn-primary smenu-resume">
                 {t('menu.cvBtn')}
               </a>
             </motion.div>

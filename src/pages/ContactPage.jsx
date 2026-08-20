@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { FiMail, FiPhone, FiMapPin, FiGithub, FiLinkedin, FiDownload } from 'react-icons/fi'
 import usePageMeta from '../seo/usePageMeta'
 import {
+  cvFilename,
+  cvPath,
   DEFAULT_LOCALE,
   LOCALES,
   PERSON,
@@ -78,7 +80,7 @@ export default function ContactPage() {
               <a href={`mailto:${PERSON.email}`} className="btn btn-primary">
                 <FiMail size={14} /> {t('contact.emailBtn')}
               </a>
-              <a href="/Martin_Bogoje-CV.pdf" download className="btn btn-outline">
+              <a href={cvPath(lng)} download={cvFilename(lng)} className="btn btn-outline">
                 <FiDownload size={14} /> {t('contact.cvBtn')}
               </a>
             </div>

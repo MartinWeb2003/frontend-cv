@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { FiMail, FiDownload, FiArrowUpRight, FiMapPin } from 'react-icons/fi'
 import ImageTrail from '../bits/ImageTrail'
 import useInView from '../hooks/useInView'
+import { cvFilename, cvPath, DEFAULT_LOCALE, LOCALES } from '../seo/siteConfig'
 import './Contact.css'
 
 const TRAIL_IMAGES = [
@@ -19,7 +20,8 @@ const fadeUp = {
 }
 
 export default function Contact() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const lng = LOCALES.includes(i18n.language) ? i18n.language : DEFAULT_LOCALE
   const sectionRef = useRef(null)
   const [ref, inView] = useInView()
 
@@ -60,7 +62,7 @@ export default function Contact() {
             </motion.div>
 
             <motion.div className="contact__secondary" custom={3} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
-              <a href="/Martin_Bogoje-CV.pdf" download="Martin_Bogoje-CV.pdf" className="contact__link">
+              <a href={cvPath(lng)} download={cvFilename(lng)} className="contact__link">
                 <FiDownload size={14} /> {t('contact.cvBtn')}
               </a>
               <span className="contact__link-sep">·</span>

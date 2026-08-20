@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { FiMail, FiPhone, FiGithub, FiLinkedin, FiDownload, FiArrowRight } from 'react-icons/fi'
 import usePageMeta from '../seo/usePageMeta'
 import {
+  cvFilename,
+  cvPath,
   DEFAULT_LOCALE,
   LOCALES,
   PERSON,
@@ -94,7 +96,7 @@ export default function AboutPage() {
                 </li>
               )}
               <li>
-                <a href="/Martin_Bogoje-CV.pdf" download>
+                <a href={cvPath(lng)} download={cvFilename(lng)}>
                   <FiDownload size={14} /> {t('contact.cvBtn')}
                 </a>
               </li>
