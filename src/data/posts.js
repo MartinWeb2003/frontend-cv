@@ -54,6 +54,26 @@ export const POSTS = [
     tags: ['WordPress', 'React', 'CMS'],
   },
   {
+    id: 'comparing-quotes',
+    key: 'b4',
+    date: '2026-08-12',
+    updated: '2026-08-12',
+    slug: {
+      hr: 'zasto-se-ponude-za-web-stranicu-razlikuju',
+      en: 'why-website-quotes-vary',
+    },
+    /**
+     * Supports the pricing page rather than a service: /cjenik/ was the one
+     * money page with no article feeding it. `ctaPricing` swaps the closing
+     * call to action from a service to the cost guide.
+     */
+    service: 'website-development',
+    ctaPricing: true,
+    relatedProjects: ['sabioncello-grafika', 'dani-cvjetnog'],
+    image: '/cvjetnog1.webp',
+    tags: ['Cijene', 'Ponude', 'Proces'],
+  },
+  {
     id: 'tourism-website',
     key: 'b3',
     date: '2026-08-12',

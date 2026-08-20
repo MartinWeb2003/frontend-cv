@@ -18,6 +18,7 @@ import {
   postUrl,
   projectPath,
   servicePath,
+  pagePath,
 } from '../seo/siteConfig'
 import './BlogPage.css'
 
@@ -119,8 +120,20 @@ export default function BlogPostPage() {
             </section>
           </div>
 
-          {/* The post exists to feed its service page; this is that link. */}
-          {service && (
+          {/*
+            Every post feeds one money page. Usually that is its service; this
+            one supports the cost guide instead.
+          */}
+          {post.ctaPricing ? (
+            <aside className="post__cta">
+              <span className="post__cta-label">{t('blog.ctaLabel')}</span>
+              <h2>{t('pricingPage.title')}</h2>
+              <p>{t('pricingPage.lead')}</p>
+              <Link to={pagePath('pricing', lng)} className="btn btn-primary">
+                {t('services.viewService')} <FiArrowRight size={13} />
+              </Link>
+            </aside>
+          ) : service && (
             <aside className="post__cta">
               <span className="post__cta-label">{t('blog.ctaLabel')}</span>
               <h2>{t(`services.${service.key}Name`)}</h2>
