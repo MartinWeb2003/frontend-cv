@@ -30,17 +30,15 @@
     "bio2": "Previously at Ericsson Nikola Tesla, alongside a run of client web projects.",
     "bio3": "I build websites and applications that are fast, clear and easy to find.",
     "ctaProjects": "View work",
-    "ctaContact": "Contact me"
+    "ctaContact": "Contact me",
+    "badge": "OPEN TO WORK • AVAILABLE FOR PROJECTS • ",
+    "badgeAria": "See the projects"
   },
   "about": {
     "sectionLabel": "Services",
     "heading": "Websites and applications where design meets engineering precision",
     "para1": "I help companies turn an idea into a web product that actually performs: fast, clear, and easy to find in search.",
     "para2": "With experience from a leading regional tech company, as a freelance developer I offer:",
-    "service1Title": "Full-stack development",
-    "service1Desc": "From concept and design through to production, in React, Node.js or WordPress.",
-    "service2Title": "API integrations",
-    "service2Desc": "Connecting an existing business to modern services and external systems.",
     "bento1Title": "Clean code",
     "bento1Desc": "Future me always thanks present me. I write code that's easy to read and even easier to extend.",
     "bento2Title": "Full-Stack",
@@ -51,7 +49,11 @@
     "bento4Desc": "Fluent English and engineering ethics gained at leading global tech corporations.",
     "bento5Title": "Academic",
     "bento5Desc": "FER background as a guarantee of engineering discipline and ability to solve the most complex problems.",
-    "hint3d": "↑ Interactive · move your mouse"
+    "hint3d": "↑ Interactive · move your mouse",
+    "presetsLabel": "3D scene colour",
+    "presetCrimson": "Crimson",
+    "presetAzure": "Azure",
+    "presetAmber": "Amber"
   },
   "experience": {
     "sectionLabel": "Career",

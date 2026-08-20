@@ -30,17 +30,15 @@
     "bio2": "Wcześniej Ericsson Nikola Tesla oraz szereg projektów webowych dla klientów.",
     "bio3": "Tworzę strony i aplikacje, które są szybkie, czytelne i łatwe do znalezienia.",
     "ctaProjects": "Zobacz projekty",
-    "ctaContact": "Skontaktuj się"
+    "ctaContact": "Skontaktuj się",
+    "badge": "OTWARTY NA PROJEKTY • DOSTĘPNY • ",
+    "badgeAria": "Zobacz projekty"
   },
   "about": {
     "sectionLabel": "Usługi",
     "heading": "Strony i aplikacje, w których projekt spotyka inżynierską precyzję",
     "para1": "Pomagam firmom zamienić pomysł w produkt internetowy, który naprawdę działa: szybki, czytelny i łatwy do znalezienia w wyszukiwarce.",
     "para2": "Dzięki doświadczeniu z wiodącej regionalnej firmy technologicznej, jako freelancer oferuję:",
-    "service1Title": "Rozwój Full-stack",
-    "service1Desc": "Od koncepcji i projektu po wdrożenie, w React, Node.js lub WordPress.",
-    "service2Title": "Integracje API",
-    "service2Desc": "Połączenie istniejącego biznesu z nowoczesnymi usługami i systemami zewnętrznymi.",
     "bento1Title": "Czysty kod",
     "bento1Desc": "Moje przyszłe ja zawsze dziękuje teraźniejszemu. Piszę kod, który jest łatwy do czytania i jeszcze łatwiejszy do rozszerzenia.",
     "bento2Title": "Full-Stack",
@@ -51,7 +49,11 @@
     "bento4Desc": "Biegła angielski i etyka inżynierska zdobyta w wiodących światowych korporacjach technologicznych.",
     "bento5Title": "Akademicki",
     "bento5Desc": "Wykształcenie FER jako gwarancja dyscypliny inżynierskiej i zdolności rozwiązywania najbardziej złożonych problemów.",
-    "hint3d": "↑ Interaktywny · porusz myszą"
+    "hint3d": "↑ Interaktywny · porusz myszą",
+    "presetsLabel": "Kolor sceny 3D",
+    "presetCrimson": "Karmazynowy",
+    "presetAzure": "Lazurowy",
+    "presetAmber": "Bursztynowy"
   },
   "experience": {
     "sectionLabel": "Kariera",
@@ -307,5 +309,13 @@
     "contactTitle": "Pytania",
     "contact": "W przypadku pytań o przetwarzanie twoich danych albo wniosku o dostęp lub usunięcie, napisz do mnie e-mail, a odpowiem w rozsądnym terminie.",
     "contactLine": "Kontakt w sprawach prywatności:"
+  },
+  "services": {
+    "s1Name": "Tworzenie stron",
+    "s1Lead": "Strony i aplikacje od pomysłu do wdrożenia, w React lub WordPress.",
+    "s2Name": "Strony dla turystyki",
+    "s2Lead": "Strony dla obiektów noclegowych, kempingów i firm turystycznych, wielojęzyczne i szybkie.",
+    "s3Name": "Utrzymanie i SEO",
+    "s3Lead": "Przyspieszanie istniejących stron, techniczne SEO i bieżąca opieka."
   }
 }

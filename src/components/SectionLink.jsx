@@ -11,7 +11,7 @@ import { DEFAULT_LOCALE, LOCALES, pathForLocale } from '../seo/siteConfig'
  * markup is a genuine link, while the click handler keeps the smooth-scroll
  * behaviour when the visitor is already on the home page.
  */
-export default function SectionLink({ to, className, children, onNavigate }) {
+export default function SectionLink({ to, className, children, onNavigate, ...rest }) {
   const { i18n } = useTranslation()
   const navigate = useNavigate()
   const { pathname } = useLocation()
@@ -36,7 +36,7 @@ export default function SectionLink({ to, className, children, onNavigate }) {
   }
 
   return (
-    <a href={href} className={className} onClick={handleClick}>
+    <a href={href} className={className} onClick={handleClick} {...rest}>
       {children}
     </a>
   )

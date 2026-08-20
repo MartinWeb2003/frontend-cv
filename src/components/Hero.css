@@ -248,3 +248,38 @@
   .hero__cta { flex-direction: column; align-items: center; }
   .hero__cta .btn { width: 100%; justify-content: center; }
 }
+
+/* ─── Badge is a link to the projects section ─── */
+.hero__badge-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--crimson);
+  cursor: pointer;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), filter 0.35s ease;
+}
+.hero__badge-link:hover {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 20px rgba(165, 28, 48, 0.45));
+}
+.hero__badge-link:focus-visible {
+  outline: 2px solid var(--crimson);
+  outline-offset: 8px;
+  border-radius: 50%;
+}
+.hero__badge-link .hero__badge-center {
+  color: inherit;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hero__badge-link:hover .hero__badge-center {
+  transform: translateY(5px);
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__badge-link,
+  .hero__badge-link .hero__badge-center { transition: none; }
+  .hero__badge-link:hover { transform: none; }
+}

@@ -96,17 +96,23 @@ export default function Hero() {
             </div>
 
             <motion.div className="hero__badge" style={{ y: yIcons }}>
-              <CircularText
-                text="DOSTUPAN ZA POSAO • OPEN TO WORK • "
-                spinDuration={20}
-                onHover="speedUp"
-                radius={76}
-                fontSize={9.5}
-                color="#A51C30"
-              />
-              <div className="hero__badge-center">
-                <FiArrowDown size={18} color="#A51C30" />
-              </div>
+              <SectionLink
+                to="projects"
+                className="hero__badge-link"
+                aria-label={t('hero.badgeAria')}
+              >
+                <CircularText
+                  text={t('hero.badge')}
+                  spinDuration={20}
+                  onHover="speedUp"
+                  radius={76}
+                  fontSize={9.5}
+                  color="#A51C30"
+                />
+                <span className="hero__badge-center">
+                  <FiArrowDown size={18} />
+                </span>
+              </SectionLink>
             </motion.div>
           </motion.div>
         </div>

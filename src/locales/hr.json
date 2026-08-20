@@ -30,17 +30,15 @@
     "bio2": "Iza mene je rad u Ericsson Nikola Tesla i niz web projekata za klijente.",
     "bio3": "Radim web stranice i aplikacije koje su brze, pregledne i vidljive na Googleu.",
     "ctaProjects": "Pogledaj radove",
-    "ctaContact": "Kontaktiraj me"
+    "ctaContact": "Kontaktiraj me",
+    "badge": "DOSTUPAN ZA POSAO • OTVOREN ZA SURADNJU • ",
+    "badgeAria": "Pogledaj projekte"
   },
   "about": {
     "sectionLabel": "Usluge",
     "heading": "Web stranice i aplikacije na spoju dizajna i inženjerske preciznosti",
     "para1": "Pomažem tvrtkama i obrtima pretvoriti ideju u web proizvod koji stvarno radi: brz, pregledan i lako pronalažljiv na tražilicama.",
     "para2": "Uz iskustvo iz vodeće regionalne tech tvrtke, kao freelance developer nudim:",
-    "service1Title": "Full-stack razvoj",
-    "service1Desc": "Od koncepta i dizajna do produkcije, u Reactu, Node.js-u ili WordPressu.",
-    "service2Title": "API integracije",
-    "service2Desc": "Povezivanje postojećeg poslovanja s modernim servisima i vanjskim sustavima.",
     "bento1Title": "Čist kod",
     "bento1Desc": "Buduće ja uvijek zahvaljuje sadašnjem. Pišem kod koji je lako čitati, a još lakše nadograđivati.",
     "bento2Title": "Full-Stack",
@@ -51,7 +49,11 @@
     "bento4Desc": "Tečan engleski i inženjerska etika usvojena u vodećim svjetskim tehnološkim korporacijama.",
     "bento5Title": "Akademski",
     "bento5Desc": "FER background kao jamstvo inženjerske discipline i sposobnosti rješavanja najkompleksnijih problema.",
-    "hint3d": "↑ Interaktivno · pomakni miš"
+    "hint3d": "↑ Interaktivno · pomakni miš",
+    "presetsLabel": "Boja 3D prikaza",
+    "presetCrimson": "Grimizna",
+    "presetAzure": "Plava",
+    "presetAmber": "Jantarna"
   },
   "experience": {
     "sectionLabel": "Karijera",

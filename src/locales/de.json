@@ -30,17 +30,15 @@
     "bio2": "Zuvor bei Ericsson Nikola Tesla, dazu zahlreiche Webprojekte für Kunden.",
     "bio3": "Ich baue Websites und Anwendungen, die schnell, klar und auffindbar sind.",
     "ctaProjects": "Arbeiten ansehen",
-    "ctaContact": "Kontaktiere mich"
+    "ctaContact": "Kontaktiere mich",
+    "badge": "OFFEN FÜR PROJEKTE • VERFÜGBAR • ",
+    "badgeAria": "Projekte ansehen"
   },
   "about": {
     "sectionLabel": "Leistungen",
     "heading": "Websites und Anwendungen, wo Design auf technische Präzision trifft",
     "para1": "Ich helfe Unternehmen, aus einer Idee ein Webprodukt zu machen, das wirklich funktioniert: schnell, übersichtlich und in der Suche auffindbar.",
     "para2": "Mit Erfahrung aus einem führenden regionalen Tech-Unternehmen biete ich als freiberuflicher Entwickler:",
-    "service1Title": "Full-stack-Entwicklung",
-    "service1Desc": "Vom Konzept über das Design bis zur Produktion, mit React, Node.js oder WordPress.",
-    "service2Title": "API-Integrationen",
-    "service2Desc": "Anbindung des bestehenden Geschäfts an moderne Dienste und externe Systeme.",
     "bento1Title": "Sauberer Code",
     "bento1Desc": "Mein zukünftiges Ich dankt meinem jetzigen. Ich schreibe Code, der leicht zu lesen und noch leichter zu erweitern ist.",
     "bento2Title": "Full-Stack",
@@ -51,7 +49,11 @@
     "bento4Desc": "Fließendes Englisch und Ingenieurethik aus führenden globalen Technologieunternehmen.",
     "bento5Title": "Akademisch",
     "bento5Desc": "FER-Hintergrund als Garant für ingenieurwissenschaftliche Disziplin und Lösungskompetenz bei komplexesten Problemen.",
-    "hint3d": "↑ Interaktiv · Maus bewegen"
+    "hint3d": "↑ Interaktiv · Maus bewegen",
+    "presetsLabel": "Farbe der 3D-Szene",
+    "presetCrimson": "Karmesinrot",
+    "presetAzure": "Azurblau",
+    "presetAmber": "Bernstein"
   },
   "experience": {
     "sectionLabel": "Karriere",
@@ -307,5 +309,13 @@
     "contactTitle": "Fragen",
     "contact": "Bei Fragen zur Verarbeitung Ihrer Daten oder bei einem Auskunfts- oder Löschungsersuchen schreiben Sie mir eine E-Mail; ich antworte innerhalb einer angemessenen Frist.",
     "contactLine": "Kontakt für Datenschutzfragen:"
+  },
+  "services": {
+    "s1Name": "Webentwicklung",
+    "s1Lead": "Websites und Anwendungen von der Idee bis zum Livegang, mit React oder WordPress.",
+    "s2Name": "Websites für Tourismus",
+    "s2Lead": "Seiten für Ferienunterkünfte, Campingplätze und Tourismusbetriebe, mehrsprachig und schnell.",
+    "s3Name": "Wartung und SEO",
+    "s3Lead": "Bestehende Seiten schneller machen, technisches SEO und laufende Pflege."
   }
 }

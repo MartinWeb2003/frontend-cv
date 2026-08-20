@@ -46,9 +46,7 @@ export default function Navbar() {
   const links = [
     { label: t('nav.about'),      to: 'about' },
     { label: t('nav.experience'), to: 'experience' },
-    { label: t('nav.education'),  to: 'education' },
     { label: t('nav.projects'),   to: 'projects' },
-    { label: t('nav.skills'),     to: 'skills' },
     { label: t('nav.contact'),    to: 'contact' },
   ].map((l) => ({
     ...l,

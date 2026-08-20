@@ -178,3 +178,44 @@
   .bento-wide { grid-column: span 1; }
   .bento-inner--row { flex-direction: column; }
 }
+
+/* ─── Scene colour presets ─── */
+.about__presets {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 3;
+  display: flex;
+  gap: 9px;
+}
+.about__preset {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: var(--preset);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.about__preset:hover { transform: scale(1.18); }
+.about__preset.is-active {
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.14);
+}
+.about__preset:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+/* Services in the intro list link to their own pages where those exist. */
+.about__service-link {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid var(--border-strong);
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+.about__service-link:hover {
+  color: var(--crimson);
+  border-color: var(--crimson);
+}

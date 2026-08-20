@@ -2,8 +2,16 @@ import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import './ThreeScene.css'
 
-export default function ThreeScene({ className = '' }) {
+export default function ThreeScene({ className = '', color = '#A51C30' }) {
   const mountRef = useRef(null)
+  /**
+   * The scene is built once in an effect with no dependencies, so the colour
+   * cannot simply be read from the prop on every render. These refs give the
+   * recolour effect below a handle on the objects that carry colour.
+   */
+  const paletteRef = useRef(null)
+  const colorRef = useRef(color)
+  colorRef.current = color
 
   useEffect(() => {
     const el = mountRef.current
@@ -25,12 +33,16 @@ export default function ThreeScene({ className = '' }) {
 
     // Torus knot — main shape
     const geo = new THREE.TorusKnotGeometry(0.85, 0.28, 180, 24, 2, 3)
-    const mat = new THREE.MeshStandardMaterial({ color: 0xa51c30, roughness: 0.3, metalness: 0.7 })
+    const mat = new THREE.MeshStandardMaterial({
+      color: new THREE.Color(colorRef.current),
+      roughness: 0.3,
+      metalness: 0.7,
+    })
     const mesh = new THREE.Mesh(geo, mat)
     scene.add(mesh)
 
     // Wireframe overlay
-    const wireMat = new THREE.MeshBasicMaterial({ color: 0xa51c30, wireframe: true, opacity: 0.12, transparent: true })
+    const wireMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(colorRef.current), wireframe: true, opacity: 0.12, transparent: true })
     const wireMesh = new THREE.Mesh(geo, wireMat)
     wireMesh.scale.setScalar(1.015)
     scene.add(wireMesh)
@@ -41,19 +53,21 @@ export default function ThreeScene({ className = '' }) {
     const positions = new Float32Array(pCount * 3)
     for (let i = 0; i < pCount * 3; i++) positions[i] = (Math.random() - 0.5) * 8
     pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-    const pMat = new THREE.PointsMaterial({ color: 0xa51c30, size: 0.015, transparent: true, opacity: 0.4 })
+    const pMat = new THREE.PointsMaterial({ color: new THREE.Color(colorRef.current), size: 0.015, transparent: true, opacity: 0.4 })
     const particles = new THREE.Points(pGeo, pMat)
     scene.add(particles)
 
     // Lights
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.6)
     scene.add(ambientLight)
-    const pointLight1 = new THREE.PointLight(0xa51c30, 3, 10)
+    const pointLight1 = new THREE.PointLight(new THREE.Color(colorRef.current), 3, 10)
     pointLight1.position.set(3, 3, 3)
     scene.add(pointLight1)
     const pointLight2 = new THREE.PointLight(0xffffff, 1.5, 10)
     pointLight2.position.set(-3, -2, 2)
     scene.add(pointLight2)
+
+    paletteRef.current = { mat, wireMat, pMat, light: pointLight1 }
 
     // Mouse hover parallax (only when not dragging)
     const hover = { x: 0, y: 0 }
@@ -173,6 +187,21 @@ export default function ThreeScene({ className = '' }) {
       if (el.contains(renderer.domElement)) el.removeChild(renderer.domElement)
     }
   }, [])
+
+  /**
+   * Recolour in place when the preset changes. Rebuilding the scene would reset
+   * the rotation and drop the WebGL context for a frame, which reads as a
+   * flicker, so the existing materials and key light are mutated instead.
+   */
+  useEffect(() => {
+    const palette = paletteRef.current
+    if (!palette) return
+    const c = new THREE.Color(color)
+    palette.mat.color.set(c)
+    palette.wireMat.color.set(c)
+    palette.pMat.color.set(c)
+    palette.light.color.set(c)
+  }, [color])
 
   return <div ref={mountRef} className={`three-scene ${className}`} />
 }

@@ -1,10 +1,15 @@
-import { useRef, lazy, Suspense } from 'react'
+import { useRef, useState, lazy, Suspense } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { FiCode, FiLayers, FiCpu, FiGlobe, FiAward } from 'react-icons/fi'
 import MagicBento from '../bits/MagicBento'
 import useInView from '../hooks/useInView'
 import useIsClient from '../hooks/useIsClient'
+import { Link } from 'react-router-dom'
+import { SCENE_PRESETS } from '../data/scenePresets'
+import { SERVICES } from '../data/services'
+import { hasServices } from '../routes'
+import { DEFAULT_LOCALE, LOCALES, servicePath } from '../seo/siteConfig'
 import './About.css'
 
 /**
@@ -23,8 +28,10 @@ const fadeUp = {
 }
 
 export default function About() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const lng = LOCALES.includes(i18n.language) ? i18n.language : DEFAULT_LOCALE
   const sectionRef = useRef(null)
+  const [preset, setPreset] = useState(SCENE_PRESETS[0])
   const [ref, inView] = useInView()
   const showScene = useIsClient()
 
@@ -57,9 +64,25 @@ export default function About() {
           <motion.p className="about__para" custom={3} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
             {t('about.para2')}
           </motion.p>
+          {/*
+            Driven by src/data/services.js so the homepage can never advertise
+            something the site does not actually offer. Linked where the service
+            pages exist, plain text in the locales where they do not.
+          */}
           <motion.ul className="about__list" custom={4} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
-            <li><strong>{t('about.service1Title')}:</strong> {t('about.service1Desc')}</li>
-            <li><strong>{t('about.service2Title')}:</strong> {t('about.service2Desc')}</li>
+            {SERVICES.map((s) => (
+              <li key={s.id}>
+                {hasServices(lng) ? (
+                  <Link to={servicePath(lng, s.slug[lng])} className="about__service-link">
+                    <strong>{t(`services.${s.key}Name`)}</strong>
+                  </Link>
+                ) : (
+                  <strong>{t(`services.${s.key}Name`)}</strong>
+                )}
+                {': '}
+                {t(`services.${s.key}Lead`)}
+              </li>
+            ))}
           </motion.ul>
         </div>
 
@@ -67,9 +90,23 @@ export default function About() {
           <motion.div className="about__3d" style={{ y: sceneY }}>
             {showScene && (
               <Suspense fallback={null}>
-                <ThreeScene />
+                <ThreeScene color={preset.hex} />
               </Suspense>
             )}
+
+            <div className="about__presets" role="group" aria-label={t('about.presetsLabel')}>
+              {SCENE_PRESETS.map((p) => (
+                <button
+                  key={p.id}
+                  type="button"
+                  className={`about__preset${p.id === preset.id ? ' is-active' : ''}`}
+                  style={{ '--preset': p.hex }}
+                  onClick={() => setPreset(p)}
+                  aria-pressed={p.id === preset.id}
+                  aria-label={t(p.labelKey)}
+                />
+              ))}
+            </div>
             <div className="about__3d-label">
               <span>{t('about.hint3d')}</span>
             </div>
@@ -97,7 +134,7 @@ export default function About() {
                 >
                   <MagicBento.Card>
                     <div className={`bento-inner${row ? ' bento-inner--row' : ''}`}>
-                      <Icon size={size} color="#A51C30" />
+                      <Icon size={size} color={preset.hex} />
                       {row ? (
                         <div>
                           <h3>{t(`about.${tKey}`)}</h3>
