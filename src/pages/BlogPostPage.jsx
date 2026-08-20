@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router-dom'
 import { FiCheck, FiArrowRight, FiArrowLeft, FiCalendar } from 'react-icons/fi'
-import { POSTS, POST_LOCALES, postBySlug } from '../data/posts'
+import { POSTS, POST_LOCALES, postBySlug, postById } from '../data/posts'
 import { serviceById } from '../data/services'
 import { projectBySlug } from '../data/projects'
 import { imgAttrs, SIZES } from '../data/imageAttrs'
@@ -18,6 +18,7 @@ import {
   postUrl,
   projectPath,
   servicePath,
+  servicesIndexPath,
   pagePath,
 } from '../seo/siteConfig'
 import './BlogPage.css'
@@ -38,6 +39,7 @@ export default function BlogPostPage() {
 
   const service = serviceById(post.service)
   const related = post.relatedProjects.map(projectBySlug).filter(Boolean)
+  const relatedPosts = (post.relatedPosts ?? []).map(postById).filter(Boolean)
   const index = POSTS.findIndex((p) => p.id === post.id)
   const next = POSTS[(index + 1) % POSTS.length]
 
@@ -124,12 +126,21 @@ export default function BlogPostPage() {
             Every post feeds one money page. Usually that is its service; this
             one supports the cost guide instead.
           */}
-          {post.ctaPricing ? (
+          {post.ctaPage === 'pricing' ? (
             <aside className="post__cta">
               <span className="post__cta-label">{t('blog.ctaLabel')}</span>
               <h2>{t('pricingPage.title')}</h2>
               <p>{t('pricingPage.lead')}</p>
               <Link to={pagePath('pricing', lng)} className="btn btn-primary">
+                {t('services.viewService')} <FiArrowRight size={13} />
+              </Link>
+            </aside>
+          ) : post.ctaPage === 'services' ? (
+            <aside className="post__cta">
+              <span className="post__cta-label">{t('blog.ctaLabel')}</span>
+              <h2>{t('services.indexTitle')}</h2>
+              <p>{t('services.indexLead')}</p>
+              <Link to={servicesIndexPath(lng)} className="btn btn-primary">
                 {t('services.viewService')} <FiArrowRight size={13} />
               </Link>
             </aside>
@@ -142,6 +153,22 @@ export default function BlogPostPage() {
                 {t('services.viewService')} <FiArrowRight size={13} />
               </Link>
             </aside>
+          )}
+
+          {relatedPosts.length > 0 && (
+            <section className="post__related">
+              <h2>{t('blog.readNextTitle')}</h2>
+              <ul>
+                {relatedPosts.map((rp) => (
+                  <li key={rp.id}>
+                    <Link to={postPath(lng, rp.slug[lng])}>
+                      {t(`blog.${rp.key}Title`)}
+                      <span>{t(`blog.${rp.key}Lead`)}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
           )}
 
           {related.length > 0 && (

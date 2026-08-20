@@ -68,7 +68,7 @@ export const POSTS = [
      * call to action from a service to the cost guide.
      */
     service: 'website-development',
-    ctaPricing: true,
+    ctaPage: 'pricing',
     relatedProjects: ['sabioncello-grafika', 'dani-cvjetnog'],
     image: '/cvjetnog1.webp',
     tags: ['Cijene', 'Ponude', 'Proces'],
@@ -88,6 +88,29 @@ export const POSTS = [
     tags: ['Turizam', 'UX', 'Multilingual'],
   },
 ]
+
+/**
+ * The pillar. Unlike the spokes it is not tied to a single service: it links
+ * out to every post and every money page, which is what turns four sibling
+ * articles into a hub-and-spoke cluster.
+ */
+POSTS.push({
+  id: 'choosing-developer',
+  key: 'b5',
+  date: '2026-08-12',
+  updated: '2026-08-12',
+  slug: {
+    hr: 'kako-odabrati-web-developera',
+    en: 'how-to-choose-a-web-developer',
+  },
+  service: null,
+  ctaPage: 'services',
+  pillar: true,
+  relatedPosts: ['slow-website', 'wordpress-vs-react', 'tourism-website', 'comparing-quotes'],
+  relatedProjects: ['sottomonte', 'camping-loviste-paradise'],
+  image: '/eva1.webp',
+  tags: ['Vodič', 'Proces', 'Odabir'],
+})
 
 export const postById = (id) => POSTS.find((p) => p.id === id)
 export const postBySlug = (lng, slug) => POSTS.find((p) => p.slug[lng] === slug)
