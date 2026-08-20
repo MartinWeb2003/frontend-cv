@@ -1,5 +1,5 @@
 import { useRef, useState, lazy, Suspense } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'motion/react'
 import { useTranslation } from 'react-i18next'
 import { FiCode, FiLayers, FiCpu, FiGlobe, FiAward } from 'react-icons/fi'
 import MagicBento from '../bits/MagicBento'
@@ -117,7 +117,7 @@ export default function About() {
             variants={{ show: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } } }}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: false, amount: 0.15 }}
+            viewport={{ once: true, amount: 0.15 }}
           >
             <MagicBento className="about__bento">
               {[

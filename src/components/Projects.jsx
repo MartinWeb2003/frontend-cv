@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'motion/react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { FiExternalLink, FiGithub, FiArrowUpRight, FiArrowRight } from 'react-icons/fi'

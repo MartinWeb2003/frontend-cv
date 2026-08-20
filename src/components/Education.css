@@ -99,7 +99,7 @@
 /* ── Card text ── */
 .edu-card__title {
   font-size: clamp(1.35rem, 2.8vw, 2rem);
-  font-weight: 900;
+  font-weight: 700;
   color: var(--text);
   line-height: 1.15;
   text-transform: uppercase;

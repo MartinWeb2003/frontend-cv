@@ -6,7 +6,7 @@
 
 .pindex__title {
   font-size: clamp(2.8rem, 9vw, 6.5rem);
-  font-weight: 900;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: -0.03em;
   line-height: 0.9;
@@ -79,7 +79,7 @@
 
 .pindex__card-title {
   font-size: 1.5rem;
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: -0.02em;
 }
 

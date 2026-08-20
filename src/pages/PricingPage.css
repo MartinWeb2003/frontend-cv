@@ -19,7 +19,7 @@
 .pricing__header { padding: 36px 0 8px; }
 .pricing__title {
   font-size: clamp(2.4rem, 7vw, 5rem);
-  font-weight: 900;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: -0.03em;
   line-height: 0.95;
@@ -112,7 +112,7 @@
 }
 .pricing__amount {
   font-size: 1.35rem;
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--crimson);
   text-align: right;
@@ -159,7 +159,7 @@
 }
 .pricing__cta h2 {
   font-size: 1.5rem;
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: -0.02em;
   margin-bottom: 10px;
 }

@@ -20,7 +20,7 @@
   --text-muted: #999999;
   --border: #E0D8CE;
   --border-strong: #C8BFB4;
-  --font-main: 'Inter', system-ui, sans-serif;
+  --font-main: 'Instrument Sans Variable', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
 
@@ -51,7 +51,7 @@ img { max-width: 100%; display: block; }
 /* ─── Mega titles (full-width all-caps) ─── */
 .mega-title {
   font-size: clamp(4.5rem, 11vw, 10rem);
-  font-weight: 900;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: -0.03em;
   line-height: 0.88;

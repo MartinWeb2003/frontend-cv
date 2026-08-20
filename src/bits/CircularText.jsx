@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, useAnimation } from 'framer-motion';
+import { motion, useAnimation } from 'motion/react';
 
 export default function CircularText({
   text = 'SCROLL DOWN • EXPLORE • ',

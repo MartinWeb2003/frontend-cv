@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
+import { MotionConfig } from 'motion/react'
 import { scroller } from 'react-scroll'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -57,7 +58,7 @@ function ScrollManager() {
 
 export default function App() {
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       <CustomCursor />
       <ScrollManager />
       <Navbar />
@@ -71,6 +72,6 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
-    </>
+    </MotionConfig>
   )
 }

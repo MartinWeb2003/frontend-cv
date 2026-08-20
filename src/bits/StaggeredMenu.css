@@ -83,7 +83,7 @@
 
 .smenu-link__label {
   font-size: clamp(1.6rem, 4vw, 2.4rem);
-  font-weight: 800;
+  font-weight: 600;
   color: #fff;
   text-transform: uppercase;
   letter-spacing: -0.02em;

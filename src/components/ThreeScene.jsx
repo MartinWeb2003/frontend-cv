@@ -11,7 +11,6 @@ export default function ThreeScene({ className = '', color = '#A51C30' }) {
    */
   const paletteRef = useRef(null)
   const colorRef = useRef(color)
-  colorRef.current = color
 
   useEffect(() => {
     const el = mountRef.current

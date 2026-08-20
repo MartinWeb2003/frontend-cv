@@ -25,7 +25,7 @@
 .projects-mega-line {
   display: block;
   font-size: clamp(5rem, 16vw, 15rem);
-  font-weight: 900;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: -0.04em;
   line-height: 0.88;
@@ -82,7 +82,7 @@
   bottom: -0.15em;
   right: -0.05em;
   font-size: clamp(10rem, 25vw, 22rem);
-  font-weight: 900;
+  font-weight: 700;
   font-family: var(--font-mono);
   color: rgba(255, 255, 255, 0.015);
   line-height: 1;
@@ -166,7 +166,7 @@
 
 .proj-row__title {
   font-size: clamp(2rem, 4.5vw, 3.8rem);
-  font-weight: 900;
+  font-weight: 700;
   color: #fff;
   text-transform: uppercase;
   letter-spacing: -0.03em;
@@ -325,7 +325,7 @@
   letter-spacing: 0.1em;
   color: var(--crimson);
 }
-.pmodal__title { font-size: 1.8rem; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 4px; }
+.pmodal__title { font-size: 1.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 4px; }
 .pmodal__subtitle { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
 .pmodal__links { display: flex; gap: 8px; flex-shrink: 0; }
 .pmodal__desc { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.75; margin-bottom: 20px; }

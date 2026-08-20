@@ -48,30 +48,18 @@ function SkillBand({ band, i, label }) {
       className="skill-band"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: false, amount: 0.3 }}
+      viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.65, delay: i * 0.08, ease: [0.4, 0, 0.2, 1] }}
     >
       <div className="skill-band__top">
         <div className="skill-band__left">
           <span className="skill-band__idx">0{i + 1}</span>
           <h3 className="skill-band__label">{label}</h3>
-          <motion.div
-            className="skill-band__chips"
-            variants={{ show: { transition: { staggerChildren: 0.055, delayChildren: 0.1 } } }}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: false, amount: 0.3 }}
-          >
+          <div className="skill-band__chips">
             {band.chips.map(c => (
-              <motion.span
-                key={c}
-                className="skill-chip-dark"
-                variants={{ hidden: { opacity: 0, y: 8, scale: 0.9 }, show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.35, ease: [0.4, 0, 0.2, 1] } } }}
-              >
-                {c}
-              </motion.span>
+              <span key={c} className="skill-chip-dark">{c}</span>
             ))}
-          </motion.div>
+          </div>
         </div>
         <div className="skill-band__right">
           <CountUp
@@ -86,7 +74,7 @@ function SkillBand({ band, i, label }) {
           className="skill-band__fill"
           initial={{ width: 0 }}
           whileInView={{ width: `${band.pct}%` }}
-          viewport={{ once: false, amount: 0.5 }}
+          viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 1.4, delay: 0.2 + i * 0.08, ease: [0.4, 0, 0.2, 1] }}
         />
       </div>
@@ -135,7 +123,7 @@ export default function Skills() {
                   className="skills__lang-fill"
                   initial={{ width: 0 }}
                   whileInView={{ width: `${l.pct}%` }}
-                  viewport={{ once: false, amount: 0.5 }}
+                  viewport={{ once: true, amount: 0.5 }}
                   transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
                 />
               </div>

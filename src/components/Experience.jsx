@@ -97,39 +97,18 @@ export default function Experience() {
                   </div>
                   <div className="exp-item__period"><FiCalendar size={11} />{t(exp.periodKey)}</div>
                 </div>
-                <motion.ul
-                  className="exp-item__bullets"
-                  variants={{ show: { transition: { staggerChildren: 0.08 } } }}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: false, amount: 0.1 }}
-                >
+                <ul className="exp-item__bullets">
                   {exp.bulletKeys.map((key) => (
-                    <motion.li
-                      key={key}
-                      variants={{ hidden: { opacity: 0, x: -20 }, show: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] } } }}
-                    >
+                    <li key={key}>
                       <span className="exp-bullet-dot" />{t(key)}
-                    </motion.li>
+                    </li>
                   ))}
-                </motion.ul>
-                <motion.div
-                  className="exp-item__tags"
-                  variants={{ show: { transition: { staggerChildren: 0.05 } } }}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: false, amount: 0.1 }}
-                >
+                </ul>
+                <div className="exp-item__tags">
                   {exp.tags.map(tag => (
-                    <motion.span
-                      key={tag}
-                      className="tag"
-                      variants={{ hidden: { opacity: 0, scale: 0.85 }, show: { opacity: 1, scale: 1, transition: { duration: 0.3 } } }}
-                    >
-                      {tag}
-                    </motion.span>
+                    <span key={tag} className="tag">{tag}</span>
                   ))}
-                </motion.div>
+                </div>
               </motion.div>
             ))}
           </div>

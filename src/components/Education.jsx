@@ -63,28 +63,28 @@ export default function Education() {
                   <span className="edu-card__spec">{t('education.deg1Spec')}</span>
                 </div>
               </div>
-              <motion.div className="edu-card__right" variants={statStagger} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.3 }}>
-                <motion.div className="edu-stat" variants={statRow}>
+              <div className="edu-card__right">
+                <div className="edu-stat">
                   <FiCalendar size={14} color="#A51C30" />
                   <span className="edu-stat__label">{t('education.labelDuration')}</span>
                   <span className="edu-stat__val">{t('education.deg1Period')}</span>
-                </motion.div>
-                <motion.div className="edu-stat" variants={statRow}>
+                </div>
+                <div className="edu-stat">
                   <FiClock size={14} color="#A51C30" />
                   <span className="edu-stat__label">{t('education.labelStatus')}</span>
                   <span className="edu-stat__val">{t('education.deg1Status')}</span>
-                </motion.div>
-                <motion.div className="edu-stat" variants={statRow}>
+                </div>
+                <div className="edu-stat">
                   <FiBookOpen size={14} color="#A51C30" />
                   <span className="edu-stat__label">{t('education.labelUniversity')}</span>
                   <span className="edu-stat__val">{t('education.deg1Uni')}</span>
-                </motion.div>
-                <motion.div className="edu-tags" variants={tagStagger}>
+                </div>
+                <div className="edu-tags">
                   {['deg1Tag1', 'deg1Tag2', 'deg1Tag3', 'deg1Tag4'].map(k =>
-                    <motion.span key={k} className="tag" variants={tagItem}>{t(`education.${k}`)}</motion.span>
+                    <span key={k} className="tag">{t(`education.${k}`)}</span>
                   )}
-                </motion.div>
-              </motion.div>
+                </div>
+              </div>
             </div>
           </motion.div>
         </motion.div>
@@ -103,28 +103,28 @@ export default function Education() {
                   <span className="edu-card__spec">{t('education.deg2Spec')}</span>
                 </div>
               </div>
-              <motion.div className="edu-card__right" variants={statStagger} initial="hidden" whileInView="show" viewport={{ once: false, amount: 0.3 }}>
-                <motion.div className="edu-stat" variants={statRow}>
+              <div className="edu-card__right">
+                <div className="edu-stat">
                   <FiCalendar size={14} color="#A51C30" />
                   <span className="edu-stat__label">{t('education.labelAcademicYear')}</span>
                   <span className="edu-stat__val">{t('education.deg2Period')}</span>
-                </motion.div>
-                <motion.div className="edu-stat" variants={statRow}>
+                </div>
+                <div className="edu-stat">
                   <FiAward size={14} color="#A51C30" />
                   <span className="edu-stat__label">{t('education.labelTitleEarned')}</span>
                   <span className="edu-stat__val">{t('education.deg2TitleEarned')}</span>
-                </motion.div>
-                <motion.div className="edu-stat" variants={statRow}>
+                </div>
+                <div className="edu-stat">
                   <FiCheckCircle size={14} color="#22c55e" />
                   <span className="edu-stat__label">{t('education.labelStatus')}</span>
                   <span className="edu-stat__val edu-stat__val--green">{t('education.deg2Status')}</span>
-                </motion.div>
-                <motion.div className="edu-tags" variants={tagStagger}>
+                </div>
+                <div className="edu-tags">
                   {['deg2Tag1', 'deg2Tag2', 'deg2Tag3', 'deg2Tag4'].map(k =>
-                    <motion.span key={k} className="tag" variants={tagItem}>{t(`education.${k}`)}</motion.span>
+                    <span key={k} className="tag">{t(`education.${k}`)}</span>
                   )}
-                </motion.div>
-              </motion.div>
+                </div>
+              </div>
             </div>
           </motion.div>
         </motion.div>

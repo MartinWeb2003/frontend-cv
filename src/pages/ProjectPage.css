@@ -37,7 +37,7 @@
 }
 .pdetail__title {
   font-size: clamp(2.4rem, 7vw, 5rem);
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1;
   margin: 10px 0 12px;

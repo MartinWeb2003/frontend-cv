@@ -39,7 +39,7 @@
 
 .post__title {
   font-size: clamp(2.1rem, 5.5vw, 3.8rem);
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1.06;
   margin-bottom: 16px;
@@ -75,7 +75,7 @@
 .post__body section { margin-bottom: 38px; }
 .post__body h2 {
   font-size: 1.42rem;
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.25;
   margin-bottom: 14px;
@@ -115,7 +115,7 @@
 }
 .post__cta h2 {
   font-size: 1.45rem;
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: -0.02em;
   margin: 10px 0 8px;
 }
@@ -214,7 +214,7 @@
   letter-spacing: 0.1em;
   color: var(--text-muted);
 }
-.blog__card-title { font-size: 1.28rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.28; }
+.blog__card-title { font-size: 1.28rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.28; }
 .blog__excerpt { font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); }
 .blog__tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .blog__cta {

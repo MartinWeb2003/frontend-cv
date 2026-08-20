@@ -1,5 +1,5 @@
 import { useRef, useSyncExternalStore } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'motion/react'
 import { useTranslation } from 'react-i18next'
 import SectionLink from './SectionLink'
 import { FiArrowDown, FiMail } from 'react-icons/fi'

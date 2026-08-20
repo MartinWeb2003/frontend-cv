@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'motion/react'
 import { useTranslation } from 'react-i18next'
 import { FiMail, FiDownload, FiArrowUpRight, FiMapPin } from 'react-icons/fi'
 import ImageTrail from '../bits/ImageTrail'

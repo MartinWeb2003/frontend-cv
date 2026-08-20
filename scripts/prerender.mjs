@@ -378,7 +378,12 @@ async function fontPreloads() {
     return ''
   }
 
-  const wanted = [/^inter-latin-400-normal-.*\.woff2$/, /^inter-latin-900-normal-.*\.woff2$/]
+  // Instrument Sans is the variable display/body face; latin-ext carries the
+  // Croatian and Polish diacritics, so both subsets sit on the critical path.
+  const wanted = [
+    /^instrument-sans-latin-wght-normal-.*[.]woff2$/,
+    /^instrument-sans-latin-ext-wght-normal-.*[.]woff2$/,
+  ]
   return wanted
     .map((re) => assets.find((f) => re.test(f)))
     .filter(Boolean)

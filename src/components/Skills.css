@@ -62,7 +62,7 @@
 
 .skill-band__label {
   font-size: clamp(1.4rem, 3.5vw, 2.4rem);
-  font-weight: 900;
+  font-weight: 700;
   color: #fff;
   text-transform: uppercase;
   letter-spacing: -0.02em;
@@ -94,7 +94,7 @@
 .skill-band__right { flex-shrink: 0; line-height: 1; }
 .skill-band__pct {
   font-size: clamp(4rem, 10vw, 9rem);
-  font-weight: 900;
+  font-weight: 700;
   font-family: var(--font-mono);
   color: rgba(255, 255, 255, 0.12);
   line-height: 1;
