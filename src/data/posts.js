@@ -11,6 +11,13 @@
  *   zasto-je-web-stranica-spora   -> maintenance-seo
  *   wordpress-ili-react           -> website-development
  *   web-stranica-za-apartmane     -> tourism-websites
+ *   zasto-se-ne-pojavljujem       -> maintenance-seo
+ *
+ * maintenance-seo carries two spokes on purpose: it is the one service with
+ * recurring revenue behind it, and "why am I not on Google" and "why is my
+ * site slow" are different queries with different answers. The visibility
+ * post touches speed in a single sentence and leaves the rest to b1, so the
+ * two do not compete for the same term.
  *
  * Croatian and English only, matching SERVICE_LOCALES: a translated stub in a
  * market with no client history is worse than no page.
@@ -87,6 +94,30 @@ export const POSTS = [
     image: '/camping1.webp',
     tags: ['Turizam', 'UX', 'Multilingual'],
   },
+  {
+    id: 'local-seo',
+    key: 'b6',
+    date: '2026-08-24',
+    updated: '2026-08-24',
+    slug: {
+      hr: 'zasto-se-moja-stranica-ne-pojavljuje-na-googleu',
+      en: 'why-your-website-does-not-show-up-on-google',
+    },
+    service: 'maintenance-seo',
+    relatedProjects: ['sottomonte', 'sabioncello'],
+    /**
+     * A Croatian listing page from sottomonte.hr: it shows a real page title
+     * naming the property and the place, which is exactly what S3 argues a
+     * page has to do to be findable. sotto2 is taken by b1.
+     */
+    image: '/sotto3.webp',
+    /**
+     * Tags are raw strings shared by both locales, so this post uses ones
+     * that read the same in Croatian and English. The older posts predate
+     * that and still show Croatian tags on their EN pages.
+     */
+    tags: ['SEO', 'Google', 'Search Console'],
+  },
 ]
 
 /**
@@ -106,7 +137,13 @@ POSTS.push({
   service: null,
   ctaPage: 'services',
   pillar: true,
-  relatedPosts: ['slow-website', 'wordpress-vs-react', 'tourism-website', 'comparing-quotes'],
+  relatedPosts: [
+    'slow-website',
+    'wordpress-vs-react',
+    'tourism-website',
+    'comparing-quotes',
+    'local-seo',
+  ],
   relatedProjects: ['sottomonte', 'camping-loviste-paradise'],
   image: '/eva1.webp',
   tags: ['Vodič', 'Proces', 'Odabir'],
