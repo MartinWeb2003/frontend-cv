@@ -59,7 +59,7 @@ export default function BlogIndexPage() {
                   <span className="blog__excerpt">{t(`blog.${p.key}Lead`)}</span>
                   <span className="blog__tags">
                     {p.tags.map((tag) => (
-                      <span key={tag} className="tag">{tag}</span>
+                      <span key={tag} className="tag">{t(`blog.tags.${tag}`)}</span>
                     ))}
                   </span>
                   <span className="blog__cta">

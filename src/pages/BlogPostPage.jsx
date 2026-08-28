@@ -74,7 +74,7 @@ export default function BlogPostPage() {
               </time>
               <span className="post__tags">
                 {post.tags.map((tag) => (
-                  <span key={tag} className="tag">{tag}</span>
+                  <span key={tag} className="tag">{t(`blog.tags.${tag}`)}</span>
                 ))}
               </span>
             </div>

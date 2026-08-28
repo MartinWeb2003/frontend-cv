@@ -12,6 +12,7 @@
  *   wordpress-ili-react           -> website-development
  *   web-stranica-za-apartmane     -> tourism-websites
  *   zasto-se-ne-pojavljujem       -> maintenance-seo
+ *   koliko-traje-izrada           -> website-development
  *
  * maintenance-seo carries two spokes on purpose: it is the one service with
  * recurring revenue behind it, and "why am I not on Google" and "why is my
@@ -21,6 +22,11 @@
  *
  * Croatian and English only, matching SERVICE_LOCALES: a translated stub in a
  * market with no client history is worse than no page.
+ *
+ * Tags are ids, not display strings: the label for each lives under
+ * `blog.tags.<id>` in every locale, so an English page never shows a Croatian
+ * tag. Adding a tag means adding the id here and the label in hr.json and
+ * en.json.
  *
  * Imported by the React app AND scripts/prerender.mjs, so keep it plain data.
  */
@@ -44,7 +50,7 @@ export const POSTS = [
     service: 'maintenance-seo',
     relatedProjects: ['sottomonte'],
     image: '/sotto2.webp',
-    tags: ['Performance', 'Core Web Vitals', 'SEO'],
+    tags: ['performance', 'core-web-vitals', 'seo'],
   },
   {
     id: 'wordpress-vs-react',
@@ -58,7 +64,7 @@ export const POSTS = [
     service: 'website-development',
     relatedProjects: ['sabioncello-grafika', 'sottomonte'],
     image: '/grafica1.webp',
-    tags: ['WordPress', 'React', 'CMS'],
+    tags: ['wordpress', 'react', 'cms'],
   },
   {
     id: 'comparing-quotes',
@@ -78,7 +84,7 @@ export const POSTS = [
     ctaPage: 'pricing',
     relatedProjects: ['sabioncello-grafika', 'dani-cvjetnog'],
     image: '/cvjetnog1.webp',
-    tags: ['Cijene', 'Ponude', 'Proces'],
+    tags: ['pricing', 'quotes', 'process'],
   },
   {
     id: 'tourism-website',
@@ -92,7 +98,7 @@ export const POSTS = [
     service: 'tourism-websites',
     relatedProjects: ['camping-loviste-paradise', 'visit-eva-orebic'],
     image: '/camping1.webp',
-    tags: ['Turizam', 'UX', 'Multilingual'],
+    tags: ['tourism', 'ux', 'multilingual'],
   },
   {
     id: 'local-seo',
@@ -111,12 +117,45 @@ export const POSTS = [
      * page has to do to be findable. sotto2 is taken by b1.
      */
     image: '/sotto3.webp',
+    tags: ['seo', 'google', 'search-console'],
+  },
+  {
+    id: 'build-timeline',
+    key: 'b7',
+    date: '2026-08-24',
+    updated: '2026-08-24',
+    slug: {
+      hr: 'koliko-traje-izrada-web-stranice',
+      en: 'how-long-does-a-website-take',
+    },
     /**
-     * Tags are raw strings shared by both locales, so this post uses ones
-     * that read the same in Croatian and English. The older posts predate
-     * that and still show Croatian tags on their EN pages.
+     * The second spoke into website-development, and the counterpart to b4:
+     * that post explains why prices differ, this one why deadlines do.
+     *
+     * The thesis is not new to the site. s1Faq1A, s1Faq4A and the pricing
+     * page's `contentText` all already assert that content readiness, not
+     * development, is the critical path. Each says it in two sentences on a
+     * commercial page. This is the article that actually argues it.
+     *
+     * Deliberately carries no week counts: there are no real per-project
+     * durations on record to publish, and inventing them would be a §0.7
+     * violation. S4 is where real ranges belong if they are ever supplied.
      */
-    tags: ['SEO', 'Google', 'Search Console'],
+    service: 'website-development',
+    relatedProjects: ['sabioncello-grafika', 'bmfit', 'dani-cvjetnog'],
+    /**
+     * A schedule page from the Dani Cvjetnog site: dense with real content,
+     * times and places, which is what the article argues a page is made of.
+     *
+     * grafica2 and grafica3 were rejected on purpose. Both are Sabioncello
+     * Grafica marketing sections, one carrying round claims ("20+ godina",
+     * "500+ zadovoljnih klijenata") and the other five-star Google reviews.
+     * Sitting above the article text they read as this site's own claims,
+     * which is exactly what section 0.7 rules out. grafica2 also has an em
+     * dash baked into the pixels.
+     */
+    image: '/cvjetnog2.webp',
+    tags: ['process', 'content', 'timeline'],
   },
 ]
 
@@ -143,10 +182,11 @@ POSTS.push({
     'tourism-website',
     'comparing-quotes',
     'local-seo',
+    'build-timeline',
   ],
   relatedProjects: ['sottomonte', 'camping-loviste-paradise'],
   image: '/eva1.webp',
-  tags: ['Vodič', 'Proces', 'Odabir'],
+  tags: ['guide', 'process', 'choosing'],
 })
 
 export const postById = (id) => POSTS.find((p) => p.id === id)
