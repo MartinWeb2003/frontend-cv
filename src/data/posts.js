@@ -13,6 +13,7 @@
  *   web-stranica-za-apartmane     -> tourism-websites
  *   zasto-se-ne-pojavljujem       -> maintenance-seo
  *   koliko-traje-izrada           -> website-development
+ *   web-stranice-peljesac         -> the Orebić location page
  *
  * maintenance-seo carries two spokes on purpose: it is the one service with
  * recurring revenue behind it, and "why am I not on Google" and "why is my
@@ -157,6 +158,33 @@ export const POSTS = [
     image: '/cvjetnog2.webp',
     tags: ['process', 'content', 'timeline'],
   },
+  {
+    id: 'peljesac-web',
+    key: 'b8',
+    date: '2026-08-24',
+    updated: '2026-08-24',
+    slug: {
+      hr: 'web-stranice-za-poslove-na-peljescu',
+      en: 'websites-for-businesses-on-peljesac',
+    },
+    /**
+     * Supports the Orebić location page rather than a service: that page
+     * carries the commercial query, this one carries the informational half
+     * of the same local intent and links up into it.
+     *
+     * Written as five real projects rather than as advice, on purpose. The
+     * neighbouring posts already own the how-to angles (b3 tourism content,
+     * b6 Google visibility), so a sixth set of tips would cannibalise them.
+     * Everything here is drawn from the project pages, nothing is new.
+     */
+    service: 'website-development',
+    ctaPage: 'location',
+    ctaLocation: 'orebic',
+    relatedProjects: ['visit-eva-orebic', 'camping-loviste-paradise', 'sabioncello'],
+    relatedPosts: ['tourism-website', 'local-seo'],
+    image: '/camping3.webp',
+    tags: ['peljesac', 'tourism', 'process'],
+  },
 ]
 
 /**
@@ -183,6 +211,7 @@ POSTS.push({
     'comparing-quotes',
     'local-seo',
     'build-timeline',
+    'peljesac-web',
   ],
   relatedProjects: ['sottomonte', 'camping-loviste-paradise'],
   image: '/eva1.webp',

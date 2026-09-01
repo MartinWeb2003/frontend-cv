@@ -16,12 +16,14 @@ import ServicePage from './pages/ServicePage'
 import PricingPage from './pages/PricingPage'
 import BlogIndexPage from './pages/BlogIndexPage'
 import BlogPostPage from './pages/BlogPostPage'
+import LocationPage from './pages/LocationPage'
 import NotFoundPage from './pages/NotFoundPage'
 import { routePatterns } from './routes'
 import './App.css'
 
 const PAGES = {
   home: HomePage,
+  location: LocationPage,
   projects: ProjectsIndexPage,
   project: ProjectPage,
   about: AboutPage,

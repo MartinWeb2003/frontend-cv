@@ -79,6 +79,14 @@ export const blogIndexPath = (lng) => `${pathForLocale(lng)}${BLOG_SEGMENT[lng]}
 export const postPath = (lng, slug) => `${blogIndexPath(lng)}${slug}/`
 export const postUrl = (lng, slug) => `${SITE_ORIGIN}${postPath(lng, slug)}`
 
+/**
+ * Location landing pages sit at the top level (/izrada-web-stranica-orebic/)
+ * rather than under the services hub, so the town stays in the first path
+ * segment. The whole slug is localised, so there is no shared segment map.
+ */
+export const locationPath = (lng, slug) => `${pathForLocale(lng)}${slug}/`
+export const locationUrl = (lng, slug) => `${SITE_ORIGIN}${locationPath(lng, slug)}`
+
 export const projectsIndexPath = (lng) => `${pathForLocale(lng)}${PROJECT_SEGMENT[lng]}/`
 export const projectPath = (lng, slug) => `${projectsIndexPath(lng)}${slug}/`
 export const projectUrl = (lng, slug) => `${SITE_ORIGIN}${projectPath(lng, slug)}`
@@ -162,8 +170,17 @@ export const ANALYTICS = {
  * a fabricated one is worse than none.
  */
 export const LOCAL_BUSINESS = {
-  enabled: false,
-  areaServed: ['Zagreb', 'Hrvatska'],
+  enabled: true,
+  /**
+   * Where the work actually is. Five of the seven production projects are for
+   * businesses on Pelješac, so Orebić and Pelješac are named explicitly rather
+   * than hidden inside "Hrvatska"; Zagreb and Hrvatska keep the wider service
+   * area honest for remote work.
+   *
+   * No streetAddress: LocalBusiness does not require one when the business is
+   * service-area based, and inventing a shopfront would be worse than none.
+   */
+  areaServed: ['Orebić', 'Pelješac', 'Zagreb', 'Hrvatska'],
   streetAddress: '',
   postalCode: '',
 }
@@ -414,6 +431,34 @@ export function serviceSchema(service, lng, copy) {
      * No `offers.price`: publishing a price that is not real is worse than
      * publishing none. Add it here once there is a rate card to stand behind.
      */
+  }
+}
+
+/**
+ * schema.org Service for a location landing page.
+ *
+ * Differs from serviceSchema in one way that matters: `areaServed` is the town
+ * this page is about, not the whole LOCAL_BUSINESS service area. That is the
+ * signal that ties the page to local intent instead of repeating the sitewide
+ * claim on every URL.
+ *
+ * @param {object} location entry from src/data/locations.js
+ * @param {string} lng
+ * @param {{title: string, description: string, name: string, area: string[]}} copy
+ */
+export function locationSchema(location, lng, copy) {
+  const url = locationUrl(lng, location.slug[lng])
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    '@id': `${url}#service`,
+    name: copy.name,
+    description: copy.description,
+    url,
+    serviceType: copy.name,
+    inLanguage: LOCALE_TAGS[lng],
+    provider: { '@id': `${SITE_ORIGIN}/#person` },
+    areaServed: copy.area.map((name) => ({ '@type': 'Place', name })),
   }
 }
 

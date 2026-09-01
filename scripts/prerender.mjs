@@ -49,6 +49,8 @@ import {
   localBusinessSchema,
   serviceSchema,
   serviceListSchema,
+  locationSchema,
+  locationUrl,
   servicePath,
   servicesIndexPath,
   blogIndexPath,
@@ -59,6 +61,7 @@ import {
 import { allPages } from '../src/routes.js'
 import { PROJECTS, projectBySlug } from '../src/data/projects.js'
 import { SERVICES, SERVICE_LOCALES, serviceById } from '../src/data/services.js'
+import { LOCATION_LOCALES, locationById } from '../src/data/locations.js'
 import { POSTS, POST_LOCALES, postById } from '../src/data/posts.js'
 
 const DIST = 'dist'
@@ -264,6 +267,37 @@ async function describe(page) {
         breadcrumbSchema([
           { name: L.projectPage.crumbHome, url: urlForLocale(lng) },
           { name: L.services.crumbServices, url },
+        ]),
+      ],
+    }
+  }
+
+  /*
+   * Location landing page. The only page type whose schema narrows areaServed
+   * to a single town, which is what ties it to local intent.
+   */
+  if (type === 'location') {
+    const location = locationById(page.locationId)
+    const copy = {
+      title: L.locations[`${location.key}MetaTitle`],
+      description: L.locations[`${location.key}MetaDesc`],
+      name: L.locations[`${location.key}Name`],
+      area: L.locations[`${location.key}Area`].split(', '),
+    }
+    return {
+      title: copy.title,
+      description: copy.description,
+      url,
+      image: OG_IMAGE,
+      imageAlt: L.seo.ogImageAlt,
+      alternates: Object.fromEntries(
+        LOCATION_LOCALES.map((l) => [l, locationUrl(l, location.slug[l])]),
+      ),
+      schemas: [
+        locationSchema(location, lng, copy),
+        breadcrumbSchema([
+          { name: L.projectPage.crumbHome, url: urlForLocale(lng) },
+          { name: copy.name, url },
         ]),
       ],
     }

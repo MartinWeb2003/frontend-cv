@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next'
 import { FiMail, FiGithub, FiLinkedin, FiPhone } from 'react-icons/fi'
 import { Link, useLocation } from 'react-router-dom'
 import SectionLink from './SectionLink'
-import { equivalentPath, hasServices } from '../routes'
+import { equivalentPath, hasServices, hasLocations } from '../routes'
+import { LOCATIONS } from '../data/locations'
 import {
   DEFAULT_LOCALE,
   LOCALES,
@@ -13,6 +14,7 @@ import {
   phoneHref,
   projectsIndexPath,
   servicesIndexPath,
+  locationPath,
   blogIndexPath,
 } from '../seo/siteConfig'
 import './Footer.css'
@@ -106,6 +108,18 @@ export default function Footer() {
               </Link>
             </span>
           )}
+          {/*
+            The location pages carry local commercial intent, so they need a
+            sitewide link rather than living at the end of one blog post.
+          */}
+          {hasLocations(lng) &&
+            LOCATIONS.map((l) => (
+              <span key={l.id}>
+                <Link to={locationPath(lng, l.slug[lng])} className="footer__nav-link">
+                  {t(`locations.${l.key}Name`)}
+                </Link>
+              </span>
+            ))}
           <span>
             <Link to={projectsIndexPath(lng)} className="footer__nav-link">
               {t('projectPage.crumbProjects')}

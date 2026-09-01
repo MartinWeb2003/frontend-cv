@@ -19,16 +19,21 @@ import {
   servicePath,
   blogIndexPath,
   postPath,
+  locationPath,
 } from './seo/siteConfig.js'
 import { PROJECTS } from './data/projects.js'
 import { SERVICES, SERVICE_LOCALES } from './data/services.js'
 import { POSTS } from './data/posts.js'
+import { LOCATIONS, LOCATION_LOCALES } from './data/locations.js'
 
 /** Standalone pages that exist once per locale. */
 const STATIC_PAGES = ['about', 'contact', 'privacy']
 
 /** Services are Croatian and English only; see SERVICE_LOCALES for why. */
 export const hasServices = (lng) => SERVICE_LOCALES.includes(lng)
+
+/** Location landing pages are hr/en only; see LOCATION_LOCALES for why. */
+export const hasLocations = (lng) => LOCATION_LOCALES.includes(lng)
 
 /** Route patterns for react-router, per locale. */
 export const routePatterns = LOCALES.flatMap((lng) => [
@@ -44,6 +49,18 @@ export const routePatterns = LOCALES.flatMap((lng) => [
         { lng, type: 'blog', pattern: blogIndexPath(lng) },
         { lng, type: 'post', pattern: `${blogIndexPath(lng)}:slug` },
       ]
+    : []),
+  /**
+   * Registered per concrete slug, not as a `:slug` pattern: these sit at the
+   * top level, so a wildcard here would swallow every unknown path and turn
+   * real 404s into soft 200s.
+   */
+  ...(hasLocations(lng)
+    ? LOCATIONS.map((l) => ({
+        lng,
+        type: 'location',
+        pattern: locationPath(lng, l.slug[lng]),
+      }))
     : []),
 ])
 
@@ -86,6 +103,17 @@ export const allPages = LOCALES.flatMap((lng) => [
         })),
       ]
     : []),
+  // Local commercial intent, same weight as the service pages.
+  ...(hasLocations(lng)
+    ? LOCATIONS.map((l) => ({
+        lng,
+        type: 'location',
+        slug: l.slug[lng],
+        locationId: l.id,
+        path: locationPath(lng, l.slug[lng]),
+        priority: '0.9',
+      }))
+    : []),
 ])
 
 /**
@@ -124,6 +152,13 @@ export function equivalentPath(pathname, targetLng) {
     if (!hasServices(targetLng)) return pathForLocale(targetLng)
     const service = SERVICES.find((s) => s.id === current.serviceId)
     return service ? servicePath(targetLng, service.slug[targetLng]) : pathForLocale(targetLng)
+  }
+  // A de/pl visitor on the Orebić page gets their own home page, never a URL
+  // that was never built.
+  if (current.type === 'location') {
+    if (!hasLocations(targetLng)) return pathForLocale(targetLng)
+    const loc = LOCATIONS.find((l) => l.id === current.locationId)
+    return loc ? locationPath(targetLng, loc.slug[targetLng]) : pathForLocale(targetLng)
   }
 
   return pathForLocale(targetLng)
