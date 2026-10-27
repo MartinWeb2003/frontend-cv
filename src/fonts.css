@@ -6,19 +6,19 @@
  *   Instrument Sans  display and body
  *   JetBrains Mono   labels, metadata, numerals
  *
- * Instrument Sans is variable on the wght axis with a range of 400 to 700.
+ * Instrument Sans is variable on two axes: wght 400 to 700 and wdth 75% to
+ * 100%. The wdth file is used rather than the wght-only one so display type
+ * can run semi-condensed (font-stretch) and be drawn narrower rather than
+ * scaled, which is what gives the large headlines their editorial shape.
  * It has no 800 or 900, so display weights are mapped to 700 in the CSS rather
- * than left to the browser, which would synthesize a fake bold and ruin the
- * letterforms at 100px+.
+ * than left to the browser, which would synthesize a fake bold.
  *
  * The variable file carries its own unicode-range splits, so latin-ext (the
  * Croatian, Polish and German diacritics) downloads only when needed.
  */
-@import '@fontsource-variable/instrument-sans/wght.css';
+@import '@fontsource-variable/instrument-sans/wdth.css';
 
 @import '@fontsource/jetbrains-mono/latin-400.css';
 @import '@fontsource/jetbrains-mono/latin-ext-400.css';
 @import '@fontsource/jetbrains-mono/latin-500.css';
 @import '@fontsource/jetbrains-mono/latin-ext-500.css';
-@import '@fontsource/jetbrains-mono/latin-600.css';
-@import '@fontsource/jetbrains-mono/latin-ext-600.css';

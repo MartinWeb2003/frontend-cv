@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { scroller } from 'react-scroll'
+import { scrollToTarget } from '../lib/scroll'
 import { DEFAULT_LOCALE, LOCALES, pathForLocale } from '../seo/siteConfig'
 
 /**
@@ -28,7 +28,7 @@ export default function SectionLink({ to, className, children, onNavigate, ...re
     onNavigate?.()
 
     if (onHome) {
-      scroller.scrollTo(to, { smooth: true, duration: 700, offset: -70 })
+      scrollToTarget(to)
       window.history.replaceState(null, '', href)
     } else {
       navigate(href)

@@ -33,7 +33,10 @@ export default defineConfig([
       },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      // There is no React plugin, so identifiers used only as JSX tags are
+      // invisible to this rule. Components are capitalised; `motion` is the
+      // one lowercase JSX namespace in the codebase (<motion.div>).
+      'no-unused-vars': ['error', { varsIgnorePattern: '^([A-Z_]|motion$)' }],
     },
   },
 ])

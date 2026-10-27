@@ -56,6 +56,13 @@ export const SERVICES = [
   },
 ]
 
+/**
+ * Geometric cover drawn by scripts/render-covers.mjs, one per service id.
+ * The SVG carries its own gentle CSS animation (paused for reduced motion);
+ * a static WebP of the same frame also exists for social cards.
+ */
+export const serviceCover = (id) => `/covers/service-${id}.svg`
+
 export const serviceById = (id) => SERVICES.find((s) => s.id === id)
 
 /** Find a service from a localised slug, e.g. "izrada-web-stranica". */

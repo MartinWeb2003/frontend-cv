@@ -1,0 +1,229 @@
+.earn {
+  margin-top: clamp(80px, 10vw, 140px);
+  padding: clamp(40px, 6vw, 88px);
+  border-radius: 32px;
+  background: var(--ink);
+  color: var(--on-ink);
+}
+
+.earn__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(24px, 5vw, 80px);
+  align-items: end;
+  margin-bottom: clamp(40px, 5vw, 64px);
+}
+.earn__title {
+  font-size: clamp(2.2rem, 4.6vw, 4rem);
+  font-weight: 600;
+  font-stretch: 88%;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  max-width: 13ch;
+}
+.earn__lead { color: var(--on-ink-2); font-size: 1.1rem; line-height: 1.55; max-width: 46ch; }
+
+.earn__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+/* ── Sourced statistics ── */
+.earn__stats {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.earn__stat {
+  display: flex;
+  flex-direction: column;
+  padding: 26px;
+  border-radius: 22px;
+  background: var(--ink-2);
+  box-shadow: inset 0 0 0 1px var(--line-ink);
+}
+.earn__value {
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  font-weight: 600;
+  font-stretch: 84%;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  color: var(--accent-lift);
+  margin-bottom: 10px;
+  white-space: nowrap;
+}
+.earn__stat-title { font-weight: 600; font-size: 1.05rem; letter-spacing: -0.01em; margin-bottom: 8px; }
+.earn__stat-text { color: var(--on-ink-2); font-size: 0.94rem; line-height: 1.55; margin-bottom: 16px; }
+.earn__source {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: auto;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--on-ink-3);
+  transition: color 0.2s var(--ease-out);
+}
+.earn__source:hover { color: var(--on-ink); }
+
+/* ── Calculator ── */
+.earn__calc {
+  position: sticky;
+  top: 112px;
+  padding: clamp(24px, 3vw, 36px);
+  border-radius: 22px;
+  background: var(--paper);
+  color: var(--text);
+}
+.earn__calc-title { font-size: 1.4rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 22px; }
+
+.earn__field { display: grid; gap: 10px; margin-bottom: 22px; border: 0; font-size: 0.94rem; color: var(--text-2); }
+.earn__field strong { color: var(--text); }
+.earn__field legend { margin-bottom: 10px; }
+
+.earn__input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 18px;
+  height: 56px;
+  border-radius: 14px;
+  background: var(--paper-2);
+  box-shadow: inset 0 0 0 1px var(--line);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.earn__input:focus-within { box-shadow: inset 0 0 0 2px var(--accent); }
+.earn__input input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  outline: none;
+}
+
+.earn__field input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(to right, var(--accent) var(--fill), var(--paper-3) var(--fill));
+  cursor: pointer;
+}
+.earn__field input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--paper);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.earn__field input[type='range']::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--paper);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.earn__chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.earn__chips button {
+  min-width: 64px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease-out), color 0.2s var(--ease-out), border-color 0.2s var(--ease-out);
+}
+.earn__chips button:hover { border-color: var(--text); }
+.earn__chips button.is-on { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }
+
+.earn__result {
+  display: grid;
+  gap: 4px;
+  padding: 22px;
+  border-radius: 16px;
+  background: var(--ink);
+  color: var(--on-ink);
+}
+.earn__result-label { font-size: 0.85rem; color: var(--on-ink-2); }
+.earn__result-value {
+  font-size: clamp(2.2rem, 3.6vw, 3rem);
+  font-weight: 600;
+  font-stretch: 86%;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: var(--accent-lift);
+}
+.earn__payback { font-size: 0.9rem; color: var(--on-ink-2); }
+.earn__payback strong { color: var(--on-ink); }
+.earn__note { margin-top: 14px; font-size: 0.78rem; line-height: 1.5; color: var(--text-3); }
+
+@media (max-width: 1000px) {
+  .earn__head, .earn__body { grid-template-columns: 1fr; }
+  .earn__calc { position: static; }
+}
+@media (max-width: 600px) {
+  .earn { border-radius: 24px; padding: 32px 20px; }
+  .earn__stats { grid-template-columns: 1fr; }
+}
+
+/* ── The headline figure ── */
+.earn__hero {
+  padding-bottom: clamp(48px, 6vw, 88px);
+  margin-bottom: clamp(48px, 6vw, 88px);
+  border-bottom: 1px solid var(--line-ink);
+}
+.earn__hero-kicker {
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+  font-weight: 500;
+  color: var(--on-ink-2);
+  margin-bottom: 8px;
+}
+.earn__hero-figure {
+  font-size: clamp(5.5rem, 19vw, 17rem);
+  font-weight: 600;
+  font-stretch: 78%;
+  letter-spacing: -0.06em;
+  line-height: 0.82;
+  color: var(--accent-lift);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.earn__hero-unit { font-size: 0.42em; letter-spacing: -0.02em; color: var(--on-ink); }
+.earn__hero-label {
+  margin-top: 18px;
+  font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  max-width: 24ch;
+}
+.earn__hero-text {
+  margin-top: 18px;
+  max-width: 62ch;
+  font-size: 1.08rem;
+  line-height: 1.6;
+  color: var(--on-ink-2);
+}
+.earn__hero-sources { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 18px; }
+.earn__hero-sources a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--on-ink-3);
+}
+.earn__hero-sources a:hover { color: var(--on-ink); }

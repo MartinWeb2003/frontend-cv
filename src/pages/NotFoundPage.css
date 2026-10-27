@@ -1,43 +1,33 @@
 .notfound {
-  min-height: 72vh;
+  position: relative;
+  min-height: max(80svh, 600px);
   display: flex;
   align-items: center;
+  overflow: hidden;
+  isolation: isolate;
   padding: 140px 0 100px;
-  background: var(--bg);
-  color: var(--text);
+  background: var(--paper);
 }
-
-.notfound__inner {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 14px;
-}
+.notfound .fluid { z-index: -1; }
 
 .notfound__code {
-  font-family: var(--font-mono);
-  font-size: clamp(4rem, 14vw, 9rem);
+  display: block;
+  font-size: clamp(7rem, 26vw, 22rem);
   font-weight: 600;
-  line-height: 1;
-  color: var(--crimson);
-  letter-spacing: -0.04em;
+  font-stretch: 80%;
+  letter-spacing: -0.07em;
+  line-height: 0.8;
+  color: var(--text);
+  margin-bottom: 32px;
 }
+.notfound__code span { color: var(--accent); }
 
 .notfound__title {
-  font-size: clamp(1.6rem, 4.5vw, 2.8rem);
+  font-size: clamp(1.8rem, 4vw, 3rem);
   font-weight: 600;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 14px;
 }
-
-.notfound__text {
-  max-width: 52ch;
-  color: var(--text-secondary);
-  line-height: 1.7;
-}
-
-.notfound__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 18px;
-}
+.notfound__text { max-width: 52ch; color: var(--text-2); line-height: 1.6; font-size: 1.1rem; }
+.notfound__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }

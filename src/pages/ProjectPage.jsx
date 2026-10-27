@@ -1,8 +1,11 @@
+import { useRef } from 'react'
+import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router-dom'
-import { FiExternalLink, FiGithub, FiArrowLeft, FiArrowRight, FiCheck } from 'react-icons/fi'
-import { PROJECTS, projectBySlug, PLACEHOLDER_BG } from '../data/projects'
+import { FiExternalLink, FiGithub, FiArrowUpRight, FiCheck } from 'react-icons/fi'
+import { PROJECTS, projectBySlug } from '../data/projects'
 import { imgAttrs, SIZES } from '../data/imageAttrs'
+import PageHeader from '../components/PageHeader'
 import usePageMeta from '../seo/usePageMeta'
 import NotFoundPage from './NotFoundPage'
 import {
@@ -16,11 +19,23 @@ import {
 } from '../seo/siteConfig'
 import './ProjectPage.css'
 
+/** Hostname for the browser-frame address bar, e.g. "sottomonte.hr". */
+const host = (url) => (url ? new URL(url).hostname.replace(/^www\./, '') : '')
+
 export default function ProjectPage() {
   const { slug } = useParams()
   const { t, i18n } = useTranslation()
   const lng = LOCALES.includes(i18n.language) ? i18n.language : DEFAULT_LOCALE
   const project = projectBySlug(slug)
+  const heroRef = useRef(null)
+  const reduce = useReducedMotion()
+
+  /*
+   * The page's scroll moment: the screenshot frame grows from inset to full
+   * container width as it scrolls into place. Transform only.
+   */
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start end', 'start 0.25'] })
+  const scale = useTransform(scrollYProgress, [0, 1], [reduce ? 1 : 0.9, 1])
 
   if (!project) return <NotFoundPage />
 
@@ -36,128 +51,102 @@ export default function ProjectPage() {
     <>
       <ProjectMeta project={project} lng={lng} title={tp('MetaTitle')} description={tp('MetaDesc')} />
 
-      <article className="pdetail">
+      <article className="pagewrap pdetail">
         <div className="container">
-          <nav className="pdetail__crumbs" aria-label="Breadcrumb">
-            <ol>
-              <li>
-                <Link to={pathForLocale(lng)}>{t('projectPage.crumbHome')}</Link>
-              </li>
-              <li>
-                <Link to={projectsIndexPath(lng)}>{t('projectPage.crumbProjects')}</Link>
-              </li>
-              <li aria-current="page">{project.title}</li>
-            </ol>
-          </nav>
-
-          <header className="pdetail__header">
-            <span className="pdetail__num">{project.num}</span>
-            <h1 className="pdetail__title">{project.title}</h1>
-            <p className="pdetail__sub">{tp('Subtitle')}</p>
-
-            <dl className="pdetail__facts">
-              <div>
-                <dt>{t('projectPage.yearLabel')}</dt>
-                <dd>{project.year}</dd>
-              </div>
-              <div>
-                <dt>{t('projectPage.roleLabel')}</dt>
-                <dd>{t('projectPage.roleValue')}</dd>
-              </div>
-              <div>
-                <dt>{t('projectPage.stackTitle')}</dt>
-                <dd>{project.stack.join(', ')}</dd>
-              </div>
-            </dl>
-
-            <div className="pdetail__actions">
-              {project.liveUrl && (
-                <a
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-primary"
-                >
-                  <FiExternalLink size={14} /> {t('projectPage.visitLive')}
-                </a>
-              )}
-              {project.githubUrl && (
-                <a
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-outline"
-                >
-                  <FiGithub size={14} /> GitHub
-                </a>
-              )}
-            </div>
-          </header>
-
-          <figure
-            className="pdetail__hero"
-            style={{ background: PLACEHOLDER_BG[project.id] }}
+          <PageHeader
+            crumbs={[
+              { label: t('projectPage.crumbHome'), href: pathForLocale(lng) },
+              { label: t('projectPage.crumbProjects'), href: projectsIndexPath(lng) },
+              { label: project.title },
+            ]}
+            title={project.title}
+            lead={tp('Subtitle')}
           >
+            <div className="pdetail__bar">
+              <dl className="pdetail__facts">
+                <div>
+                  <dt>{t('projectPage.yearLabel')}</dt>
+                  <dd>{project.year}</dd>
+                </div>
+                <div>
+                  <dt>{t('projectPage.roleLabel')}</dt>
+                  <dd>{t('projectPage.roleValue')}</dd>
+                </div>
+                <div>
+                  <dt>{t('projectPage.stackTitle')}</dt>
+                  <dd>{project.stack.join(', ')}</dd>
+                </div>
+              </dl>
+              <div className="pdetail__actions">
+                {project.liveUrl && (
+                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+                    <FiExternalLink size={15} aria-hidden="true" /> {t('projectPage.visitLive')}
+                  </a>
+                )}
+                {project.githubUrl && (
+                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
+                    <FiGithub size={15} aria-hidden="true" /> GitHub
+                  </a>
+                )}
+              </div>
+            </div>
+          </PageHeader>
+
+          <motion.figure ref={heroRef} className="pdetail__frame" style={{ scale }}>
+            <div className="pdetail__chrome" aria-hidden="true">
+              <span /><span /><span />
+              {project.liveUrl && <span className="pdetail__url">{host(project.liveUrl)}</span>}
+            </div>
             <img
-              src={project.images[0]}
               alt={`${project.title}, ${tp('Subtitle')}`}
               {...imgAttrs(project.images[0], SIZES.hero)}
               loading="eager"
               fetchPriority="high"
               decoding="async"
             />
-          </figure>
+          </motion.figure>
 
-          <div className="pdetail__body">
+          <div className="pdetail__layout">
             <p className="pdetail__lead">{tp('Intro')}</p>
 
-            <section className="pdetail__section">
-              <h2>{t('projectPage.challengeTitle')}</h2>
-              <p>{tp('Challenge')}</p>
-            </section>
-
-            <section className="pdetail__section">
-              <h2>{t('projectPage.approachTitle')}</h2>
-              <p>{tp('Approach')}</p>
-            </section>
-
-            <section className="pdetail__section">
-              <h2>{t('projectPage.featuresTitle')}</h2>
-              <ul className="pdetail__features">
-                {features.map((f) => (
-                  <li key={f}>
-                    <FiCheck size={15} aria-hidden="true" />
-                    <span>{f}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            <section className="pdetail__section">
-              <h2>{t('projectPage.stackTitle')}</h2>
-              <div className="pdetail__tags">
-                {project.stack.map((s) => (
-                  <span key={s} className="tag">{s}</span>
-                ))}
-              </div>
-            </section>
-
-            <section className="pdetail__section">
-              <h2>{t('projectPage.deliveredTitle')}</h2>
-              <p>{tp('Delivered')}</p>
-            </section>
+            <div className="pdetail__sections">
+              <section className="pdetail__section">
+                <h2>{t('projectPage.challengeTitle')}</h2>
+                <p>{tp('Challenge')}</p>
+              </section>
+              <section className="pdetail__section">
+                <h2>{t('projectPage.approachTitle')}</h2>
+                <p>{tp('Approach')}</p>
+              </section>
+              <section className="pdetail__section">
+                <h2>{t('projectPage.deliveredTitle')}</h2>
+                <p>{tp('Delivered')}</p>
+              </section>
+            </div>
           </div>
 
+          <section className="psection">
+            <h2 className="psection__title">{t('projectPage.featuresTitle')}</h2>
+            <ul className="pdetail__features">
+              {features.map((f, i) => (
+                <li key={f}>
+                  <span className="pdetail__feature-num">{String(i + 1).padStart(2, '0')}</span>
+                  <FiCheck size={18} aria-hidden="true" />
+                  <p>{f}</p>
+                </li>
+              ))}
+            </ul>
+          </section>
+
           {project.images.length > 1 && (
-            <section className="pdetail__section pdetail__gallery-wrap">
-              <h2>{t('projectPage.galleryTitle')}</h2>
+            <section className="psection">
+              <h2 className="psection__title">{t('projectPage.galleryTitle')}</h2>
               <div className="pdetail__gallery">
                 {project.images.slice(1).map((src, i) => (
                   <img
                     key={src}
-                    src={src}
                     alt={`${project.title}, ${t('projects.screenshotAlt', { n: i + 2 })}`}
-                    {...imgAttrs(src, SIZES.card)}
+                    {...imgAttrs(src, SIZES.projectRow)}
                     loading="lazy"
                     decoding="async"
                   />
@@ -166,14 +155,25 @@ export default function ProjectPage() {
             </section>
           )}
 
-          <nav className="pdetail__pager">
-            <Link to={projectsIndexPath(lng)} className="pdetail__pager-link">
-              <FiArrowLeft size={14} /> {t('projectPage.backToProjects')}
+          <Link to={projectPath(lng, next.slug)} className="pdetail__next" data-theme="ink">
+            <span className="pdetail__next-text">
+              <span className="pdetail__next-label">{t('projectPage.nextProject')}</span>
+              <span className="pdetail__next-title">{next.title}</span>
+              <span className="pdetail__next-sub">{t(`projects.${next.key}Subtitle`)}</span>
+            </span>
+            <span className="pdetail__next-media">
+              <img alt="" {...imgAttrs(next.images[0], SIZES.projectRow)} loading="lazy" decoding="async" />
+            </span>
+            <span className="pdetail__next-go" aria-hidden="true">
+              <FiArrowUpRight size={26} />
+            </span>
+          </Link>
+
+          <p className="pdetail__back">
+            <Link to={projectsIndexPath(lng)} className="link-draw">
+              {t('projectPage.backToProjects')}
             </Link>
-            <Link to={projectPath(lng, next.slug)} className="pdetail__pager-link pdetail__pager-link--next">
-              {t('projectPage.nextProject')}: {next.title} <FiArrowRight size={14} />
-            </Link>
-          </nav>
+          </p>
         </div>
       </article>
     </>

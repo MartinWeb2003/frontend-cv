@@ -1,11 +1,12 @@
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
-import { FiCheck, FiArrowLeft, FiMail, FiArrowUpRight } from 'react-icons/fi'
+import { FiCheck, FiArrowRight, FiArrowUpRight } from 'react-icons/fi'
 import { LOCATIONS, LOCATION_LOCALES, locationBySlug } from '../data/locations'
 import { serviceById } from '../data/services'
 import { postById } from '../data/posts'
-import { projectBySlug, PLACEHOLDER_BG } from '../data/projects'
+import { projectBySlug } from '../data/projects'
 import { imgAttrs, SIZES } from '../data/imageAttrs'
+import PageHeader from '../components/PageHeader'
 import usePageMeta from '../seo/usePageMeta'
 import NotFoundPage from './NotFoundPage'
 import {
@@ -27,6 +28,19 @@ import {
  * has to look identical to it; a second copy of those rules would drift.
  */
 import './ServicePage.css'
+
+function Checks({ items }) {
+  return (
+    <ul className="service__checks">
+      {items.map((g) => (
+        <li key={g}>
+          <FiCheck size={17} aria-hidden="true" />
+          <span>{g}</span>
+        </li>
+      ))}
+    </ul>
+  )
+}
 
 export default function LocationPage() {
   const { pathname } = useLocation()
@@ -62,60 +76,60 @@ export default function LocationPage() {
         description={tl('MetaDesc')}
       />
 
-      <article className="service">
+      <article className="pagewrap service">
         <div className="container">
-          <nav className="service__crumbs" aria-label="Breadcrumb">
-            <ol>
-              <li>
-                <Link to={pathForLocale(lng)}>{t('projectPage.crumbHome')}</Link>
-              </li>
-              <li aria-current="page">{tl('Name')}</li>
-            </ol>
-          </nav>
+          <PageHeader
+            crumbs={[
+              { label: t('projectPage.crumbHome'), href: pathForLocale(lng) },
+              { label: tl('Name') },
+            ]}
+            title={tl('Title')}
+            lead={tl('Lead')}
+            size="lg"
+          >
+            <div className="service__head-cta">
+              <Link to={pagePath('contact', lng)} className="btn btn-primary btn-lg">
+                {t('services.ctaBtn')} <FiArrowRight size={17} aria-hidden="true" />
+              </Link>
+            </div>
+          </PageHeader>
 
-          <header className="service__header">
-            <h1 className="service__title">{tl('Title')}</h1>
-            <p className="service__lead">{tl('Lead')}</p>
-          </header>
+          <figure className="partband">
+            <img
+              alt=""
+              {...imgAttrs(location.image, SIZES.hero)}
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+            />
+          </figure>
 
-          <div className="service__body">
-            <p>{tl('Intro1')}</p>
-            <p>{tl('Intro2')}</p>
-            <p>{tl('Intro3')}</p>
+          <div className="service__intro">
+            <div className="prose">
+              <p>{tl('Intro1')}</p>
+              <p>{tl('Intro2')}</p>
+              <p>{tl('Intro3')}</p>
+            </div>
+            <aside className="service__panel">
+              <h2 className="service__panel-title">{tl('GetTitle')}</h2>
+              <Checks items={gets} />
+            </aside>
+          </div>
 
-            <section className="service__section">
-              <h2>{tl('GetTitle')}</h2>
-              <ul className="service__checks">
-                {gets.map((g) => (
-                  <li key={g}>
-                    <FiCheck size={15} aria-hidden="true" />
-                    <span>{g}</span>
-                  </li>
-                ))}
-              </ul>
+          <div className="service__pair psection">
+            <section>
+              <h2 className="service__pair-title">{tl('ForTitle')}</h2>
+              <Checks items={fors} />
             </section>
-
-            <section className="service__section">
-              <h2>{tl('ForTitle')}</h2>
-              <ul className="service__checks">
-                {fors.map((f) => (
-                  <li key={f}>
-                    <FiCheck size={15} aria-hidden="true" />
-                    <span>{f}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
-
             {/* Descriptive anchors into the money pages, never "click here". */}
-            <section className="service__section">
-              <h2>{tl('ServicesTitle')}</h2>
-              <ul className="service__checks">
+            <section>
+              <h2 className="service__pair-title">{tl('ServicesTitle')}</h2>
+              <ul className="service__links">
                 {services.map((s) => (
                   <li key={s.id}>
-                    <FiCheck size={15} aria-hidden="true" />
-                    <Link to={servicePath(lng, s.slug[lng])}>
-                      {t(`services.${s.key}Name`)}
+                    <Link to={servicePath(lng, s.slug[lng])} className="service__link">
+                      <span>{t(`services.${s.key}Name`)}</span>
+                      <FiArrowUpRight size={18} aria-hidden="true" />
                     </Link>
                   </li>
                 ))}
@@ -125,27 +139,25 @@ export default function LocationPage() {
 
           {/* The whole justification for the page: real work in this area. */}
           {related.length > 0 && (
-            <section className="service__proof">
-              <h2>{tl('ProofTitle')}</h2>
-              <ul className="service__proof-grid">
+            <section className="psection">
+              <h2 className="psection__title">{tl('ProofTitle')}</h2>
+              <ul className="pgrid">
                 {related.map((p) => (
                   <li key={p.slug}>
-                    <Link
-                      to={projectPath(lng, p.slug)}
-                      className="service__proof-card"
-                      style={{ background: PLACEHOLDER_BG[p.id] }}
-                    >
-                      <img
-                        src={p.images[0]}
-                        alt={`${p.title}, ${t(`projects.${p.key}Subtitle`)}`}
-                        {...imgAttrs(p.images[0], SIZES.card)}
-                        loading="lazy"
-                        decoding="async"
-                      />
-                      <span className="service__proof-body">
-                        <span className="service__proof-title">{p.title}</span>
-                        <span className="service__proof-sub">
-                          {t(`projects.${p.key}Subtitle`)}
+                    <Link to={projectPath(lng, p.slug)} className="pcard">
+                      <span className="pcard__media">
+                        <img
+                          alt={`${p.title}, ${t(`projects.${p.key}Subtitle`)}`}
+                          {...imgAttrs(p.images[0], SIZES.card)}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </span>
+                      <span className="pcard__body">
+                        <span className="pcard__title">{p.title}</span>
+                        <span className="pcard__text">{t(`projects.${p.key}Subtitle`)}</span>
+                        <span className="pcard__go">
+                          {t('home.caseStudy')} <FiArrowUpRight size={15} aria-hidden="true" />
                         </span>
                       </span>
                     </Link>
@@ -156,39 +168,43 @@ export default function LocationPage() {
           )}
 
           {/* Plain Q&A, not FAQPage schema, for the reason given on ServicePage. */}
-          <section className="service__section service__faq">
-            <h2>{tl('FaqTitle')}</h2>
-            {faqs.map(({ q, a }) => (
-              <div key={q} className="service__faq-item">
-                <h3>{q}</h3>
-                <p>{a}</p>
-              </div>
-            ))}
+          <section className="psection">
+            <h2 className="psection__title">{tl('FaqTitle')}</h2>
+            <div className="faq">
+              {faqs.map(({ q, a }, i) => (
+                <details key={q} open={i === 0}>
+                  <summary><h3>{q}</h3></summary>
+                  <p>{a}</p>
+                </details>
+              ))}
+            </div>
           </section>
 
           {posts.length > 0 && (
-            <section className="service__section">
-              <h2>{tl('ReadTitle')}</h2>
-              <ul className="service__checks">
+            <section className="psection">
+              <h2 className="service__pair-title">{tl('ReadTitle')}</h2>
+              <ul className="service__links">
                 {posts.map((p) => (
                   <li key={p.id}>
-                    <FiArrowUpRight size={15} aria-hidden="true" />
-                    <Link to={postPath(lng, p.slug[lng])}>{t(`blog.${p.key}Title`)}</Link>
+                    <Link to={postPath(lng, p.slug[lng])} className="service__link">
+                      <span>{t(`blog.${p.key}Title`)}</span>
+                      <FiArrowUpRight size={18} aria-hidden="true" />
+                    </Link>
                   </li>
                 ))}
               </ul>
             </section>
           )}
 
-          <section className="service__cta">
-            <h2>{tl('CtaTitle')}</h2>
-            <p>{tl('CtaText')}</p>
-            <div className="service__cta-actions">
-              <Link to={pagePath('contact', lng)} className="btn btn-primary">
-                <FiMail size={14} /> {t('services.ctaBtn')}
+          <section className="pband" data-theme="ink">
+            <h2 className="pband__title">{tl('CtaTitle')}</h2>
+            <p className="pband__text">{tl('CtaText')}</p>
+            <div className="pband__actions">
+              <Link to={pagePath('contact', lng)} className="btn btn-primary btn-lg">
+                {t('services.ctaBtn')} <FiArrowRight size={17} aria-hidden="true" />
               </Link>
-              <Link to={pathForLocale(lng)} className="btn btn-outline">
-                <FiArrowLeft size={13} /> {t('projectPage.crumbHome')}
+              <Link to={pathForLocale(lng)} className="btn btn-outline btn-lg">
+                {t('projectPage.crumbHome')}
               </Link>
             </div>
           </section>

@@ -1,9 +1,10 @@
 import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router-dom'
-import { FiCheck, FiArrowRight, FiArrowLeft, FiMail } from 'react-icons/fi'
-import { SERVICES, SERVICE_LOCALES, serviceBySlug } from '../data/services'
-import { projectBySlug, PLACEHOLDER_BG } from '../data/projects'
+import { FiCheck, FiArrowRight, FiArrowUpRight } from 'react-icons/fi'
+import { projectBySlug } from '../data/projects'
+import { SERVICES, SERVICE_LOCALES, serviceBySlug, serviceCover } from '../data/services'
 import { imgAttrs, SIZES } from '../data/imageAttrs'
+import PageHeader from '../components/PageHeader'
 import usePageMeta from '../seo/usePageMeta'
 import NotFoundPage from './NotFoundPage'
 import {
@@ -18,6 +19,19 @@ import {
   serviceUrl,
 } from '../seo/siteConfig'
 import './ServicePage.css'
+
+function Checks({ items }) {
+  return (
+    <ul className="service__checks">
+      {items.map((g) => (
+        <li key={g}>
+          <FiCheck size={17} aria-hidden="true" />
+          <span>{g}</span>
+        </li>
+      ))}
+    </ul>
+  )
+}
 
 export default function ServicePage() {
   const { slug } = useParams()
@@ -44,81 +58,71 @@ export default function ServicePage() {
     <>
       <ServiceMeta service={service} lng={lng} title={ts('MetaTitle')} description={ts('MetaDesc')} />
 
-      <article className="service">
+      <article className="pagewrap service">
         <div className="container">
-          <nav className="service__crumbs" aria-label="Breadcrumb">
-            <ol>
-              <li>
-                <Link to={pathForLocale(lng)}>{t('projectPage.crumbHome')}</Link>
-              </li>
-              <li>
-                <Link to={servicesIndexPath(lng)}>{t('services.crumbServices')}</Link>
-              </li>
-              <li aria-current="page">{ts('Name')}</li>
+          <PageHeader
+            crumbs={[
+              { label: t('projectPage.crumbHome'), href: pathForLocale(lng) },
+              { label: t('services.crumbServices'), href: servicesIndexPath(lng) },
+              { label: ts('Name') },
+            ]}
+            title={ts('Title')}
+            lead={ts('Lead')}
+            size="lg"
+          >
+            <div className="service__head-cta">
+              <Link to={pagePath('contact', lng)} className="btn btn-primary btn-lg">
+                {t('services.ctaBtn')} <FiArrowRight size={17} aria-hidden="true" />
+              </Link>
+              <Link to={pagePath('pricing', lng)} className="btn btn-outline btn-lg">
+                {t('pricingPage.label')}
+              </Link>
+            </div>
+          </PageHeader>
+
+          <figure className="partband">
+            <img
+              alt=""
+              {...imgAttrs(serviceCover(service.id), SIZES.hero)}
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+            />
+          </figure>
+
+          <div className="service__intro">
+            <div className="prose">
+              <p>{ts('Intro1')}</p>
+              <p>{ts('Intro2')}</p>
+              <p>{ts('Intro3')}</p>
+            </div>
+            <aside className="service__panel">
+              <h2 className="service__panel-title">{t('services.getTitle')}</h2>
+              <Checks items={gets} />
+            </aside>
+          </div>
+
+          <section className="psection">
+            <h2 className="psection__title">{t('services.processTitle')}</h2>
+            <ol className="service__steps">
+              {steps.map((s, i) => (
+                <li key={s}>
+                  <span className="service__step-num">{String(i + 1).padStart(2, '0')}</span>
+                  <p>{s}</p>
+                </li>
+              ))}
             </ol>
-          </nav>
+          </section>
 
-          <header className="service__header">
-            <span className="service__num">{service.num}</span>
-            <h1 className="service__title">{ts('Title')}</h1>
-            <p className="service__lead">{ts('Lead')}</p>
-          </header>
-
-          <div className="service__body">
-            <p>{ts('Intro1')}</p>
-            <p>{ts('Intro2')}</p>
-            <p>{ts('Intro3')}</p>
-
-            <section className="service__section">
-              <h2>{t('services.getTitle')}</h2>
-              <ul className="service__checks">
-                {gets.map((g) => (
-                  <li key={g}>
-                    <FiCheck size={15} aria-hidden="true" />
-                    <span>{g}</span>
-                  </li>
-                ))}
-              </ul>
+          <div className="service__pair psection">
+            <section>
+              <h2 className="service__pair-title">{t('services.forTitle')}</h2>
+              <Checks items={fors} />
             </section>
-
-            <section className="service__section">
-              <h2>{t('services.processTitle')}</h2>
-              <ol className="service__steps">
-                {steps.map((s, i) => (
-                  <li key={s}>
-                    <span className="service__step-num">{String(i + 1).padStart(2, '0')}</span>
-                    <span>{s}</span>
-                  </li>
-                ))}
-              </ol>
-            </section>
-
-            <section className="service__section">
-              <h2>{t('services.forTitle')}</h2>
-              <ul className="service__checks">
-                {fors.map((f) => (
-                  <li key={f}>
-                    <FiCheck size={15} aria-hidden="true" />
-                    <span>{f}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            <section className="service__section">
-              <h2>{ts('NoteTitle')}</h2>
-              <ul className="service__checks">
-                {notes.map((n) => (
-                  <li key={n}>
-                    <FiCheck size={15} aria-hidden="true" />
-                    <span>{n}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            <section className="service__section">
-              <h2>{t('services.stackTitle')}</h2>
+            <section>
+              <h2 className="service__pair-title">{ts('NoteTitle')}</h2>
+              <Checks items={notes} />
+              <h3 className="service__stack-title">{t('services.stackTitle')}</h3>
               <div className="service__tags">
                 {service.stack.map((s) => (
                   <span key={s} className="tag">{s}</span>
@@ -129,27 +133,25 @@ export default function ServicePage() {
 
           {/* Real projects as proof, and a strong internal link into the case studies. */}
           {related.length > 0 && (
-            <section className="service__proof">
-              <h2>{t('services.proofTitle')}</h2>
-              <ul className="service__proof-grid">
+            <section className="psection">
+              <h2 className="psection__title">{t('services.proofTitle')}</h2>
+              <ul className="pgrid">
                 {related.map((p) => (
                   <li key={p.slug}>
-                    <Link
-                      to={projectPath(lng, p.slug)}
-                      className="service__proof-card"
-                      style={{ background: PLACEHOLDER_BG[p.id] }}
-                    >
-                      <img
-                        src={p.images[0]}
-                        alt={`${p.title}, ${t(`projects.${p.key}Subtitle`)}`}
-                        {...imgAttrs(p.images[0], SIZES.card)}
-                        loading="lazy"
-                        decoding="async"
-                      />
-                      <span className="service__proof-body">
-                        <span className="service__proof-title">{p.title}</span>
-                        <span className="service__proof-sub">
-                          {t(`projects.${p.key}Subtitle`)}
+                    <Link to={projectPath(lng, p.slug)} className="pcard">
+                      <span className="pcard__media">
+                        <img
+                          alt={`${p.title}, ${t(`projects.${p.key}Subtitle`)}`}
+                          {...imgAttrs(p.images[0], SIZES.card)}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </span>
+                      <span className="pcard__body">
+                        <span className="pcard__title">{p.title}</span>
+                        <span className="pcard__text">{t(`projects.${p.key}Subtitle`)}</span>
+                        <span className="pcard__go">
+                          {t('home.caseStudy')} <FiArrowUpRight size={15} aria-hidden="true" />
                         </span>
                       </span>
                     </Link>
@@ -160,38 +162,34 @@ export default function ServicePage() {
           )}
 
           {/*
-            Written as plain Q&A, not FAQPage schema: Google restricted FAQ rich
-            results to authority sites in 2023, so the markup would earn nothing
-            while risking a mismatch. The content still answers the questions.
+            Plain Q&A, not FAQPage schema: Google restricted FAQ rich results to
+            authority sites in 2023, so the markup would earn nothing while
+            risking a mismatch. The answers are in the DOM either way.
           */}
-          <section className="service__section service__faq">
-            <h2>{t('services.faqTitle')}</h2>
-            {faqs.map(({ q, a }) => (
-              <div key={q} className="service__faq-item">
-                <h3>{q}</h3>
-                <p>{a}</p>
-              </div>
-            ))}
-          </section>
-
-          <section className="service__cta">
-            <h2>{t('services.ctaTitle')}</h2>
-            <p>{t('services.ctaText')}</p>
-            <div className="service__cta-actions">
-              <Link to={pagePath('contact', lng)} className="btn btn-primary">
-                <FiMail size={14} /> {t('services.ctaBtn')}
-              </Link>
-              <Link to={servicesIndexPath(lng)} className="btn btn-outline">
-                <FiArrowLeft size={13} /> {t('services.crumbServices')}
-              </Link>
+          <section className="psection">
+            <h2 className="psection__title">{t('services.faqTitle')}</h2>
+            <div className="faq">
+              {faqs.map(({ q, a }, i) => (
+                <details key={q} open={i === 0}>
+                  <summary><h3>{q}</h3></summary>
+                  <p>{a}</p>
+                </details>
+              ))}
             </div>
           </section>
 
-          <nav className="service__pager">
-            <Link to={servicePath(lng, next.slug[lng])} className="service__pager-link">
-              {t('services.next')}: {t(`services.${next.key}Name`)} <FiArrowRight size={14} />
-            </Link>
-          </nav>
+          <section className="pband" data-theme="ink">
+            <h2 className="pband__title">{t('services.ctaTitle')}</h2>
+            <p className="pband__text">{t('services.ctaText')}</p>
+            <div className="pband__actions">
+              <Link to={pagePath('contact', lng)} className="btn btn-primary btn-lg">
+                {t('services.ctaBtn')} <FiArrowRight size={17} aria-hidden="true" />
+              </Link>
+              <Link to={servicePath(lng, next.slug[lng])} className="btn btn-outline btn-lg">
+                {t('services.next')}: {t(`services.${next.key}Name`)}
+              </Link>
+            </div>
+          </section>
         </div>
       </article>
     </>

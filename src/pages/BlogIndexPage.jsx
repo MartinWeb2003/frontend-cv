@@ -1,8 +1,9 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { FiArrowUpRight, FiCalendar } from 'react-icons/fi'
+import { FiArrowUpRight } from 'react-icons/fi'
 import { postsByDate, POST_LOCALES } from '../data/posts'
 import { imgAttrs, SIZES } from '../data/imageAttrs'
+import PageHeader from '../components/PageHeader'
 import usePageMeta from '../seo/usePageMeta'
 import {
   DEFAULT_LOCALE,
@@ -10,6 +11,7 @@ import {
   LOCALE_TAGS,
   SITE_ORIGIN,
   blogIndexPath,
+  pathForLocale,
   postPath,
 } from '../seo/siteConfig'
 import './BlogPage.css'
@@ -31,39 +33,41 @@ export default function BlogIndexPage() {
     new Intl.DateTimeFormat(LOCALE_TAGS[lng], { year: 'numeric', month: 'long', day: 'numeric' })
       .format(new Date(d))
 
-  return (
-    <div className="post post--index">
-      <div className="container">
-        <span className="section-label">{t('blog.crumb')}</span>
-        <h1 className="post__title post__title--index">{t('blog.indexTitle')}</h1>
-        <p className="post__lead">{t('blog.indexLead')}</p>
+  const posts = postsByDate()
 
-        <ul className="blog__list">
-          {postsByDate().map((p) => (
-            <li key={p.id}>
-              <Link to={postPath(lng, p.slug[lng])} className="blog__card">
-                <span className="blog__media">
+  return (
+    <div className="pagewrap blogindex">
+      <div className="container">
+        <PageHeader
+          crumbs={[
+            { label: t('projectPage.crumbHome'), href: pathForLocale(lng) },
+            { label: t('blog.crumb') },
+          ]}
+          title={t('blog.indexTitle')}
+          lead={t('blog.indexLead')}
+        />
+
+        <ul className="blogindex__list">
+          {posts.map((p, i) => (
+            <li key={p.id} className={i === 0 ? 'blogindex__item--lead' : undefined}>
+              <Link to={postPath(lng, p.slug[lng])} className="blogcard">
+                <span className="blogcard__media">
                   <img
-                    src={p.image}
                     alt={t(`blog.${p.key}Title`)}
-                    {...imgAttrs(p.image, SIZES.card)}
-                    loading="lazy"
+                    {...imgAttrs(p.image, i === 0 ? SIZES.projectRow : SIZES.card)}
+                    loading={i === 0 ? 'eager' : 'lazy'}
                     decoding="async"
                   />
                 </span>
-                <span className="blog__body">
-                  <time dateTime={p.date} className="blog__date">
-                    <FiCalendar size={11} aria-hidden="true" /> {fmt(p.date)}
-                  </time>
-                  <h2 className="blog__card-title">{t(`blog.${p.key}Title`)}</h2>
-                  <span className="blog__excerpt">{t(`blog.${p.key}Lead`)}</span>
-                  <span className="blog__tags">
-                    {p.tags.map((tag) => (
-                      <span key={tag} className="tag">{t(`blog.tags.${tag}`)}</span>
-                    ))}
+                <span className="blogcard__body">
+                  <span className="blogcard__meta">
+                    <time dateTime={p.date}>{fmt(p.date)}</time>
+                    <span>{p.tags.map((tag) => t(`blog.tags.${tag}`)).join(' · ')}</span>
                   </span>
-                  <span className="blog__cta">
-                    {t('blog.readMore')} <FiArrowUpRight size={14} />
+                  <h2 className="blogcard__title">{t(`blog.${p.key}Title`)}</h2>
+                  <span className="blogcard__excerpt">{t(`blog.${p.key}Lead`)}</span>
+                  <span className="pcard__go">
+                    {t('blog.readMore')} <FiArrowUpRight size={15} aria-hidden="true" />
                   </span>
                 </span>
               </Link>

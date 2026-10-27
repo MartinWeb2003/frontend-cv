@@ -1,11 +1,13 @@
 import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router-dom'
-import { FiCheck, FiArrowRight, FiArrowLeft, FiCalendar } from 'react-icons/fi'
+import { motion, useScroll } from 'motion/react'
+import { FiCheck, FiArrowRight, FiArrowLeft } from 'react-icons/fi'
 import { POSTS, POST_LOCALES, postBySlug, postById } from '../data/posts'
 import { serviceById } from '../data/services'
 import { locationById } from '../data/locations'
 import { projectBySlug } from '../data/projects'
 import { imgAttrs, SIZES } from '../data/imageAttrs'
+import PageHeader from '../components/PageHeader'
 import usePageMeta from '../seo/usePageMeta'
 import NotFoundPage from './NotFoundPage'
 import {
@@ -33,6 +35,8 @@ export default function BlogPostPage() {
   const { t, i18n } = useTranslation()
   const lng = LOCALES.includes(i18n.language) ? i18n.language : DEFAULT_LOCALE
   const post = postBySlug(lng, slug)
+  // The page's scroll moment: a reading-progress hairline under the navbar.
+  const { scrollYProgress } = useScroll()
 
   if (!post) return <NotFoundPage />
 
@@ -56,38 +60,30 @@ export default function BlogPostPage() {
     <>
       <PostMeta post={post} lng={lng} title={tb('MetaTitle')} description={tb('MetaDesc')} />
 
-      <article className="post">
-        <div className="container">
-          <nav className="post__crumbs" aria-label="Breadcrumb">
-            <ol>
-              <li>
-                <Link to={pathForLocale(lng)}>{t('projectPage.crumbHome')}</Link>
-              </li>
-              <li>
-                <Link to={blogIndexPath(lng)}>{t('blog.crumb')}</Link>
-              </li>
-              <li aria-current="page">{tb('Title')}</li>
-            </ol>
-          </nav>
+      <motion.div className="post__progress" style={{ scaleX: scrollYProgress }} aria-hidden="true" />
 
-          <header className="post__header">
-            <div className="post__meta">
-              <time dateTime={post.date}>
-                <FiCalendar size={12} aria-hidden="true" /> {dateLabel}
-              </time>
-              <span className="post__tags">
-                {post.tags.map((tag) => (
-                  <span key={tag} className="tag">{t(`blog.tags.${tag}`)}</span>
-                ))}
-              </span>
-            </div>
-            <h1 className="post__title">{tb('Title')}</h1>
-            <p className="post__lead">{tb('Lead')}</p>
-          </header>
+      <article className="pagewrap post">
+        <div className="container post__container">
+          <PageHeader
+            crumbs={[
+              { label: t('projectPage.crumbHome'), href: pathForLocale(lng) },
+              { label: t('blog.crumb'), href: blogIndexPath(lng) },
+              { label: tb('Title') },
+            ]}
+            meta={
+              <>
+                <time dateTime={post.date}>{dateLabel}</time>
+                <span aria-hidden="true"> · </span>
+                {post.tags.map((tag) => t(`blog.tags.${tag}`)).join(', ')}
+              </>
+            }
+            title={tb('Title')}
+            lead={tb('Lead')}
+            size="lg"
+          />
 
           <figure className="post__hero">
             <img
-              src={post.image}
               alt={tb('Title')}
               {...imgAttrs(post.image, SIZES.hero)}
               loading="eager"
@@ -96,8 +92,27 @@ export default function BlogPostPage() {
             />
           </figure>
 
-          <div className="post__body">
+          <div className="prose post__body">
             <p className="post__intro">{tb('Intro')}</p>
+
+            {/*
+              Original-research posts lead with their key findings: short,
+              self-contained, quotable sentences are what search and AI
+              answers lift, and each one names its own basis.
+            */}
+            {post.findings > 0 && (
+              <section className="post__findings" aria-labelledby="findings-title">
+                <h2 id="findings-title">{t('blog.findingsTitle')}</h2>
+                <ul>
+                  {Array.from({ length: post.findings }, (_, i) => (
+                    <li key={i}>
+                      <span className="post__finding-value">{tb(`F${i + 1}Value`)}</span>
+                      <span className="post__finding-label">{tb(`F${i + 1}Label`)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
 
             {SECTIONS.map((n) => (
               <section key={n}>
@@ -123,6 +138,15 @@ export default function BlogPostPage() {
               <h2>{tb('CloseTitle')}</h2>
               <p>{tb('Close')}</p>
             </section>
+
+            {post.dataset && (
+              <p className="post__dataset">
+                <a href={post.dataset} download>
+                  {t('blog.datasetLink')}
+                </a>{' '}
+                {t('blog.datasetNote')}
+              </p>
+            )}
           </div>
 
           {/*
@@ -130,42 +154,38 @@ export default function BlogPostPage() {
             one supports the cost guide instead.
           */}
           {post.ctaPage === 'location' && ctaLocation ? (
-            <aside className="post__cta">
-              <span className="post__cta-label">{t('blog.ctaLabel')}</span>
+            <aside className="pband post__cta" data-theme="ink">
               <h2>{t(`locations.${ctaLocation.key}Name`)}</h2>
               <p>{t(`locations.${ctaLocation.key}Lead`)}</p>
               <Link
                 to={locationPath(lng, ctaLocation.slug[lng])}
-                className="btn btn-primary"
+                className="btn btn-primary btn-lg"
               >
-                {t('services.viewService')} <FiArrowRight size={13} />
+                {t('services.viewService')} <FiArrowRight size={17} aria-hidden="true" />
               </Link>
             </aside>
           ) : post.ctaPage === 'pricing' ? (
-            <aside className="post__cta">
-              <span className="post__cta-label">{t('blog.ctaLabel')}</span>
+            <aside className="pband post__cta" data-theme="ink">
               <h2>{t('pricingPage.title')}</h2>
               <p>{t('pricingPage.lead')}</p>
-              <Link to={pagePath('pricing', lng)} className="btn btn-primary">
-                {t('services.viewService')} <FiArrowRight size={13} />
+              <Link to={pagePath('pricing', lng)} className="btn btn-primary btn-lg">
+                {t('services.viewService')} <FiArrowRight size={17} aria-hidden="true" />
               </Link>
             </aside>
           ) : post.ctaPage === 'services' ? (
-            <aside className="post__cta">
-              <span className="post__cta-label">{t('blog.ctaLabel')}</span>
+            <aside className="pband post__cta" data-theme="ink">
               <h2>{t('services.indexTitle')}</h2>
               <p>{t('services.indexLead')}</p>
-              <Link to={servicesIndexPath(lng)} className="btn btn-primary">
-                {t('services.viewService')} <FiArrowRight size={13} />
+              <Link to={servicesIndexPath(lng)} className="btn btn-primary btn-lg">
+                {t('services.viewService')} <FiArrowRight size={17} aria-hidden="true" />
               </Link>
             </aside>
           ) : service && (
-            <aside className="post__cta">
-              <span className="post__cta-label">{t('blog.ctaLabel')}</span>
+            <aside className="pband post__cta" data-theme="ink">
               <h2>{t(`services.${service.key}Name`)}</h2>
               <p>{t(`services.${service.key}Lead`)}</p>
-              <Link to={servicePath(lng, service.slug[lng])} className="btn btn-primary">
-                {t('services.viewService')} <FiArrowRight size={13} />
+              <Link to={servicePath(lng, service.slug[lng])} className="btn btn-primary btn-lg">
+                {t('services.viewService')} <FiArrowRight size={17} aria-hidden="true" />
               </Link>
             </aside>
           )}

@@ -1,77 +1,51 @@
-import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'motion/react'
 import { useTranslation } from 'react-i18next'
-import { FiMail, FiDownload, FiArrowUpRight, FiMapPin } from 'react-icons/fi'
-import ImageTrail from '../bits/ImageTrail'
-import useInView from '../hooks/useInView'
-import { cvFilename, cvPath, DEFAULT_LOCALE, LOCALES } from '../seo/siteConfig'
+import { Link } from 'react-router-dom'
+import { FiArrowUpRight, FiDownload, FiMapPin } from 'react-icons/fi'
+import FluidBackground from './FluidBackground'
+import { cvFilename, cvPath, DEFAULT_LOCALE, LOCALES, PERSON, pagePath } from '../seo/siteConfig'
 import './Contact.css'
 
-const TRAIL_IMAGES = [
-  '/sotto1.webp', '/sotto2.webp', '/sotto3.webp', '/sotto4.webp',
-  '/eva1.webp', '/eva2.webp', '/eva3.webp', '/eva4.webp',
-  '/sabioncello1.webp', '/sabioncello2.webp',
-  '/grafica1.webp', '/grafica2.webp',
-]
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 36 },
-  show: (i) => ({ opacity: 1, y: 0, transition: { duration: 0.65, delay: i * 0.12, ease: [0.4, 0, 0.2, 1] } }),
-}
-
+/*
+ * The closing dark chapter. The site has one job, an email enquiry, so this is
+ * the largest call to action on the page. The ink returns from the hero so
+ * the page ends where it began.
+ */
 export default function Contact() {
   const { t, i18n } = useTranslation()
   const lng = LOCALES.includes(i18n.language) ? i18n.language : DEFAULT_LOCALE
-  const sectionRef = useRef(null)
-  const [ref, inView] = useInView()
-
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] })
-  const titleY = useTransform(scrollYProgress, [0, 1], [80, -80])
 
   return (
-    <section ref={sectionRef} className="contact section-dark" id="contact">
-      <ImageTrail items={TRAIL_IMAGES}>
-        <div className="contact__trail-inner">
+    <section id="contact" className="contact chapter-ink" data-theme="ink" aria-labelledby="contact-title">
+      <FluidBackground variant="ink" />
+      <div className="container contact__inner">
+        <h2 id="contact-title" className="contact__title">
+          {t('home.contactTitle')}
+        </h2>
+        <p className="lead contact__lead">
+          {t('contact.tagline1')} {t('contact.tagline2')}
+        </p>
 
-          <div className="contact__title-row">
-            <motion.div style={{ y: titleY }} className="contact__title-mover">
-              <h2 className="mega-title contact__mega">{t('titles.contact')}</h2>
-            </motion.div>
-          </div>
-
-          <div ref={ref} className="container contact__body">
-
-            <motion.p className="contact__tagline" custom={0} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
-              {t('contact.tagline1')}<br />
-              {t('contact.tagline2')}
-            </motion.p>
-
-            <motion.div className="contact__location" custom={1} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
-              <FiMapPin size={13} />
-              {t('contact.location')}
-              <span className="contact__avail-dot" />
-              <span className="contact__avail-text">{t('contact.available')}</span>
-            </motion.div>
-
-            <motion.div className="contact__cta" custom={2} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
-              <a href="https://mail.google.com/mail/?view=cm&to=bogojemartin@gmail.com" target="_blank" rel="noopener noreferrer" className="contact__btn contact__btn--primary">
-                <FiMail size={18} />
-                <span>{t('contact.emailBtn')}</span>
-                <FiArrowUpRight size={16} className="contact__btn-arrow" />
-              </a>
-            </motion.div>
-
-            <motion.div className="contact__secondary" custom={3} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}>
-              <a href={cvPath(lng)} download={cvFilename(lng)} className="contact__link">
-                <FiDownload size={14} /> {t('contact.cvBtn')}
-              </a>
-              <span className="contact__link-sep">·</span>
-              <span className="contact__link contact__link--plain">bogojemartin@gmail.com</span>
-            </motion.div>
-
-          </div>
+        <div className="contact__actions">
+          <a href={`mailto:${PERSON.email}`} className="contact__mail">
+            <span className="contact__mail-text">{PERSON.email}</span>
+            <span className="contact__mail-go" aria-hidden="true">
+              <FiArrowUpRight size={26} />
+            </span>
+          </a>
         </div>
-      </ImageTrail>
+
+        <div className="contact__meta">
+          <span className="contact__where">
+            <FiMapPin size={15} aria-hidden="true" /> {t('contact.location')}
+          </span>
+          <Link to={pagePath('contact', lng)} className="link-draw">
+            {t('home.contactPage')} <FiArrowUpRight size={15} aria-hidden="true" />
+          </Link>
+          <a href={cvPath(lng)} download={cvFilename(lng)} className="link-draw">
+            <FiDownload size={15} aria-hidden="true" /> {t('contact.cvBtn')}
+          </a>
+        </div>
+      </div>
     </section>
   )
 }

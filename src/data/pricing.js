@@ -19,7 +19,8 @@
  *   metadigital.hr    freelancer projects 150-2000 overall
  *
  * `marketAvg` below is the midpoint average across those freelancer figures.
- * `price` is 60% of it, per the owner's instruction, rounded to a clean number.
+ * `price` is 45% of it, per the owner's instruction (lowered from 60% in
+ * October 2026), rounded to a clean number.
  *
  * ⚠ These are STARTING prices ("od X"), not quotes. Every figure is a business
  * commitment; review before deploying. Nothing here is published until built.
@@ -42,16 +43,37 @@ export const CURRENCY_SYMBOL = '€'
 
 /** @type {PriceItem[]} */
 export const PRICES = [
-  { id: 'landing', price: 290, marketAvg: 490, unit: 'project' },
-  { id: 'presentation', price: 650, marketAvg: 1100, unit: 'project' },
-  { id: 'business', price: 1290, marketAvg: 2150, unit: 'project' },
-  { id: 'shop', price: 950, marketAvg: 1600, unit: 'project' },
-  { id: 'audit', price: 300, marketAvg: 500, unit: 'project' },
-  { id: 'maintenance', price: 60, marketAvg: 100, unit: 'month' },
-  { id: 'hourly', price: 30, marketAvg: 50, unit: 'hour' },
+  { id: 'landing', price: 220, marketAvg: 490, unit: 'project' },
+  { id: 'presentation', price: 495, marketAvg: 1100, unit: 'project' },
+  { id: 'business', price: 970, marketAvg: 2150, unit: 'project' },
+  { id: 'shop', price: 720, marketAvg: 1600, unit: 'project' },
+  // Owner's request: SEO work priced lower than the rest, at 30% of market.
+  { id: 'audit', price: 150, marketAvg: 500, unit: 'project' },
+  { id: 'maintenance', price: 45, marketAvg: 100, unit: 'month' },
+  { id: 'hourly', price: 22, marketAvg: 50, unit: 'hour' },
 ]
 
 /** Cost drivers explained on the page; each maps to a translation key. */
 export const COST_FACTORS = ['pages', 'cms', 'content', 'languages', 'shop', 'integrations']
 
 export const priceById = (id) => PRICES.find((p) => p.id === id)
+
+/**
+ * The headline figure on the cost guide: what an average Croatian holiday
+ * rental pays booking platforms in commission each year, i.e. the money a
+ * direct-booking website can win back. Both inputs are published figures;
+ * the page links the sources beside the number.
+ *
+ *   avgRevenue   €28,254, average annual revenue of a short-term rental in
+ *                Croatia, 2025 (Airbtics market review)
+ *   commission   15%, the low end of the typical 15-25% OTA commission
+ *                (Which?, via TTG Media). The low end keeps the claim modest.
+ */
+export const EARNINGS = {
+  avgRevenue: 28254,
+  commission: 0.15,
+  revenueSource: 'https://airbtics.com/short-term-rental-market-report-2025-croatia',
+  commissionSource: 'https://www.ttgmedia.com/news/which-says-avoid-otas-when-booking-hotels-21546',
+}
+
+export const commissionPaid = () => Math.round(EARNINGS.avgRevenue * EARNINGS.commission)

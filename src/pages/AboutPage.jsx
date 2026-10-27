@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { FiMail, FiPhone, FiGithub, FiLinkedin, FiDownload, FiArrowRight } from 'react-icons/fi'
+import { imgAttrs, SIZES } from '../data/imageAttrs'
+import PageHeader from '../components/PageHeader'
 import usePageMeta from '../seo/usePageMeta'
 import {
   cvFilename,
@@ -11,6 +13,7 @@ import {
   phoneHref,
   pagePath,
   pageUrl,
+  pathForLocale,
   projectsIndexPath,
   SITE_ORIGIN,
 } from '../seo/siteConfig'
@@ -32,11 +35,26 @@ export default function AboutPage() {
   const facts = ['fact1', 'fact2', 'fact3', 'fact4'].map((k) => t(`aboutPage.${k}`))
 
   return (
-    <article className="staticpage">
+    <article className="pagewrap staticpage">
       <div className="container staticpage__inner">
-        <span className="section-label">{t('aboutPage.label')}</span>
-        <h1 className="staticpage__title">{t('aboutPage.title')}</h1>
-        <p className="staticpage__lead">{t('aboutPage.lead')}</p>
+        <PageHeader
+          crumbs={[
+            { label: t('projectPage.crumbHome'), href: pathForLocale(lng) },
+            { label: t('aboutPage.label') },
+          ]}
+          title={t('aboutPage.title')}
+          lead={t('aboutPage.lead')}
+        />
+
+        <figure className="partband">
+          <img
+            alt=""
+            {...imgAttrs('/covers/page-about.svg', SIZES.hero)}
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+          />
+        </figure>
 
         <div className="staticpage__split">
           <div className="staticpage__body">

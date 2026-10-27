@@ -164,8 +164,24 @@ export const PROJECTS = ORDER.map((slug, i) => {
 
 export const FEATURED_PROJECTS = PROJECTS.filter((p) => p.featured)
 
-export const projectBySlug = (slug) => PROJECTS.find((p) => p.slug === slug)
+/**
+ * The projects highlighted on the home page, one full row each, in this
+ * order (owner's choice). The rest are on the projects index, linked below.
+ */
+export const HOME_PROJECTS = ['sottomonte', 'bmfit', 'sabioncello-grafika', 'visit-eva-orebic'].map((slug) =>
+  PROJECTS.find((p) => p.slug === slug),
+)
 
-/** Card background tints, keyed by project id. */
-export const PLACEHOLDER_BG = { 1: '#1a0a0c', 2: '#0a0e1a', 3: '#0a1210', 4: '#0e0a1a', 5: '#0f1a0a', 6: '#0a1418', 7: '#140a0c' }
-export const PLACEHOLDER_ACCENT = { 1: '#3d0f17', 2: '#0f1a3d', 3: '#0f3d2a', 4: '#1a0f3d', 5: '#1a3d0f', 6: '#0f2f3d', 7: '#3d0f14' }
+/**
+ * The four projects that play on the home page's 3D device, in order. Chosen
+ * for range (real estate, branding, tourism, a conversion landing page) and
+ * for hero screenshots that read well at laptop size.
+ */
+export const SHOWCASE_PROJECTS = [
+  'sottomonte',
+  'sabioncello-grafika',
+  'camping-loviste-paradise',
+  'bmfit',
+].map((slug) => PROJECTS.find((p) => p.slug === slug))
+
+export const projectBySlug = (slug) => PROJECTS.find((p) => p.slug === slug)

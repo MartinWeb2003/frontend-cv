@@ -19,7 +19,13 @@ export default function CustomCursor() {
     if (window.matchMedia('(pointer: coarse), (hover: none)').matches) return
 
     const onMove = (e) => {
-      pos.current = { x: e.clientX, y: e.clientY }
+      if (!pos.current.seen) {
+        // Start the ring where the pointer is, not sliding in from the corner.
+        ringPos.current = { x: e.clientX, y: e.clientY }
+        dotRef.current?.classList.add('is-live')
+        ringRef.current?.classList.add('is-live')
+      }
+      pos.current = { x: e.clientX, y: e.clientY, seen: true }
       if (dotRef.current) {
         dotRef.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`
       }
@@ -36,7 +42,6 @@ export default function CustomCursor() {
 
     const setHover = (on) => {
       ringRef.current?.classList.toggle('cursor-ring--hover', on)
-      dotRef.current?.classList.toggle('cursor-dot--hover', on)
     }
 
     /*
@@ -72,8 +77,10 @@ export default function CustomCursor() {
 
   return (
     <>
-      <div ref={dotRef} className="cursor-dot" />
-      <div ref={ringRef} className="cursor-ring" />
+      <div ref={dotRef} className="cursor-dot" aria-hidden="true" />
+      <div ref={ringRef} className="cursor-ring" aria-hidden="true">
+        <div className="cursor-ring__inner" />
+      </div>
     </>
   )
 }

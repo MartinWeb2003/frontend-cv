@@ -1,0 +1,249 @@
+/*
+ * Shared page primitives for every standalone route: the header, prose and
+ * the closing call-to-action band. Page-specific CSS only adds layout.
+ */
+
+.pagewrap {
+  padding: clamp(112px, 15vh, 160px) 0 var(--section-y);
+  background: var(--paper);
+}
+
+/* ── Header ── */
+.phead { margin-bottom: clamp(48px, 7vw, 96px); }
+
+.phead__crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  list-style: none;
+  margin-bottom: clamp(28px, 4vw, 44px);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-3);
+}
+.phead__crumbs li + li::before {
+  content: '/';
+  margin-right: 10px;
+  color: var(--line-strong);
+}
+.phead__crumbs a { color: var(--text-2); transition: color 0.2s var(--ease-out); }
+.phead__crumbs a:hover { color: var(--accent); }
+.phead__crumbs [aria-current='page'] { color: var(--text); }
+
+.phead__title {
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 0.96;
+  color: var(--text);
+  will-change: transform;
+}
+.phead__title--xl {
+  font-size: var(--fs-display);
+  font-stretch: 86%;
+  max-width: 15ch;
+}
+.phead__title--lg {
+  font-size: clamp(2.5rem, 5.6vw, 5.25rem);
+  font-stretch: 90%;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  max-width: 20ch;
+}
+
+.phead__meta {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-3);
+  margin-bottom: 18px;
+}
+
+.phead__rest { margin-top: clamp(24px, 3vw, 36px); }
+.phead__lead { max-width: 60ch; }
+
+/* ── Prose: long-form copy, 65ch measure ── */
+.prose { max-width: 65ch; }
+.prose > * + * { margin-top: 1.1em; }
+.prose p,
+.prose li {
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--text-2);
+}
+.prose strong { color: var(--text); font-weight: 600; }
+.prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: text-decoration-thickness 0.2s var(--ease-out);
+}
+.prose a:hover { text-decoration-thickness: 2px; }
+.prose h2 {
+  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  color: var(--text);
+  margin-top: 2.2em;
+}
+.prose h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  color: var(--text);
+  margin-top: 1.8em;
+}
+.prose h2 + *, .prose h3 + * { margin-top: 0.7em; }
+.prose ul, .prose ol { padding-left: 1.2em; }
+.prose li + li { margin-top: 0.45em; }
+.prose li::marker { color: var(--accent); }
+
+/* ── Section heading used inside pages ── */
+.psection { margin-top: clamp(72px, 9vw, 128px); }
+.psection__title {
+  font-size: var(--fs-h2);
+  font-weight: 600;
+  font-stretch: 92%;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  margin-bottom: clamp(28px, 4vw, 48px);
+  max-width: 18ch;
+}
+
+/* ── Dark closing band (CTA) ── */
+.pband {
+  margin-top: clamp(80px, 10vw, 140px);
+  padding: clamp(48px, 7vw, 96px);
+  border-radius: 32px;
+  background: var(--ink);
+  color: var(--on-ink);
+}
+.pband__title {
+  font-size: clamp(2rem, 4.4vw, 3.8rem);
+  font-weight: 600;
+  font-stretch: 90%;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  max-width: 16ch;
+  margin-bottom: 18px;
+}
+.pband__text { color: var(--on-ink-2); max-width: 52ch; margin-bottom: 32px; font-size: 1.05rem; }
+.pband__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.pband .btn-outline { color: var(--on-ink); border-color: var(--line-ink-strong); }
+.pband .btn-outline:hover { border-color: var(--on-ink); }
+
+/* ── Card used for related projects, posts, services ── */
+.pcard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--paper-2);
+  transition: background-color 0.35s var(--ease-out);
+}
+.pcard:hover { background: var(--paper-3); }
+.pcard__media {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--paper-3);
+}
+.pcard__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s var(--ease-out);
+}
+.pcard:hover .pcard__media img { transform: scale(1.04); }
+.pcard__body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 22px 24px 26px;
+  flex: 1;
+}
+.pcard__meta {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-3);
+}
+.pcard__title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+.pcard__text { font-size: 0.95rem; line-height: 1.55; color: var(--text-2); }
+.pcard__go {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 12px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--accent);
+}
+.pcard__go svg { transition: transform 0.3s var(--ease-out); }
+.pcard:hover .pcard__go svg { transform: translate(2px, -2px); }
+
+.pgrid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: 16px;
+}
+
+/* ── FAQ: native details/summary, styled ── */
+.faq { border-top: 1px solid var(--line-strong); max-width: 860px; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 24px 0;
+  cursor: pointer;
+  list-style: none;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: '+';
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  font-weight: 400;
+  font-size: 1.2rem;
+  transition: transform 0.35s var(--ease-out), background-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
+}
+.faq details[open] summary::after { transform: rotate(45deg); background: var(--ink); color: var(--on-ink); border-color: var(--ink); }
+.faq summary:hover::after { border-color: var(--text); }
+.faq details > :not(summary) { padding: 0 0 26px; max-width: 65ch; color: var(--text-2); line-height: 1.65; }
+
+@media (max-width: 640px) {
+  .pband { border-radius: 24px; padding: 40px 24px; }
+}
+
+/* ── Art band: a wide generated artwork under the page header ── */
+.partband {
+  margin: 0 0 clamp(64px, 8vw, 112px);
+  aspect-ratio: 21 / 8;
+  border-radius: 28px;
+  overflow: hidden;
+  background: var(--ink);
+}
+.partband img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 700px) {
+  .partband { aspect-ratio: 16 / 10; border-radius: 20px; }
+}

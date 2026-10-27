@@ -1,14 +1,15 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { FiArrowUpRight } from 'react-icons/fi'
-import { PROJECTS, PLACEHOLDER_BG } from '../data/projects'
+import { PROJECTS } from '../data/projects'
 import { imgAttrs, SIZES } from '../data/imageAttrs'
-import DrawTitle from '../bits/DrawTitle'
+import PageHeader from '../components/PageHeader'
 import usePageMeta from '../seo/usePageMeta'
 import {
   DEFAULT_LOCALE,
   LOCALES,
   SITE_ORIGIN,
+  pathForLocale,
   projectPath,
   projectsIndexPath,
 } from '../seo/siteConfig'
@@ -28,48 +29,45 @@ export default function ProjectsIndexPage() {
   })
 
   return (
-    <div className="pindex">
-      <div className="container pindex__inner">
-        <span className="section-label">{t('projectPage.crumbProjects')}</span>
-        <DrawTitle
-          as="h1"
-          className="pindex__title"
-          lines={[{ text: t('projectPage.indexTitle'), fill: true }]}
+    <div className="pagewrap pindex">
+      <div className="container">
+        <PageHeader
+          crumbs={[
+            { label: t('projectPage.crumbHome'), href: pathForLocale(lng) },
+            { label: t('projectPage.crumbProjects') },
+          ]}
+          title={t('projectPage.indexTitle')}
+          lead={t('projectPage.indexIntro')}
         />
-        <p className="pindex__intro">{t('projectPage.indexIntro')}</p>
 
         <ul className="pindex__grid">
-          {PROJECTS.map((project) => (
-            <li key={project.slug} className="pindex__item">
-              <Link
-                to={projectPath(lng, project.slug)}
-                className="pindex__card"
-                style={{ background: PLACEHOLDER_BG[project.id] }}
-              >
+          {PROJECTS.map((project, i) => (
+            <li key={project.slug} className={`pindex__item${i === 0 ? ' pindex__item--wide' : ''}`}>
+              <Link to={projectPath(lng, project.slug)} className="pindex__card">
                 <span className="pindex__media">
                   <img
-                    src={project.images[0]}
                     alt={`${project.title}, ${t(`projects.${project.key}Subtitle`)}`}
-                    {...imgAttrs(project.images[0], SIZES.card)}
-                    loading="lazy"
+                    {...imgAttrs(project.images[0], i === 0 ? SIZES.hero : SIZES.projectRow)}
+                    loading={i < 2 ? 'eager' : 'lazy'}
                     decoding="async"
-                    className="pindex__img"
                   />
                 </span>
                 <span className="pindex__body">
                   <span className="pindex__meta">
-                    <span className="pindex__num">{project.num}</span>
-                    <span className="pindex__year">{project.year}</span>
+                    <span>{project.num}</span>
+                    <span>{project.year}</span>
                   </span>
-                  <h2 className="pindex__card-title">{project.title}</h2>
+                  <h2 className="pindex__title">{project.title}</h2>
                   <span className="pindex__sub">{t(`projects.${project.key}Subtitle`)}</span>
-                  <span className="pindex__tags">
-                    {project.stack.slice(0, 3).map((s) => (
-                      <span key={s} className="tag">{s}</span>
-                    ))}
-                  </span>
-                  <span className="pindex__cta">
-                    {t('projects.liveBtn')} <FiArrowUpRight size={14} />
+                  <span className="pindex__foot">
+                    <span className="pindex__tags">
+                      {project.stack.slice(0, 3).map((s) => (
+                        <span key={s} className="tag">{s}</span>
+                      ))}
+                    </span>
+                    <span className="pindex__go" aria-hidden="true">
+                      <FiArrowUpRight size={20} />
+                    </span>
                   </span>
                 </span>
               </Link>

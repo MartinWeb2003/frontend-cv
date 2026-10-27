@@ -31,6 +31,13 @@
  *
  * Imported by the React app AND scripts/prerender.mjs, so keep it plain data.
  */
+/*
+ * Covers are geometric compositions drawn by scripts/render-covers.mjs, one
+ * per post id, not project screenshots: a post is about a question, not
+ * about one client's site.
+ */
+const cover = (id) => `/covers/${id}.webp`
+
 export const POST_LOCALES = ['hr', 'en']
 
 /**
@@ -50,7 +57,7 @@ export const POSTS = [
     },
     service: 'maintenance-seo',
     relatedProjects: ['sottomonte'],
-    image: '/sotto2.webp',
+    image: cover('slow-website'),
     tags: ['performance', 'core-web-vitals', 'seo'],
   },
   {
@@ -64,7 +71,7 @@ export const POSTS = [
     },
     service: 'website-development',
     relatedProjects: ['sabioncello-grafika', 'sottomonte'],
-    image: '/grafica1.webp',
+    image: cover('wordpress-vs-react'),
     tags: ['wordpress', 'react', 'cms'],
   },
   {
@@ -84,7 +91,7 @@ export const POSTS = [
     service: 'website-development',
     ctaPage: 'pricing',
     relatedProjects: ['sabioncello-grafika', 'dani-cvjetnog'],
-    image: '/cvjetnog1.webp',
+    image: cover('comparing-quotes'),
     tags: ['pricing', 'quotes', 'process'],
   },
   {
@@ -98,7 +105,7 @@ export const POSTS = [
     },
     service: 'tourism-websites',
     relatedProjects: ['camping-loviste-paradise', 'visit-eva-orebic'],
-    image: '/camping1.webp',
+    image: cover('tourism-website'),
     tags: ['tourism', 'ux', 'multilingual'],
   },
   {
@@ -117,7 +124,7 @@ export const POSTS = [
      * naming the property and the place, which is exactly what S3 argues a
      * page has to do to be findable. sotto2 is taken by b1.
      */
-    image: '/sotto3.webp',
+    image: cover('local-seo'),
     tags: ['seo', 'google', 'search-console'],
   },
   {
@@ -155,7 +162,7 @@ export const POSTS = [
      * which is exactly what section 0.7 rules out. grafica2 also has an em
      * dash baked into the pixels.
      */
-    image: '/cvjetnog2.webp',
+    image: cover('build-timeline'),
     tags: ['process', 'content', 'timeline'],
   },
   {
@@ -182,7 +189,7 @@ export const POSTS = [
     ctaLocation: 'orebic',
     relatedProjects: ['visit-eva-orebic', 'camping-loviste-paradise', 'sabioncello'],
     relatedPosts: ['tourism-website', 'local-seo'],
-    image: '/camping3.webp',
+    image: cover('peljesac-web'),
     tags: ['peljesac', 'tourism', 'process'],
   },
 ]
@@ -214,8 +221,52 @@ POSTS.push({
     'peljesac-web',
   ],
   relatedProjects: ['sottomonte', 'camping-loviste-paradise'],
-  image: '/eva1.webp',
+  image: cover('choosing-developer'),
   tags: ['guide', 'process', 'choosing'],
+})
+
+/**
+ * Original research: a speed and health check of Croatian coastal tourism
+ * websites. The sample frame is every accommodation, campsite and estate
+ * agency with a website in OpenStreetMap for the seven Adriatic counties
+ * (Geofabrik extract of 26 October 2026); the method is in the post and the
+ * anonymised data is downloadable. Written to be cited: its numbers exist
+ * nowhere else.
+ */
+POSTS.push({
+  id: 'web-speed-study',
+  key: 'b9',
+  date: '2026-10-27',
+  updated: '2026-10-27',
+  slug: {
+    hr: 'brzina-turistickih-web-stranica-hrvatska-2026',
+    en: 'croatian-tourism-website-speed-study-2026',
+  },
+  service: 'maintenance-seo',
+  ctaPage: 'pricing',
+  relatedPosts: ['slow-website', 'tourism-website', 'local-seo'],
+  relatedProjects: ['sottomonte', 'camping-loviste-paradise'],
+  image: cover('web-speed-study'),
+  tags: ['research', 'performance', 'tourism'],
+  findings: 4,
+  dataset: '/data/croatian-tourism-websites-2026.csv',
+  study: {
+    measured: '2026-10-27',
+    area: 'Adriatic counties of Croatia',
+    basedOn: 'https://www.openstreetmap.org/',
+    variables: [
+      'website reachability',
+      'HTTPS',
+      'mobile viewport',
+      'CMS platform',
+      'booking engine detected',
+      'Lighthouse mobile performance score',
+      'Largest Contentful Paint',
+      'Total Blocking Time',
+      'Cumulative Layout Shift',
+      'page weight',
+    ],
+  },
 })
 
 export const postById = (id) => POSTS.find((p) => p.id === id)

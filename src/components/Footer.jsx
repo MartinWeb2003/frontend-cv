@@ -1,171 +1,136 @@
-import { motion } from 'motion/react'
 import { useTranslation } from 'react-i18next'
-import { FiMail, FiGithub, FiLinkedin, FiPhone } from 'react-icons/fi'
+import { FiArrowUpRight } from 'react-icons/fi'
 import { Link, useLocation } from 'react-router-dom'
-import SectionLink from './SectionLink'
 import { equivalentPath, hasServices, hasLocations } from '../routes'
 import { LOCATIONS } from '../data/locations'
+import { SERVICES } from '../data/services'
 import {
   DEFAULT_LOCALE,
   LOCALES,
   LOCALE_TAGS,
   PERSON,
   pagePath,
+  pathForLocale,
   phoneHref,
   projectsIndexPath,
   servicesIndexPath,
+  servicePath,
   locationPath,
   blogIndexPath,
 } from '../seo/siteConfig'
 import './Footer.css'
 
 /*
- * One fade for the whole footer. It previously staggered every link, divider
- * and social icon separately, which is a lot of animation for furniture nobody
- * scrolls down to admire.
+ * Static furniture: no entrance animation. Every standalone page gets a
+ * crawlable link from here, so nothing on the site is an orphan.
  */
-const fadeIn = {
-  hidden: { opacity: 0, y: 16 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] } },
-}
-
 export default function Footer() {
   const { t, i18n } = useTranslation()
   const { pathname } = useLocation()
   const lng = LOCALES.includes(i18n.language) ? i18n.language : DEFAULT_LOCALE
+  const services = hasServices(lng)
 
-  const LINKS = [
-    { labelKey: 'nav.about',      to: 'about' },
-    { labelKey: 'nav.experience', to: 'experience' },
-    { labelKey: 'nav.projects',   to: 'projects' },
-    { labelKey: 'nav.skills',     to: 'skills' },
-    { labelKey: 'nav.contact',    to: 'contact' },
+  const pages = [
+    { href: pathForLocale(lng), label: t('home.footerHome') },
+    ...(services ? [{ href: servicesIndexPath(lng), label: t('services.crumbServices') }] : []),
+    { href: projectsIndexPath(lng), label: t('projectPage.crumbProjects') },
+    ...(services
+      ? [
+          { href: pagePath('pricing', lng), label: t('pricingPage.label') },
+          { href: blogIndexPath(lng), label: t('blog.crumb') },
+        ]
+      : []),
+    { href: pagePath('about', lng), label: t('aboutPage.label') },
+    { href: pagePath('contact', lng), label: t('contactPage.label') },
+  ]
+
+  const offer = [
+    ...(services
+      ? SERVICES.map((s) => ({ href: servicePath(lng, s.slug[lng]), label: t(`services.${s.key}Name`) }))
+      : []),
+    // Location pages carry local commercial intent, so they get a sitewide link.
+    ...(hasLocations(lng)
+      ? LOCATIONS.map((l) => ({ href: locationPath(lng, l.slug[lng]), label: t(`locations.${l.key}Name`) }))
+      : []),
   ]
 
   return (
-    <motion.footer
-      className="footer"
-      variants={fadeIn}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.2 }}
-    >
-      <div className="footer__top">
-        <div>
-          <SectionLink to="hero" className="footer__wordmark">MARTIN BOGOJE</SectionLink>
-        </div>
-        {/*
-          Sitewide profile links. `rel="me"` plus the matching schema.org
-          sameAs is what ties this site to those accounts as one identity.
-          Each entry disappears if its config value is empty.
-        */}
-        <div className="footer__socials">
-          <a href={`mailto:${PERSON.email}`} aria-label="Email"><FiMail /></a>
-          {PERSON.github && (
-            <a href={PERSON.github} target="_blank" rel="noopener noreferrer me" aria-label="GitHub">
-              <FiGithub />
+    <footer className="footer chapter-ink" data-theme="ink">
+      <div className="container">
+        <div className="footer__grid">
+          <div className="footer__intro">
+            <p className="footer__pitch">{t('home.footerPitch')}</p>
+            <a href={`mailto:${PERSON.email}`} className="link-draw footer__mail">
+              {PERSON.email} <FiArrowUpRight size={15} aria-hidden="true" />
             </a>
-          )}
-          {PERSON.linkedin && (
-            <a href={PERSON.linkedin} target="_blank" rel="noopener noreferrer me" aria-label="LinkedIn">
-              <FiLinkedin />
-            </a>
-          )}
-          {PERSON.phone && (
-            <a href={phoneHref()} aria-label={PERSON.phone}><FiPhone /></a>
-          )}
-        </div>
-      </div>
+          </div>
 
-      <div className="footer__divider" />
+          <nav className="footer__col" aria-label={t('home.footerPages')}>
+            <h2 className="footer__label">{t('home.footerPages')}</h2>
+            <ul>
+              {pages.map((l) => (
+                <li key={l.href}><Link to={l.href}>{l.label}</Link></li>
+              ))}
+            </ul>
+          </nav>
 
-      <div className="footer__bottom">
-        <nav className="footer__nav">
-          {LINKS.map(l => (
-            <span key={l.to}>
-              <SectionLink to={l.to} className="footer__nav-link">{t(l.labelKey)}</SectionLink>
-            </span>
-          ))}
-          {/* Standalone pages, so they get crawlable links from every page. */}
-          {hasServices(lng) && (
-            <span>
-              <Link to={servicesIndexPath(lng)} className="footer__nav-link">
-                {t('services.crumbServices')}
-              </Link>
-            </span>
+          {offer.length > 0 && (
+            <nav className="footer__col" aria-label={t('services.crumbServices')}>
+              <h2 className="footer__label">{t('services.crumbServices')}</h2>
+              <ul>
+                {offer.map((l) => (
+                  <li key={l.href}><Link to={l.href}>{l.label}</Link></li>
+                ))}
+              </ul>
+            </nav>
           )}
-          {hasServices(lng) && (
-            <span>
-              <Link to={pagePath('pricing', lng)} className="footer__nav-link">
-                {t('pricingPage.label')}
-              </Link>
-            </span>
-          )}
-          {hasServices(lng) && (
-            <span>
-              <Link to={blogIndexPath(lng)} className="footer__nav-link">
-                {t('blog.crumb')}
-              </Link>
-            </span>
-          )}
+
           {/*
-            The location pages carry local commercial intent, so they need a
-            sitewide link rather than living at the end of one blog post.
+            `rel="me"` plus the matching schema.org sameAs is what ties this
+            site to those accounts as one identity, for search engines and for
+            AI assistants resolving who "Martin Bogoje" is.
           */}
-          {hasLocations(lng) &&
-            LOCATIONS.map((l) => (
-              <span key={l.id}>
-                <Link to={locationPath(lng, l.slug[lng])} className="footer__nav-link">
-                  {t(`locations.${l.key}Name`)}
-                </Link>
-              </span>
-            ))}
-          <span>
-            <Link to={projectsIndexPath(lng)} className="footer__nav-link">
-              {t('projectPage.crumbProjects')}
-            </Link>
-          </span>
-          <span>
-            <Link to={pagePath('about', lng)} className="footer__nav-link">
-              {t('aboutPage.label')}
-            </Link>
-          </span>
-          <span>
-            <Link to={pagePath('contact', lng)} className="footer__nav-link">
-              {t('contactPage.label')}
-            </Link>
-          </span>
-          <span>
-            <Link to={pagePath('privacy', lng)} className="footer__nav-link footer__nav-link--muted">
-              {t('privacyPage.title')}
-            </Link>
-          </span>
-        </nav>
+          <div className="footer__col">
+            <h2 className="footer__label">{t('home.footerProfiles')}</h2>
+            <ul>
+              {PERSON.linkedin && (
+                <li><a href={PERSON.linkedin} target="_blank" rel="noopener noreferrer me">LinkedIn</a></li>
+              )}
+              {PERSON.github && (
+                <li><a href={PERSON.github} target="_blank" rel="noopener noreferrer me">GitHub</a></li>
+              )}
+              {PERSON.phone && <li><a href={phoneHref()}>{PERSON.phone}</a></li>}
+            </ul>
+            {/*
+              Always-rendered locale links: the navbar switcher only exists
+              once opened, so without these the other language trees would
+              have no crawlable inbound link.
+            */}
+            <nav className="footer__langs" aria-label="Language">
+              {LOCALES.map((code) => (
+                <a
+                  key={code}
+                  href={equivalentPath(pathname, code)}
+                  hrefLang={LOCALE_TAGS[code]}
+                  lang={code}
+                  className={code === lng ? 'is-active' : undefined}
+                  aria-current={code === lng ? 'true' : undefined}
+                >
+                  {code.toUpperCase()}
+                </a>
+              ))}
+            </nav>
+          </div>
+        </div>
 
-        {/*
-          Always-rendered locale links. The navbar switcher is a dropdown that
-          only exists once opened, so without these the other three language
-          trees would have no crawlable inbound link at all.
-        */}
-        <nav className="footer__langs" aria-label="Language">
-          {LOCALES.map((code) => (
-            <a
-              key={code}
-              href={equivalentPath(pathname, code)}
-              hrefLang={LOCALE_TAGS[code]}
-              lang={code}
-              className={`footer__lang${code === lng ? ' is-active' : ''}`}
-              aria-current={code === lng ? 'true' : undefined}
-            >
-              {code.toUpperCase()}
-            </a>
-          ))}
-        </nav>
+        <p className="footer__wordmark" aria-hidden="true">Martin Bogoje</p>
 
-        <p className="footer__copy">
-          © {new Date().getFullYear()} Martin Bogoje · {t('footer.built')}
-        </p>
+        <div className="footer__base">
+          <span>© {new Date().getFullYear()} Martin Bogoje</span>
+          <Link to={pagePath('privacy', lng)}>{t('privacyPage.title')}</Link>
+          <span>{t('footer.built')}</span>
+        </div>
       </div>
-    </motion.footer>
+    </footer>
   )
 }

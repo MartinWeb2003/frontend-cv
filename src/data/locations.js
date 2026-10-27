@@ -26,6 +26,8 @@
  *
  * Imported by the React app AND scripts/prerender.mjs, so keep it plain data.
  */
+import { photo } from './photos.js'
+
 export const LOCATION_LOCALES = ['hr', 'en']
 
 export const LOCATIONS = [
@@ -53,7 +55,7 @@ export const LOCATIONS = [
     services: ['website-development', 'tourism-websites', 'maintenance-seo'],
     /** Supporting articles, so the page is not a dead end. */
     relatedPosts: ['peljesac-web', 'tourism-website', 'local-seo'],
-    image: '/eva2.webp',
+    image: photo('peljesac-panorama'),
   },
 ]
 

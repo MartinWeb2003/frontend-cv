@@ -1,0 +1,70 @@
+.workindex { background: var(--paper); }
+
+.workindex__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: clamp(28px, 6vw, 96px);
+  align-items: end;
+  margin-bottom: clamp(40px, 6vw, 72px);
+}
+.workindex__head .h2 { max-width: 13ch; }
+
+/* ── One project per row: image left, facts right ── */
+.workrows { list-style: none; border-top: 1px solid var(--line-strong); }
+.workrow {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: clamp(28px, 4.5vw, 72px);
+  align-items: center;
+  padding: clamp(36px, 5vw, 64px) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.workrow__media {
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--paper-3);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.workrow__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  transition: transform 0.9s var(--ease-out);
+}
+.workrow:hover .workrow__media img { transform: scale(1.03); }
+
+.workrow__meta {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-3);
+  margin-bottom: 14px;
+}
+.workrow__num { color: var(--accent); }
+.workrow__title {
+  font-size: clamp(2rem, 3.6vw, 3.2rem);
+  font-weight: 600;
+  font-stretch: 88%;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.workrow__title a { transition: color 0.25s var(--ease-out); }
+.workrow__title a:hover { color: var(--accent); }
+.workrow__sub { font-size: 1.1rem; font-weight: 500; color: var(--text); margin-bottom: 14px; }
+.workrow__desc { color: var(--text-2); line-height: 1.6; max-width: 52ch; margin-bottom: 20px; }
+.workrow__tags { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
+.workrow__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; }
+.workrow__actions .link-draw { font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500; }
+
+.workindex__all { margin-top: 48px; }
+
+@media (max-width: 900px) {
+  .workindex__head,
+  .workrow { grid-template-columns: 1fr; }
+  .workrow { gap: 22px; }
+}

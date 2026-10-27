@@ -15,6 +15,11 @@
     X-Robots-Tag = "noindex, noarchive"
 
 [[headers]]
+  for = "/Martin_Bogoje-CV-EN.pdf"
+  [headers.values]
+    X-Robots-Tag = "noindex, noarchive"
+
+[[headers]]
   for = "/*"
   [headers.values]
     X-Content-Type-Options = "nosniff"

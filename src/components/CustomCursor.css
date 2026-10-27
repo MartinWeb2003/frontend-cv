@@ -1,31 +1,48 @@
+/*
+ * Transform-only cursor: position and the hover growth are both transforms
+ * on a fixed-size element, so nothing here triggers layout (CLAUDE.md §4).
+ */
 @media (hover: hover) and (pointer: fine) {
-  body { cursor: none; }
-  a, button, [data-cursor] { cursor: none; }
+  body, a, button, [data-cursor] { cursor: none; }
+  input, textarea, select { cursor: text; }
 }
-.cursor-dot {
-  position: fixed;
-  top: -4px; left: -4px;
-  width: 8px; height: 8px;
-  background: var(--crimson, #A51C30);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 99999;
-  will-change: transform;
-  transition: width 0.15s, height 0.15s;
-}
+
+.cursor-dot,
 .cursor-ring {
   position: fixed;
-  top: -18px; left: -18px;
-  width: 36px; height: 36px;
-  border: 1.5px solid rgba(165, 28, 48, 0.5);
-  border-radius: 50%;
+  top: 0;
+  left: 0;
   pointer-events: none;
-  z-index: 99998;
+  border-radius: 50%;
   will-change: transform;
-  transition: width 0.25s cubic-bezier(0.4,0,0.2,1), height 0.25s cubic-bezier(0.4,0,0.2,1), border-color 0.25s;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-out);
 }
-.cursor-dot--hover { width: 12px; height: 12px; top: -6px; left: -6px; }
-.cursor-ring--hover { width: 54px; height: 54px; top: -27px; left: -27px; border-color: var(--crimson, #A51C30); }
-@media (max-width: 768px) {
+.cursor-dot.is-live,
+.cursor-ring.is-live { opacity: 1; }
+.cursor-dot {
+  z-index: 99999;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  background: var(--accent);
+}
+.cursor-ring {
+  z-index: 99998;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+}
+.cursor-ring__inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  opacity: 0.45;
+  transition: transform 0.35s var(--ease-out), opacity 0.35s var(--ease-out);
+}
+.cursor-ring--hover .cursor-ring__inner { transform: scale(1.5); opacity: 1; }
+
+@media (hover: none), (pointer: coarse) {
   .cursor-dot, .cursor-ring { display: none; }
 }

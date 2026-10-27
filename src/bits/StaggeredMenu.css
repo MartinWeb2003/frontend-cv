@@ -1,117 +1,76 @@
-/* ─── Staggered Menu ─── */
-
-.smenu-backdrop {
+.smenu {
   position: fixed;
   inset: 0;
-  background: rgba(10, 10, 10, 0.55);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  z-index: 1100;
-}
-
-.smenu-panel {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: min(480px, 100vw);
-  height: 100dvh;
-  background: #0A0A0A;
   z-index: 1200;
   display: flex;
   flex-direction: column;
-  padding: 48px 52px 48px;
-  border-left: 1px solid rgba(255, 255, 255, 0.07);
-  will-change: transform;
+  padding: 96px var(--gutter) 40px;
+  background: var(--ink);
+  color: var(--on-ink);
+  overflow-y: auto;
 }
 
-/* Close button — two diagonal spans forming an X */
-.smenu-close {
+.smenu__close {
   position: absolute;
-  top: 28px;
-  right: 40px;
-  width: 40px;
-  height: 40px;
-  background: none;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: border-color 0.2s;
-  flex-shrink: 0;
-}
-.smenu-close:hover { border-color: var(--crimson); }
-.smenu-close span {
-  position: absolute;
-  width: 16px;
-  height: 1.5px;
-  background: #fff;
-  display: block;
-}
-.smenu-close span:nth-child(1) { transform: rotate(45deg); }
-.smenu-close span:nth-child(2) { transform: rotate(-45deg); }
-
-/* Nav list */
-.smenu-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  margin-top: 80px;
-  flex: 1;
-}
-
-.smenu-item-wrap {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-.smenu-item-wrap:first-child {
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.smenu-link {
-  display: flex;
-  align-items: baseline;
-  gap: 20px;
-  width: 100%;
-  padding: 22px 0;
-  background: none;
+  top: 14px;
+  right: 12px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
   border: none;
   cursor: pointer;
-  text-align: left;
-  transition: gap 0.3s ease;
+  background: var(--ink-3);
 }
-.smenu-link:hover { gap: 28px; }
-
-.smenu-link__label {
-  font-size: clamp(1.6rem, 4vw, 2.4rem);
-  font-weight: 600;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
-  line-height: 1;
-  transition: color 0.2s;
+.smenu__close span {
+  position: absolute;
+  top: 50%;
+  left: 13px;
+  right: 13px;
+  height: 1.5px;
+  background: var(--on-ink);
 }
-.smenu-link:hover .smenu-link__label { color: var(--crimson); }
+.smenu__close span:nth-child(1) { transform: rotate(45deg); }
+.smenu__close span:nth-child(2) { transform: rotate(-45deg); }
 
-/* Footer */
-.smenu-footer {
-  padding-top: 40px;
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
-}
+.smenu__nav { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.smenu__row { overflow: hidden; border-bottom: 1px solid var(--line-ink); }
 
-.smenu-resume {
-  font-size: 0.72rem;
-  padding: 12px 24px;
-}
-
-@media (max-width: 480px) {
-  .smenu-panel { padding: 40px 28px 40px; }
-  .smenu-close { right: 24px; }
-}
-
-/* The menu entries became real <a href> links; keep the button styling. */
-.smenu-link {
+.smenu__link {
   display: flex;
-  width: 100%;
-  text-decoration: none;
-  color: inherit;
+  align-items: baseline;
+  gap: 18px;
+  padding: 16px 0;
 }
+.smenu__num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  color: var(--on-ink-3);
+}
+.smenu__label {
+  font-size: clamp(2rem, 9vw, 3.4rem);
+  font-weight: 600;
+  font-stretch: 90%;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  transition: color 0.25s var(--ease-out), transform 0.35s var(--ease-out);
+}
+.smenu__link:hover .smenu__label,
+.smenu__link:focus-visible .smenu__label { color: var(--accent-lift); transform: translateX(6px); }
+
+.smenu__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 32px;
+}
+.smenu__mail {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--on-ink-2);
+}
+.smenu .btn-outline { color: var(--on-ink); border-color: var(--line-ink-strong); }

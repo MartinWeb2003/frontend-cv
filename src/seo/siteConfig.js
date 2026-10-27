@@ -115,12 +115,12 @@ export const PERSON = {
    * and it is omitted everywhere rather than rendering blank. Nothing here is
    * required for the site to build or look right.
    *
-   * Currently unset by choice. If any of them is ever added, the only cost is
-   * a rebuild.
+   * Phone, photo and OIB are unset by choice. If any of them is ever added,
+   * the only cost is a rebuild.
    */
   phone: '', // e.g. '+385 91 234 5678'
   photo: '', // e.g. '/martin.webp' (put the file in public/)
-  linkedin: '', // e.g. 'https://www.linkedin.com/in/martin-bogoje/'
+  linkedin: '', // removed by the owner, October 2026
   github: 'https://github.com/MartinWeb2003',
 
   /** Croatian business registration number, shown in the footer when set. */
@@ -194,6 +194,11 @@ const JOB_TITLE = {
 }
 
 const KNOWS_ABOUT = [
+  'Website development',
+  'Websites for tourism',
+  'Real estate websites',
+  'Technical SEO',
+  'Core Web Vitals',
   'React',
   'JavaScript',
   'Node.js',
@@ -244,6 +249,18 @@ export function personSchema(lng, seo) {
       sameAs: 'https://www.ericsson.hr/',
     },
     knowsAbout: KNOWS_ABOUT,
+    /*
+     * The occupation and where it is practised, stated as data. This is what
+     * lets search engines and AI assistants answer "who builds websites on
+     * Pelješac" with this entity rather than guessing from page text.
+     */
+    hasOccupation: {
+      '@type': 'Occupation',
+      name: JOB_TITLE[lng] ?? JOB_TITLE.en,
+      occupationalCategory: '15-1254.00 Web Developers',
+      occupationLocation: LOCAL_BUSINESS.areaServed.map((name) => ({ '@type': 'Place', name })),
+      skills: KNOWS_ABOUT.join(', '),
+    },
     knowsLanguage: LOCALES.map((code) => ({
       '@type': 'Language',
       name: LOCALE_TAGS[code],
@@ -511,6 +528,36 @@ export function blogPostingSchema(post, lng, copy) {
     author: { '@id': `${SITE_ORIGIN}/#person` },
     publisher: { '@id': `${SITE_ORIGIN}/#person` },
     isPartOf: { '@id': `${SITE_ORIGIN}${blogIndexPath(lng)}#blog` },
+  }
+}
+
+/**
+ * schema.org Dataset for an original-research post. Marks the page as the
+ * primary source of its numbers, which is what search engines and AI
+ * assistants look for when deciding whom to cite.
+ */
+export function datasetSchema(post, lng, copy) {
+  if (!post.dataset) return null
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Dataset',
+    '@id': `${postUrl(lng, post.slug[lng])}#dataset`,
+    name: copy.title,
+    description: copy.description,
+    url: postUrl(lng, post.slug[lng]),
+    inLanguage: LOCALE_TAGS[lng],
+    creator: { '@id': `${SITE_ORIGIN}/#person` },
+    datePublished: post.date,
+    temporalCoverage: post.study.measured,
+    spatialCoverage: { '@type': 'Place', name: post.study.area },
+    license: 'https://creativecommons.org/licenses/by/4.0/',
+    isBasedOn: post.study.basedOn,
+    variableMeasured: post.study.variables,
+    distribution: {
+      '@type': 'DataDownload',
+      encodingFormat: 'text/csv',
+      contentUrl: `${SITE_ORIGIN}${post.dataset}`,
+    },
   }
 }
 

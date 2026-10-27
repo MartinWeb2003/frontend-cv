@@ -32,6 +32,7 @@ import {
   BING_SITE_VERIFICATION,
   ANALYTICS,
   PERSON,
+  PERSON_PROFILES,
   urlForLocale,
   projectUrl,
   projectsIndexPath,
@@ -56,13 +57,18 @@ import {
   blogIndexPath,
   postPath,
   blogPostingSchema,
+  datasetSchema,
   blogSchema,
+  pageUrl as pageUrlFor,
+  serviceUrl,
+  postUrl,
 } from '../src/seo/siteConfig.js'
 import { allPages } from '../src/routes.js'
 import { PROJECTS, projectBySlug } from '../src/data/projects.js'
 import { SERVICES, SERVICE_LOCALES, serviceById } from '../src/data/services.js'
-import { LOCATION_LOCALES, locationById } from '../src/data/locations.js'
-import { POSTS, POST_LOCALES, postById } from '../src/data/posts.js'
+import { LOCATIONS, LOCATION_LOCALES, locationById } from '../src/data/locations.js'
+import { POSTS, POST_LOCALES, postById, postsByDate } from '../src/data/posts.js'
+import { PRICES, SHOW_PRICES, CURRENCY_SYMBOL } from '../src/data/pricing.js'
 
 const DIST = 'dist'
 const SSR_ENTRY = path.resolve('dist-ssr/entry-server.js')
@@ -212,12 +218,13 @@ async function describe(page) {
       ),
       schemas: [
         blogPostingSchema(post, lng, { title: L.blog[`${post.key}Title`], description: copy.description }),
+        datasetSchema(post, lng, { title: L.blog[`${post.key}Title`], description: copy.description }),
         breadcrumbSchema([
           { name: L.projectPage.crumbHome, url: urlForLocale(lng) },
           { name: L.blog.crumb, url: `${SITE_ORIGIN}${blogIndexPath(lng)}` },
           { name: L.blog[`${post.key}Title`], url },
         ]),
-      ],
+      ].filter(Boolean),
     }
   }
 
@@ -415,8 +422,8 @@ async function fontPreloads() {
   // Instrument Sans is the variable display/body face; latin-ext carries the
   // Croatian and Polish diacritics, so both subsets sit on the critical path.
   const wanted = [
-    /^instrument-sans-latin-wght-normal-.*[.]woff2$/,
-    /^instrument-sans-latin-ext-wght-normal-.*[.]woff2$/,
+    /^instrument-sans-latin-wdth-normal-.*[.]woff2$/,
+    /^instrument-sans-latin-ext-wdth-normal-.*[.]woff2$/,
   ]
   return wanted
     .map((re) => assets.find((f) => re.test(f)))
@@ -493,6 +500,7 @@ async function main() {
   await write404(template, render, preloads)
   await writeRobots()
   await writeSitemap()
+  await writeLlms()
   console.log(`\n${count} pages prerendered.`)
 }
 
@@ -528,9 +536,32 @@ async function write404(template, render, preloads) {
   }
 }
 
+/*
+ * Everything is allowed for everyone. The AI crawlers are named explicitly
+ * anyway: being quoted by ChatGPT, Claude, Perplexity and Google's AI answers
+ * is a goal of this site, and an explicit Allow survives any future
+ * tightening of the wildcard rule.
+ */
+const AI_CRAWLERS = [
+  'GPTBot',
+  'OAI-SearchBot',
+  'ChatGPT-User',
+  'ClaudeBot',
+  'Claude-SearchBot',
+  'Claude-User',
+  'PerplexityBot',
+  'Perplexity-User',
+  'Google-Extended',
+  'Applebot-Extended',
+  'CCBot',
+]
+
 async function writeRobots() {
   const body = `# https://www.robotstxt.org/robotstxt.html
 User-agent: *
+Allow: /
+
+${AI_CRAWLERS.map((ua) => `User-agent: ${ua}`).join('\n')}
 Allow: /
 
 Sitemap: ${SITE_ORIGIN}/sitemap.xml
@@ -578,6 +609,71 @@ ${urls}
 `
   await fs.writeFile(path.join(DIST, 'sitemap.xml'), xml, 'utf8')
   console.log(`  dist/sitemap.xml (${allPages.length} URLs)`)
+}
+
+/**
+ * llms.txt (https://llmstxt.org): a plain Markdown map of the site for
+ * language models. It states who Martin Bogoje is in self-contained,
+ * quotable sentences and links every page that matters, so an assistant
+ * asked about web development in Croatia, or about him by name, has an
+ * authoritative source to cite. Built from the same data and locale files as
+ * the pages, so it cannot drift from them.
+ */
+async function writeLlms() {
+  const en = await locale('en')
+  const hr = await locale('hr')
+  const link = (title, url, note) => `- [${title}](${url})${note ? `: ${note}` : ''}`
+
+  const body = `# Martin Bogoje
+
+> Martin Bogoje is a freelance web developer based in Zagreb, Croatia. He builds fast websites for tourism, real estate and local businesses, most of them on the Pelješac peninsula, around Orebić and Lovište. He is completing a master's degree in computing at FER, University of Zagreb, and previously worked as a software developer at Ericsson Nikola Tesla. ${PROJECTS.length} of his client projects are live in production.
+
+- Email: ${PERSON.email}
+- Based in: ${PERSON.locality}, Croatia; works with clients across Croatia, including remotely
+- Works in: Croatian (native), English (C1)
+- Stack: React, Vite, WordPress, JavaScript, Node.js, PostgreSQL, technical SEO
+- Website languages: Croatian (default, at /), English (/en/), German (/de/), Polish (/pl/)
+${PERSON_PROFILES.map((u) => `- Profile: ${u}`).join('\n')}
+
+## Services
+
+${SERVICES.map((s) => link(en.services[`${s.key}Name`], serviceUrl('en', s.slug.en), en.services[`${s.key}Lead`])).join('\n')}
+${link(en.services.indexTitle, `${SITE_ORIGIN}${servicesIndexPath('en')}`, en.services.indexLead)}
+
+## Pricing
+
+${link(en.pricingPage.title, pageUrlFor('pricing', 'en'), en.pricingPage.lead)}
+${SHOW_PRICES ? PRICES.map((p) => `- ${en.pricingPage[`${p.id}Name`]}: from ${p.price} ${CURRENCY_SYMBOL}${p.unit === 'month' ? ' per month' : p.unit === 'hour' ? ' per hour' : ''}. ${en.pricingPage[`${p.id}Desc`]}`).join('\n') : ''}
+
+## Projects
+
+${PROJECTS.map((p) => link(p.title, projectUrl('en', p.slug), `${en.projects[`${p.key}Subtitle`]} (${p.year}). ${p.liveUrl ? `Live at ${p.liveUrl}. ` : ''}Stack: ${p.stack.join(', ')}.`)).join('\n')}
+
+## Local
+
+${LOCATIONS.map((l) => link(en.locations[`${l.key}Name`], locationUrl('en', l.slug.en), en.locations[`${l.key}Lead`])).join('\n')}
+
+## Writing
+
+${postsByDate().map((p) => link(en.blog[`${p.key}Title`], postUrl('en', p.slug.en), en.blog[`${p.key}Lead`])).join('\n')}
+
+## About and contact
+
+${link(en.aboutPage.title, pageUrlFor('about', 'en'), en.aboutPage.lead)}
+${link(en.contactPage.title, pageUrlFor('contact', 'en'), en.contactPage.lead)}
+
+## Hrvatski
+
+${link(hr.seo.title, urlForLocale('hr'), hr.seo.description)}
+${SERVICES.map((s) => link(hr.services[`${s.key}Name`], serviceUrl('hr', s.slug.hr))).join('\n')}
+${link(hr.pricingPage.title, pageUrlFor('pricing', 'hr'))}
+${LOCATIONS.map((l) => link(hr.locations[`${l.key}Name`], locationUrl('hr', l.slug.hr))).join('\n')}
+${link(hr.aboutPage.title, pageUrlFor('about', 'hr'))}
+${link(hr.contactPage.title, pageUrlFor('contact', 'hr'))}
+`
+  if (body.includes('\u2014')) throw new Error('llms.txt contains an em dash')
+  await fs.writeFile(path.join(DIST, 'llms.txt'), body.replace(/\n{3,}/g, '\n\n'), 'utf8')
+  console.log('  dist/llms.txt')
 }
 
 main().catch((err) => {

@@ -4,15 +4,6 @@
     "description": "Softwareentwickler aus Zagreb, Kroatien. Websites und Anwendungen mit React und WordPress, technisches SEO und Wartung. Projekte ansehen und Kontakt aufnehmen.",
     "ogImageAlt": "Martin Bogoje, Softwareentwickler aus Zagreb"
   },
-  "titles": {
-    "about": "ÜBER MICH",
-    "experience": "ERFAHRUNG",
-    "education": "BILDUNG",
-    "projectsLine1": "MEINE",
-    "projectsLine2": "PROJEKTE",
-    "skills": "FÄHIGKEITEN",
-    "contact": "REDEN WIR"
-  },
   "nav": {
     "about": "Über mich",
     "experience": "Erfahrung",
@@ -22,87 +13,49 @@
     "contact": "Kontakt",
     "menu": "Menü",
     "toTop": "Nach oben",
-    "closeMenu": "Schließen"
+    "closeMenu": "Schließen",
+    "skip": "Zum Inhalt springen",
+    "primary": "Hauptnavigation"
   },
   "hero": {
     "tagline": "Softwareentwickler · Zagreb, Kroatien",
-    "bio1": "Softwareentwickler aus Zagreb, Masterstudium Informatik an der FER.",
-    "bio2": "Zuvor bei Ericsson Nikola Tesla, dazu zahlreiche Webprojekte für Kunden.",
-    "bio3": "Ich baue Websites und Anwendungen, die schnell, klar und auffindbar sind.",
     "ctaProjects": "Arbeiten ansehen",
-    "ctaContact": "Kontaktiere mich",
-    "badge": "OFFEN FÜR PROJEKTE • VERFÜGBAR • ",
-    "badgeAria": "Projekte ansehen"
+    "ctaContact": "Anfrage senden",
+    "statement": "Ich entwickle schnelle Websites für Tourismus, Immobilien und lokale Unternehmen, vom ersten Gespräch bis zur ersten Anfrage.",
+    "availability": "Offen für neue Projekte",
+    "fact1Key": "FER, Zagreb",
+    "fact1Val": "Masterstudium Informatik",
+    "fact2Key": "Ericsson Nikola Tesla",
+    "fact2Val": "Ehemaliger Softwareentwickler",
+    "fact3Key": "{{count}} Projekte",
+    "fact3Val": "Live im Einsatz, überwiegend auf Pelješac",
+    "dragHint": "Zum Drehen ziehen"
   },
   "about": {
     "sectionLabel": "Leistungen",
-    "heading": "Websites und Anwendungen, wo Design auf technische Präzision trifft",
-    "para1": "Ich helfe Unternehmen, aus einer Idee ein Webprodukt zu machen, das wirklich funktioniert: schnell, übersichtlich und in der Suche auffindbar.",
-    "para2": "Mit Erfahrung aus einem führenden regionalen Tech-Unternehmen biete ich als freiberuflicher Entwickler:",
-    "bento1Title": "Sauberer Code",
-    "bento1Desc": "Mein zukünftiges Ich dankt meinem jetzigen. Ich schreibe Code, der leicht zu lesen und noch leichter zu erweitern ist.",
-    "bento2Title": "Full-Stack",
-    "bento2Desc": "Souverän auf jeder Ebene der Anwendung. Ich verbinde visuelle Perfektion mit leistungsstarken Server-Lösungen.",
-    "bento3Title": "Performance zuerst",
-    "bento3Desc": "Jede Millisekunde zählt. Ich optimiere Bundles, Rendering und Datenbanken für ein sofortiges Erlebnis.",
-    "bento4Title": "International",
-    "bento4Desc": "Fließendes Englisch und Ingenieurethik aus führenden globalen Technologieunternehmen.",
-    "bento5Title": "Akademisch",
-    "bento5Desc": "FER-Hintergrund als Garant für ingenieurwissenschaftliche Disziplin und Lösungskompetenz bei komplexesten Problemen.",
-    "hint3d": "↑ Interaktiv · Maus bewegen",
-    "presetsLabel": "Farbe der 3D-Szene",
-    "presetCrimson": "Karmesinrot",
-    "presetAzure": "Azurblau",
-    "presetAmber": "Bernstein"
+    "heading": "Leistungen, die ich von Anfang bis Ende liefere.",
+    "para1": "Ich helfe Unternehmen, aus einer Idee ein Webprodukt zu machen, das wirklich funktioniert: schnell, übersichtlich und in der Suche auffindbar."
   },
   "experience": {
     "sectionLabel": "Karriere",
-    "intro": "Softwareentwickler mit Erfahrung bei Ericsson Nikola Tesla und in der Entwicklung individueller Weblösungen für Kunden. Ich verbinde die Präzision großer Systeme mit der Geschwindigkeit eigenständiger Arbeit.",
     "job1Role": "Softwareentwickler",
     "job1Type": "Studentenposition",
     "job1Company": "Ericsson Nikola Tesla",
     "job1Period": "Apr 2025 – Nov 2025",
-    "job1B1": "Lieferung robuster Softwaremodule nach strengen Enterprise-Qualitätsstandards.",
-    "job1B2": "Anwendung von Best-Practice-Git-Workflows und agilen Methoden zur Aufrechterhaltung hoher Liefergeschwindigkeit.",
-    "job1B3": "Hochhalten von Codequalitätsstandards durch Teilnahme an Code-Reviews und Feature-Optimierungen.",
-    "job1B4": "Architektonische Beiträge in Zusammenarbeit mit erfahrenen Ingenieuren an zukunftssicheren Systemlösungen.",
     "job2Role": "Freiberuflicher Webentwickler",
     "job2Type": "Selbstständig",
     "job2Company": "Selbstständige Projekte",
-    "job2Period": "2023 – heute",
-    "job2B1": "Full-stack-Entwicklung: Ingenieuransatz zum Aufbau von Anwendungen mit React und komplexen SQL/API-Architekturen.",
-    "job2B2": "UI/UX-Engineering: Entwicklung interaktiver, pixelgenauer Oberflächen für ein nahtloses Benutzererlebnis.",
-    "job2B3": "Projektleitung: Eigenständige Steuerung aller Entwicklungsphasen mit Fokus auf Systemstabilität und saubere Dokumentation.",
-    "job2B4": "Kundenmanagement: Direkte Zusammenarbeit und Beratung der Kunden bei der Wahl der optimalen Technologie."
+    "job2Period": "2023 – heute"
   },
   "education": {
-    "activeBadge": "Aktiv · Masterstudium",
     "deg1Title": "Master of Engineering in Informatik",
     "deg1School": "Fakultät für Elektrotechnik und Informatik (FER)",
     "deg1Spec": "Software Engineering und Informationssysteme",
-    "labelDuration": "Dauer",
-    "labelStatus": "Status",
-    "labelUniversity": "Universität",
     "deg1Period": "2023/24 – 2025/26",
-    "deg1Status": "2. Jahr · laufend",
-    "deg1Uni": "Universität Zagreb",
-    "doneBadge": "Abgeschlossen · Bachelor",
     "deg2Title": "Bachelor of Computing",
     "deg2School": "Fakultät für Elektrotechnik und Informatik (FER)",
     "deg2Spec": "Universität Zagreb · univ. bacc. ing. comp.",
-    "labelAcademicYear": "Studienjahr",
-    "deg2Period": "2020/21 – 2022/23",
-    "labelTitleEarned": "Erworbener Abschluss",
-    "deg2TitleEarned": "univ. bacc. ing. comp.",
-    "deg2Status": "Abgeschlossen",
-    "deg1Tag1": "Software Engineering",
-    "deg1Tag2": "Informationssysteme",
-    "deg1Tag3": "ML",
-    "deg1Tag4": "Verteilte Systeme",
-    "deg2Tag1": "Algorithmen & Datenstrukturen",
-    "deg2Tag2": "Betriebssysteme",
-    "deg2Tag3": "Datenbanken",
-    "deg2Tag4": "Informatik"
+    "deg2Period": "2020/21 – 2022/23"
   },
   "projects": {
     "sectionIntro": "Sieben Projekte vom Konzept bis zur Produktion, für Kunden aus Tourismus, Immobilien und Grafikdesign. Jedes löste ein konkretes Problem, statt nur das Aussehen zu ändern.",
@@ -181,7 +134,7 @@
     "p6F3": "Fotogalerien von Platz, Sanitärbereich und Umgebung mit schrittweisem Laden",
     "p6F4": "Entfernungen zu Nachbarorten und Karte für die einfachere Reiseplanung",
     "p6Delivered": "Die Website ging unter eigener Domain online, strukturiert so, dass Inhalte und saisonale Angaben ohne Entwicklungsarbeit ergänzt werden können.",
-    "viewAll": "Alle {{count}} Projekte ansehen",
+    "viewAll": "Alle Projekte ansehen",
     "p7Subtitle": "Landingpage für Fitness-Coaching",
     "p7Desc": "BMFit: eine conversion-orientierte Landingpage für den Personal Trainer Benjamin Matošević. Sie führt Besucherinnen vom Problem zur Anmeldung, mit klarer Darstellung des Programms und Antworten auf häufige Einwände.",
     "p7MetaTitle": "BMFit: Landingpage für ein Fitness-Coaching-Programm",
@@ -216,7 +169,7 @@
     "cvBtn": "Lebenslauf herunterladen"
   },
   "footer": {
-    "built": "Erstellt mit React & Framer Motion"
+    "built": "Design und Code: Martin Bogoje"
   },
   "menu": {
     "cvBtn": "Lebenslauf herunterladen"
@@ -285,7 +238,8 @@
     "brief2": "Ob es bereits eine Website gibt und was daran nicht funktioniert",
     "brief3": "Ob die Seite mehrsprachig sein muss",
     "brief4": "Ob es eine Frist gibt, bis zu der sie fertig sein muss",
-    "seeWork": "Vorher die Arbeiten ansehen"
+    "seeWork": "Vorher die Arbeiten ansehen",
+    "photoAlt": "Sonnenuntergang am Strand von Kućište auf Pelješac"
   },
   "privacyPage": {
     "metaTitle": "Datenschutzerklärung | Martin Bogoje",
@@ -308,7 +262,9 @@
     "retention": "E-Mail-Korrespondenz bewahre ich so lange auf, wie es zur Beantwortung der Anfrage und zur Abwicklung einer daraus entstehenden Zusammenarbeit nötig ist, danach wird sie gelöscht. Technische Server-Logs werden gemäß den Richtlinien des Hosting-Anbieters gelöscht.",
     "contactTitle": "Fragen",
     "contact": "Bei Fragen zur Verarbeitung Ihrer Daten oder bei einem Auskunfts- oder Löschungsersuchen schreiben Sie mir eine E-Mail; ich antworte innerhalb einer angemessenen Frist.",
-    "contactLine": "Kontakt für Datenschutzfragen:"
+    "contactLine": "Kontakt für Datenschutzfragen:",
+    "photosTitle": "Fotos",
+    "photosText": "Die Fotos von Pelješac auf dieser Website stammen von Wikimedia Commons unter den angegebenen Lizenzen. Die Urheber sind:"
   },
   "services": {
     "s1Name": "Webentwicklung",
@@ -317,5 +273,38 @@
     "s2Lead": "Seiten für Ferienunterkünfte, Campingplätze und Tourismusbetriebe, mehrsprachig und schnell.",
     "s3Name": "Wartung und SEO",
     "s3Lead": "Bestehende Seiten schneller machen, technisches SEO und laufende Pflege."
+  },
+  "home": {
+    "showcaseTitle": "Websites, die heute für ihre Inhaber arbeiten.",
+    "caseStudy": "Fallstudie",
+    "pricingNote": "Richtpreise und was sie beeinflusst:",
+    "indexTitle": "Projekte, vom Konzept bis zum Livegang.",
+    "recordTitle": "Wo ich gelernt und gearbeitet habe.",
+    "recordIntro": "Ein Ingenieurstudium an der FER und Erfahrung in der Enterprise-Entwicklung bei Ericsson Nikola Tesla, angewandt auf Websites für kleine und mittlere Unternehmen.",
+    "kindWork": "Beruf",
+    "kindEdu": "Studium",
+    "rec1": "Werkstudentenstelle in einem Team, das Enterprise-Software entwickelt. Arbeit in C# mit Git-Workflow und Scrum, mit Code-Review bei jeder Änderung und Tests vor der Auslieferung.",
+    "rec2": "Websites und Anwendungen für Kunden aus Tourismus, Immobilien und Grafikdesign, vom ersten Gespräch bis zur Wartung nach dem Launch. React, WordPress, Node.js und PostgreSQL.",
+    "contactTitle": "Sie haben ein Projekt? Schreiben Sie mir.",
+    "contactPage": "Alle Kontaktwege",
+    "footerHome": "Startseite",
+    "footerPitch": "Websites für Tourismus, Immobilien und lokale Unternehmen in Kroatien.",
+    "footerPages": "Seiten",
+    "footerProfiles": "Profile",
+    "priceCtaTitle": "Was kann Ihnen eine Website einbringen?",
+    "priceCtaText": "Berechnen Sie in der Preisübersicht, wie viel Geld eine eigene Website in Ihrem Geschäft hält, ergänzt um Studien dazu, wie Tempo und Sichtbarkeit den Umsatz beeinflussen.",
+    "priceCtaBtn": "Ersparnis berechnen",
+    "priceCtaFrom": "Eine eigene Website kann jährlich halten",
+    "priceCtaNote": "Quellen und Berechnung finden Sie in der Preisübersicht.",
+    "processTitle": "Vom ersten Gespräch bis zum Launch.",
+    "processLead": "Ein klarer Ablauf in vier Schritten. Sie wissen immer, was als Nächstes kommt und was es kostet.",
+    "step1Title": "Gespräch",
+    "step1Text": "Ein kurzes Gespräch über Ihr Geschäft, das Ziel der Website und vorhandene Inhalte. Danach erhalten Sie eine Einschätzung zu Umfang, Zeitplan und Preis.",
+    "step2Title": "Struktur und Design",
+    "step2Text": "Zuerst die Anordnung der Inhalte, dann das visuelle Design. In dieser Phase sind Änderungen am einfachsten und günstigsten.",
+    "step3Title": "Umsetzung",
+    "step3Text": "Entwicklung in der vereinbarten Technologie, mit regelmäßigen Zwischenständen, damit es am Ende keine Überraschungen gibt.",
+    "step4Title": "Launch",
+    "step4Text": "Tests auf echten Geräten, Prüfung von Ladezeit und SEO-Grundlagen, Livegang auf Ihrer Domain und Übergabe mit Anleitung."
   }
 }

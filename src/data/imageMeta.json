@@ -79,6 +79,138 @@
       1600
     ]
   },
+  "/covers/build-timeline.webp": {
+    "width": 1600,
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
+  },
+  "/covers/choosing-developer.webp": {
+    "width": 1600,
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
+  },
+  "/covers/comparing-quotes.webp": {
+    "width": 1600,
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
+  },
+  "/covers/local-seo.webp": {
+    "width": 1600,
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
+  },
+  "/covers/page-about.svg": {
+    "width": 1600,
+    "height": 1000
+  },
+  "/covers/page-about.webp": {
+    "width": 1600,
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
+  },
+  "/covers/page-pricing.svg": {
+    "width": 1600,
+    "height": 1000
+  },
+  "/covers/page-pricing.webp": {
+    "width": 1600,
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
+  },
+  "/covers/peljesac-web.webp": {
+    "width": 1600,
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
+  },
+  "/covers/service-maintenance-seo.svg": {
+    "width": 1600,
+    "height": 1000
+  },
+  "/covers/service-maintenance-seo.webp": {
+    "width": 1600,
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
+  },
+  "/covers/service-tourism-websites.svg": {
+    "width": 1600,
+    "height": 1000
+  },
+  "/covers/service-tourism-websites.webp": {
+    "width": 1600,
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
+  },
+  "/covers/service-website-development.svg": {
+    "width": 1600,
+    "height": 1000
+  },
+  "/covers/service-website-development.webp": {
+    "width": 1600,
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
+  },
+  "/covers/slow-website.webp": {
+    "width": 1600,
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
+  },
+  "/covers/tourism-website.webp": {
+    "width": 1600,
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
+  },
+  "/covers/web-speed-study.webp": {
+    "width": 1600,
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
+  },
+  "/covers/wordpress-vs-react.webp": {
+    "width": 1600,
+    "height": 1000,
+    "widths": [
+      800,
+      1600
+    ]
+  },
   "/cvjetnog1.webp": {
     "width": 1600,
     "height": 754,
@@ -169,14 +301,27 @@
   },
   "/logo.webp": {
     "width": 512,
-    "height": 512,
-    "widths": [
-      512
-    ]
+    "height": 512
   },
   "/og-image.jpg": {
     "width": 1200,
     "height": 630
+  },
+  "/photos/kuciste-sunset.webp": {
+    "width": 1600,
+    "height": 824,
+    "widths": [
+      800,
+      1600
+    ]
+  },
+  "/photos/peljesac-panorama.webp": {
+    "width": 1600,
+    "height": 1067,
+    "widths": [
+      800,
+      1600
+    ]
   },
   "/sabioncello1.webp": {
     "width": 1600,

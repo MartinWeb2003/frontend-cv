@@ -1,0 +1,77 @@
+{
+  "frame": 1194,
+  "reachable": 928,
+  "domainGone": 163,
+  "broken": 57,
+  "unclear": 46,
+  "brokenPct": 18.4,
+  "noHttpsPct": 15.1,
+  "noViewportPct": 8.6,
+  "bookingPct": 31.1,
+  "platforms": {
+    "WordPress": 40.3,
+    "Other": 49.6,
+    "Wix": 1.4,
+    "Squarespace": 0.8,
+    "Joomla": 5.5,
+    "undefined": 1.2,
+    "Jimdo": 0.4,
+    "Drupal": 0.4,
+    "Weebly": 0.3,
+    "Webflow": 0.1
+  },
+  "lighthouse": {
+    "n": 394,
+    "failedRuns": 6,
+    "medianScore": 56.00000000000001,
+    "goodScorePct": 6.1,
+    "poorScorePct": 36,
+    "medianLcpS": 9.2,
+    "lcpGoodPct": 6.1,
+    "lcpPoorPct": 85.3,
+    "lcpOver10sPct": 46.4,
+    "clsGoodPct": 76.9,
+    "tbtGoodPct": 46.7,
+    "medianMB": 3.2,
+    "over5MBPct": 32.2,
+    "byPlatform": {
+      "WordPress": {
+        "n": 153,
+        "medianScore": 55.00000000000001,
+        "medianLcpS": 9.2
+      },
+      "Joomla": {
+        "n": 21,
+        "medianScore": 51,
+        "medianLcpS": 10.3
+      },
+      "Other": {
+        "n": 197,
+        "medianScore": 59,
+        "medianLcpS": 8.8
+      }
+    },
+    "byType": {
+      "hotel": {
+        "n": 119,
+        "medianScore": 55.00000000000001,
+        "medianLcpS": 9.9
+      },
+      "apartment": {
+        "n": 94,
+        "medianScore": 60.5,
+        "medianLcpS": 8.3
+      },
+      "guest_house": {
+        "n": 75,
+        "medianScore": 59,
+        "medianLcpS": 8.1
+      },
+      "camp_site": {
+        "n": 64,
+        "medianScore": 43.5,
+        "medianLcpS": 12.5
+      }
+    }
+  }
+}

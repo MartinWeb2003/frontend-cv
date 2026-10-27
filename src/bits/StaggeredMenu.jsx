@@ -1,119 +1,88 @@
 import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { useTranslation } from 'react-i18next'
-import { cvFilename, cvPath, DEFAULT_LOCALE, LOCALES } from '../seo/siteConfig'
+import { Link } from 'react-router-dom'
+import { FiArrowUpRight, FiDownload } from 'react-icons/fi'
+import { cvFilename, cvPath, DEFAULT_LOCALE, LOCALES, PERSON } from '../seo/siteConfig'
+import { lockScroll } from '../lib/scroll'
 import './StaggeredMenu.css'
 
-const itemVariants = {
-  closed: { opacity: 0, y: 40, skewY: 4 },
-  open: (i) => ({
-    opacity: 1,
-    y: 0,
-    skewY: 0,
-    transition: {
-      duration: 0.55,
-      delay: 0.1 + i * 0.07,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  }),
-  exit: (i) => ({
-    opacity: 0,
-    y: -24,
-    skewY: -3,
-    transition: {
-      duration: 0.3,
-      delay: i * 0.04,
-      ease: [0.4, 0, 1, 1],
-    },
-  }),
+const ease = [0.22, 1, 0.36, 1]
+
+const panel = {
+  closed: { y: '-100%' },
+  open: { y: 0, transition: { duration: 0.4, ease } },
+  exit: { y: '-100%', transition: { duration: 0.32, ease: [0.65, 0, 0.35, 1] } },
 }
 
-const overlayVariants = {
-  closed: { opacity: 0 },
-  open: { opacity: 1, transition: { duration: 0.35, ease: 'easeOut' } },
-  exit: { opacity: 0, transition: { duration: 0.4, delay: 0.15, ease: 'easeIn' } },
+const item = {
+  closed: { y: '100%' },
+  open: (i) => ({ y: 0, transition: { duration: 0.4, delay: 0.12 + i * 0.04, ease } }),
+  exit: { y: '100%', transition: { duration: 0.18 } },
 }
 
-const panelVariants = {
-  closed: { x: '100%' },
-  open: { x: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
-  exit: { x: '100%', transition: { duration: 0.4, ease: [0.4, 0, 0.6, 1] } },
-}
-
+/**
+ * Full-screen menu for narrow viewports. Every entry is a real router link,
+ * so the menu adds no JS-only navigation.
+ *
+ * @param {{isOpen: boolean, onClose: () => void, links: {label: string, href: string}[]}} props
+ */
 export default function StaggeredMenu({ isOpen, onClose, links }) {
   const { t, i18n } = useTranslation()
   const lng = LOCALES.includes(i18n.language) ? i18n.language : DEFAULT_LOCALE
 
-  // Lock body scroll while open
   useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
-  }, [isOpen])
+    lockScroll(isOpen)
+    if (!isOpen) return undefined
+    const onKey = (e) => e.key === 'Escape' && onClose()
+    window.addEventListener('keydown', onKey)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      lockScroll(false)
+    }
+  }, [isOpen, onClose])
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <>
-          {/* Backdrop */}
-          <motion.div
-            className="smenu-backdrop"
-            variants={overlayVariants}
-            initial="closed"
-            animate="open"
-            exit="exit"
-            onClick={onClose}
-          />
+        <motion.div
+          className="smenu"
+          role="dialog"
+          aria-modal="true"
+          aria-label={t('nav.menu')}
+          variants={panel}
+          initial="closed"
+          animate="open"
+          exit="exit"
+          data-theme="ink"
+        >
+          <button type="button" className="smenu__close" onClick={onClose} aria-label={t('nav.closeMenu')} autoFocus>
+            <span />
+            <span />
+          </button>
 
-          {/* Panel */}
-          <motion.div
-            className="smenu-panel"
-            variants={panelVariants}
-            initial="closed"
-            animate="open"
-            exit="exit"
-          >
-            {/* Close button */}
-            <button className="smenu-close" onClick={onClose} aria-label="Zatvori">
-              <span />
-              <span />
-            </button>
+          <nav className="smenu__nav">
+            {links.map((link, i) => (
+              <div key={link.href} className="smenu__row">
+                <motion.div custom={i} variants={item} initial="closed" animate="open" exit="exit">
+                  <Link to={link.href} className="smenu__link" onClick={onClose}>
+                    <span className="smenu__num">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="smenu__label">{link.label}</span>
+                  </Link>
+                </motion.div>
+              </div>
+            ))}
+          </nav>
 
-            {/* Nav links */}
-            <nav className="smenu-nav">
-              {links.map((link, i) => (
-                <div key={link.to} className="smenu-item-wrap" style={{ overflow: 'hidden' }}>
-                  <motion.div
-                    custom={i}
-                    variants={itemVariants}
-                    initial="closed"
-                    animate="open"
-                    exit="exit"
-                  >
-                    <a
-                      className="smenu-link"
-                      href={link.href}
-                      onClick={(e) => { link.onClick(e); onClose() }}
-                    >
-                      <span className="smenu-link__label">{link.label}</span>
-                    </a>
-                  </motion.div>
-                </div>
-              ))}
-            </nav>
-
-            {/* Footer */}
-            <motion.div
-              className="smenu-footer"
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0, transition: { delay: 0.55, duration: 0.4 } }}
-              exit={{ opacity: 0 }}
-            >
-              <a href={cvPath(lng)} download={cvFilename(lng)} className="btn btn-primary smenu-resume">
-                {t('menu.cvBtn')}
-              </a>
-            </motion.div>
-          </motion.div>
-        </>
+          <div className="smenu__foot">
+            <a href={`mailto:${PERSON.email}`} className="smenu__mail">
+              {PERSON.email} <FiArrowUpRight size={15} aria-hidden="true" />
+            </a>
+            <a href={cvPath(lng)} download={cvFilename(lng)} className="btn btn-outline">
+              <FiDownload size={15} aria-hidden="true" /> {t('menu.cvBtn')}
+            </a>
+          </div>
+        </motion.div>
       )}
     </AnimatePresence>
   )

@@ -10,7 +10,6 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import sharp from 'sharp'
-import { PERSON } from '../src/seo/siteConfig.js'
 
 const PUBLIC = 'public'
 const ARCHIVE = 'assets-original'
@@ -21,6 +20,7 @@ const QUALITY = 80
 
 /** logo.png stays a PNG too — it is the favicon and needs universal support. */
 const LOGO = 'logo.png'
+const ICONS = new Set(['apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png'])
 const LOGO_MAX = 512
 
 const bytes = (n) => `${(n / 1024).toFixed(0)} KB`
@@ -32,9 +32,13 @@ async function main() {
   const entries = await fs.readdir(PUBLIC, { withFileTypes: true })
   const pngs = entries
     .filter((e) => e.isFile() && e.name.toLowerCase().endsWith('.png'))
+    // Favicon PNGs from generate-icons.mjs must stay PNG and stay in public/.
+    .filter((e) => !ICONS.has(e.name))
     .map((e) => e.name)
 
-  const meta = {}
+  // Merge into the existing metadata: covers, art and photos are recorded
+  // there by their own scripts and must survive a re-run of this one.
+  const meta = JSON.parse(await fs.readFile(META_OUT, 'utf8').catch(() => '{}'))
   let before = 0
   let after = 0
 
@@ -77,31 +81,11 @@ async function main() {
     await fs.rename(src, path.join(ARCHIVE, name))
   }
 
-  await buildOgImage(meta)
+  // The social card now follows the colour tokens: scripts/brand-assets.mjs.
 
   await fs.writeFile(META_OUT, JSON.stringify(meta, null, 2) + '\n', 'utf8')
   console.log(`\nwrote ${META_OUT} (${Object.keys(meta).length} entries)`)
   console.log(`public/ PNG payload ${bytes(before)} -> WebP ${bytes(after)}`)
-}
-
-/** 1200x630 social card referenced by og:image / twitter:image. */
-async function buildOgImage(meta) {
-  const W = 1200
-  const H = 630
-  const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;')
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">
-  <rect width="${W}" height="${H}" fill="#0A0A0A"/>
-  <rect x="0" y="0" width="${W}" height="8" fill="#A51C30"/>
-  <text x="80" y="250" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="112" font-weight="800" fill="#FFFFFF" letter-spacing="-3">Martin</text>
-  <text x="80" y="370" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="112" font-weight="800" fill="#A51C30" letter-spacing="-3">Bogoje</text>
-  <text x="80" y="452" font-family="Consolas, Courier New, monospace" font-size="27" fill="#9A9A9A" letter-spacing="4">SOFTWARE DEVELOPER</text>
-  <text x="80" y="540" font-family="Consolas, Courier New, monospace" font-size="23" fill="#6E6E6E" letter-spacing="2">${esc(PERSON.locality)} · React · Full-Stack · UI/UX</text>
-</svg>`
-
-  const out = path.join(PUBLIC, 'og-image.jpg')
-  const info = await sharp(Buffer.from(svg)).jpeg({ quality: 88 }).toFile(out)
-  meta['/og-image.jpg'] = { width: info.width, height: info.height }
-  console.log(`  og-image.jpg generated ${info.width}x${info.height} ${bytes(info.size)}`)
 }
 
 main().catch((err) => {

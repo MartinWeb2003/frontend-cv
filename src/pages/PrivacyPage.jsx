@@ -1,4 +1,6 @@
 import { useTranslation } from 'react-i18next'
+import { PHOTOS } from '../data/photos'
+import PageHeader from '../components/PageHeader'
 import usePageMeta from '../seo/usePageMeta'
 import {
   ANALYTICS,
@@ -7,6 +9,7 @@ import {
   PERSON,
   pagePath,
   pageUrl,
+  pathForLocale,
   SITE_ORIGIN,
 } from '../seo/siteConfig'
 import './StaticPage.css'
@@ -30,13 +33,19 @@ export default function PrivacyPage() {
   const usesAnalytics = Boolean(ANALYTICS.plausibleDomain || ANALYTICS.umamiSrc)
 
   return (
-    <article className="staticpage">
+    <article className="pagewrap staticpage">
       <div className="container staticpage__inner staticpage__inner--narrow">
-        <span className="section-label">{t('privacyPage.label')}</span>
-        <h1 className="staticpage__title staticpage__title--sm">{t('privacyPage.title')}</h1>
-        <p className="staticpage__lead">{t('privacyPage.lead')}</p>
+        <PageHeader
+          crumbs={[
+            { label: t('projectPage.crumbHome'), href: pathForLocale(lng) },
+            { label: t('privacyPage.label') },
+          ]}
+          title={t('privacyPage.title')}
+          lead={t('privacyPage.lead')}
+          size="lg"
+        />
 
-        <div className="staticpage__body">
+        <div className="prose staticpage__body">
           {SECTIONS.map((key) => (
             <section key={key}>
               <h2>{t(`privacyPage.${key}Title`)}</h2>
@@ -47,6 +56,21 @@ export default function PrivacyPage() {
               </p>
             </section>
           ))}
+
+          <section>
+            <h2>{t('privacyPage.photosTitle')}</h2>
+            <p>{t('privacyPage.photosText')}</p>
+            <ul className="credits">
+              {Object.entries(PHOTOS).map(([key, p]) => (
+                <li key={key}>
+                  <a href={p.source} target="_blank" rel="noopener noreferrer license">
+                    {p.place ?? key}
+                  </a>
+                  {`: ${p.author}, ${p.license}`}
+                </li>
+              ))}
+            </ul>
+          </section>
 
           <p className="staticpage__note">
             {t('privacyPage.contactLine')}{' '}

@@ -1,124 +1,142 @@
-import { useRef, useSyncExternalStore } from 'react'
-import { motion, useScroll, useTransform } from 'motion/react'
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
+import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+import { FiArrowRight, FiArrowDown } from 'react-icons/fi'
 import SectionLink from './SectionLink'
-import { FiArrowDown, FiMail } from 'react-icons/fi'
-import CircularText from '../bits/CircularText'
-import FloatingIcons from './FloatingIcons'
+import FluidBackground from './FluidBackground'
+import { PROJECTS } from '../data/projects'
+import { DEFAULT_LOCALE, LOCALES, pagePath } from '../seo/siteConfig'
 import './Hero.css'
 
-const subscribeToResize = (onChange) => {
-  window.addEventListener('resize', onChange)
-  return () => window.removeEventListener('resize', onChange)
+/*
+ * The interactive logo shares the three.js chunk with the showcase. It is
+ * requested only after the page has loaded and the browser is idle, and only
+ * on wide screens, so it never competes with the LCP name.
+ */
+const Logo3D = lazy(() => import('./Logo3D'))
+
+function useDeferred3D() {
+  const [ok, setOk] = useState(false)
+  useEffect(() => {
+    if (!window.matchMedia('(min-width: 900px)').matches) return undefined
+    let id = 0
+    const go = () => {
+      id = (window.requestIdleCallback ?? ((f) => setTimeout(f, 200)))(() => setOk(true))
+    }
+    if (document.readyState === 'complete') go()
+    else window.addEventListener('load', go, { once: true })
+    return () => {
+      window.removeEventListener('load', go)
+      ;(window.cancelIdleCallback ?? clearTimeout)(id)
+    }
+  }, [])
+  return ok
 }
-const isMobileNow = () => window.innerWidth <= 768
-/** No viewport during prerender; false keeps server and hydration markup identical. */
-const isMobileOnServer = () => false
 
+const ease = [0.22, 1, 0.36, 1]
+
+/*
+ * Motion moment 1 of the home page: the load sequence.
+ *
+ * The h1 is the LCP element, so it animates transform only and is fully
+ * opaque from the first paint. Supporting copy follows with a short fade.
+ * Scroll then hands the hero off: the name drifts up and the ink layer moves
+ * at a slower rate, which reads as depth rather than as an effect.
+ */
 export default function Hero() {
-  const { t } = useTranslation()
-  const sectionRef = useRef(null)
-  const isMobile = useSyncExternalStore(subscribeToResize, isMobileNow, isMobileOnServer)
+  const { t, i18n } = useTranslation()
+  const lng = LOCALES.includes(i18n.language) ? i18n.language : DEFAULT_LOCALE
+  const ref = useRef(null)
+  const reduce = useReducedMotion()
+  const show3d = useDeferred3D()
+  const [ready3d, setReady3d] = useState(false)
+  const onReady3d = useCallback(() => setReady3d(true), [])
 
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] })
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
+  const nameY = useTransform(scrollYProgress, [0, 1], ['0%', reduce ? '0%' : '-18%'])
+  const inkY = useTransform(scrollYProgress, [0, 1], ['0%', reduce ? '0%' : '22%'])
+  const footOpacity = useTransform(scrollYProgress, [0, 0.45], [1, reduce ? 1 : 0])
 
-  const yBg    = useTransform(scrollYProgress, [0, 1], ['0%', '14%'])
-  const yIcons = useTransform(scrollYProgress, [0, 1], ['0%', '30%'])
-  const yText  = useTransform(scrollYProgress, [0, 1], ['0%', '60%'])
-  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0])
-  const yLine  = useTransform(scrollYProgress, [0, 1], ['0%', '80%'])
+  const facts = [
+    { k: t('hero.fact1Key'), v: t('hero.fact1Val') },
+    { k: t('hero.fact2Key'), v: t('hero.fact2Val') },
+    { k: t('hero.fact3Key', { count: PROJECTS.length }), v: t('hero.fact3Val') },
+  ]
 
-  const fadeIn = (delay = 0) => ({
-    initial: { opacity: 0, y: 24 },
+  const fadeIn = (delay) => ({
+    initial: { opacity: 0, y: 16 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.7, delay, ease: [0.4, 0, 0.2, 1] },
+    transition: { duration: 0.4, delay, ease },
   })
 
   return (
-    <section ref={sectionRef} className="hero" id="hero">
-      <motion.div className="hero__bg-shape" style={{ y: yBg }}>
-        <div className="hero__blob" />
-        <div className="hero__blob-grid" />
+    <section ref={ref} className="hero chapter-ink" id="hero" data-theme="ink">
+      <motion.div className="hero__ink" style={{ y: inkY }}>
+        <FluidBackground variant="ember" />
       </motion.div>
 
-      <motion.div className="hero__icons-layer" style={{ y: yIcons }}>
-        <FloatingIcons />
-      </motion.div>
-
-      <motion.h1 className="hero__name" style={{ y: isMobile ? 0 : yText }}>
-        <motion.span
-          className="hero__name-first"
-          initial={{ x: -60 }}
-          animate={{ x: 0 }}
-          transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-        >
-          Martin
-        </motion.span>
-        <motion.span
-          className="hero__name-last"
-          initial={{ x: 60 }}
-          animate={{ x: 0 }}
-          transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        >
-          Bogoje
-        </motion.span>
-        <span className="sr-only">{t('hero.tagline')}</span>
-      </motion.h1>
-
-      <motion.div className="hero__content" style={{ opacity }}>
-        <div className="container hero__container">
-          <motion.div className="hero__topbar" {...fadeIn(0.1)}>
-            <span className="section-label" style={{ marginBottom: 0, color: 'rgba(255,255,255,0.35)' }}>
-              {t('hero.tagline')}
-            </span>
-            <div className="hero__socials">
-              <a href="mailto:bogojemartin@gmail.com" className="hero__social" aria-label="Email">
-                <FiMail />
-              </a>
-            </div>
-          </motion.div>
-
-          <motion.div className="hero__bottom" {...fadeIn(0.9)}>
-            <div className="hero__bio">
-              <p>
-                {t('hero.bio1')}<br />
-                {t('hero.bio2')}<br />
-                {t('hero.bio3')}
-              </p>
-              <div className="hero__cta">
-                <SectionLink to="projects" className="btn btn-primary">
-                  {t('hero.ctaProjects')} <FiArrowDown size={13} />
-                </SectionLink>
-                <SectionLink to="contact" className="btn btn-outline">
-                  {t('hero.ctaContact')}
-                </SectionLink>
-              </div>
-            </div>
-
-            <motion.div className="hero__badge" style={{ y: yIcons }}>
-              <SectionLink
-                to="projects"
-                className="hero__badge-link"
-                aria-label={t('hero.badgeAria')}
-              >
-                <CircularText
-                  text={t('hero.badge')}
-                  spinDuration={20}
-                  onHover="speedUp"
-                  radius={76}
-                  fontSize={9.5}
-                  color="#A51C30"
-                />
-                <span className="hero__badge-center">
-                  <FiArrowDown size={18} />
-                </span>
-              </SectionLink>
-            </motion.div>
-          </motion.div>
+      {show3d && (
+        <div className={`hero__3d${ready3d ? ' is-ready' : ''}`}>
+          <Suspense fallback={null}>
+            <Logo3D reduce={!!reduce} onReady={onReady3d} />
+          </Suspense>
+          <span className="hero__3d-hint" aria-hidden="true">{t('hero.dragHint')}</span>
         </div>
-      </motion.div>
+      )}
 
-      <motion.div className="hero__scroll-line" style={{ y: yLine }} />
+      <div className="container hero__frame">
+        <motion.div className="hero__top" {...fadeIn(0.5)}>
+          <span className="eyebrow">{t('hero.tagline')}</span>
+          <span className="hero__status">
+            <span className="hero__pulse" aria-hidden="true" />
+            {t('hero.availability')}
+          </span>
+        </motion.div>
+
+        <motion.h1 className="hero__name" style={{ y: nameY }}>
+          <motion.span
+            className="hero__line"
+            initial={{ y: 48 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.4, ease }}
+          >
+            Martin
+          </motion.span>
+          <motion.span
+            className="hero__line"
+            initial={{ y: 72 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.4, delay: 0.06, ease }}
+          >
+            Bogoje<span className="hero__dot">.</span>
+          </motion.span>
+          <span className="sr-only">, {t('hero.tagline')}</span>
+        </motion.h1>
+
+        <motion.div className="hero__foot" style={{ opacity: footOpacity }}>
+          <motion.div className="hero__pitch" {...fadeIn(0.25)}>
+            <p className="hero__statement">{t('hero.statement')}</p>
+            <div className="hero__cta">
+              <Link to={pagePath('contact', lng)} className="btn btn-primary btn-lg">
+                {t('hero.ctaContact')} <FiArrowRight size={17} aria-hidden="true" />
+              </Link>
+              <SectionLink to="work" className="btn btn-outline btn-lg">
+                {t('hero.ctaProjects')} <FiArrowDown size={17} aria-hidden="true" />
+              </SectionLink>
+            </div>
+          </motion.div>
+
+          <motion.dl className="hero__facts" {...fadeIn(0.35)}>
+            {facts.map((f) => (
+              <div key={f.k} className="hero__fact">
+                <dt>{f.k}</dt>
+                <dd>{f.v}</dd>
+              </div>
+            ))}
+          </motion.dl>
+        </motion.div>
+      </div>
     </section>
   )
 }
