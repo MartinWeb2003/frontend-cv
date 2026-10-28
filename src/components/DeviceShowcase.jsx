@@ -116,6 +116,20 @@ export default function DeviceShowcase() {
       aria-labelledby="showcase-title"
     >
       <div className="showcase__pin">
+        {/*
+          Each site's own backdrop: its hero screenshot reduced to a tiny,
+          pre-blurred colour field (scripts/showcase-backdrops.mjs), shown
+          faintly and crossfaded with the active project. Decorative.
+        */}
+        <div className="showcase__backdrops" aria-hidden="true">
+          {SHOWCASE_PROJECTS.map((p, i) => (
+            <span
+              key={p.slug}
+              className={`showcase__backdrop${i === active ? ' is-on' : ''}`}
+              style={{ backgroundImage: `url(/showcase/${p.slug}.webp)` }}
+            />
+          ))}
+        </div>
         <div className="container showcase__grid">
           <header className="showcase__head">
             <h2 id="showcase-title" className="h2 showcase__heading">{t('home.showcaseTitle')}</h2>

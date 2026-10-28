@@ -12,7 +12,21 @@
   overflow: hidden;
 }
 
+/* ── Per-site backdrop: mostly transparent, crossfaded ── */
+.showcase__backdrops { position: absolute; inset: 0; pointer-events: none; }
+.showcase__backdrop {
+  position: absolute;
+  inset: -4%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 1s var(--ease-out), transform 1.6s var(--ease-out);
+}
+.showcase__backdrop.is-on { opacity: 0.28; transform: none; }
+
 .showcase__grid {
+  position: relative;
   height: 100%;
   display: grid;
   grid-template-columns: minmax(300px, 0.78fr) minmax(0, 1.5fr);
